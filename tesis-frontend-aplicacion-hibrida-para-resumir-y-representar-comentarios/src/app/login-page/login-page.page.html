@@ -1,0 +1,69 @@
+<ion-app>
+  <ion-header class="ion-no-border" collapse="fade">
+    <ion-toolbar class="Page-Header">
+      <ion-title class="Log-In" >INICIAR SESIÓN</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+  
+    <div style="margin-top: 0.5em">
+      <!--Colocar la imagen del restaurante dueno de la aplicacion-->
+      <div  class="redeSociales" >
+        <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:17.0;"></ion-icon>
+      </div>
+    </div>
+    
+    <div style="margin-top: 1em">
+      <ion-item-group>
+        <ion-item class="BG">
+          <ion-input
+            class="Email"
+            style="padding-inline-start: 0%"
+            placeholder="Email"
+            type="email"
+            [(ngModel)]="email"
+            required
+          ></ion-input>
+        </ion-item>
+        <ion-item class="BG">
+          <ion-input
+            class="Password"
+            placeholder="Contraseña"
+            type="password"
+            [(ngModel)]="password"
+            required
+          ></ion-input>
+          <ion-label class="Show" (click)="mostrarPassword()">Mostrar</ion-label>
+        </ion-item>
+        <div>
+          <ion-label class="Olvidaste-tu-contrasea" (click)="mostrarPassword()">¿Olvidaste tu contraseña?</ion-label>
+        </div>
+      </ion-item-group>
+      <ion-button color="loginbutton" class="ButtonLogin" (click)="login()"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">Ingresar</span> </ion-button>
+      
+      <div>
+        <ion-label class="O-inicia-sesin-con">O inicia sesión con:</ion-label>
+        <div  class="redeSociales" >
+          <ion-button color="primary" class="ButtonRedesSociales" (click)="iniciarConFacebook()">
+            <ion-icon name="logo-facebook" style="zoom:3.0;"></ion-icon>
+          </ion-button>
+          <ion-button color="light" class="ButtonRedesSociales" (click)="iniciarConGoogle()">
+            <ion-icon src="../../assets/icon/iconGmail.svg" style="zoom:3.0;"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  
+  
+  <ion-footer collapse="fade">
+    <ion-toolbar>
+      <div class="footerDerechosAutor">
+        <ion-label class="derechosAutor">
+          &#169; 2022 Todos los derechos reservados | Developed by JB & KB
+        </ion-label>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+</ion-app>
