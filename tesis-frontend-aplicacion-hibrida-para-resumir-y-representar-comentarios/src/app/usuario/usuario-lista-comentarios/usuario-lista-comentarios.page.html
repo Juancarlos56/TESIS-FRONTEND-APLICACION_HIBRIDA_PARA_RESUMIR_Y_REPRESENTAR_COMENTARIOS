@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Listar datos JSON
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <ion-button (click)="onClickDescargarDatos()">
+      Descargar datos
+    </ion-button>
+    <ion-list>
+      <ion-item *ngFor="let tarea of tareas"> 
+        <p>{{ tarea.title }}</p>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

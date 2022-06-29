@@ -15,45 +15,58 @@
     </div>
     
     <div style="margin-top: 1em">
-      <ion-item-group>
-        <ion-item class="BG">
-          <ion-input
-            class="Email"
-            style="padding-inline-start: 0%"
-            placeholder="Email"
-            type="email"
-            [(ngModel)]="email"
-            required
-          ></ion-input>
-        </ion-item>
-        <ion-item class="BG">
-          <ion-input
-            class="Password"
-            placeholder="Contraseña"
-            type="password"
-            [(ngModel)]="password"
-            required
-          ></ion-input>
-          <ion-label class="Show" (click)="mostrarPassword()">Mostrar</ion-label>
-        </ion-item>
+      <form (ngSubmit)="login()" [formGroup]="credentials">
+        <ion-item-group>
+          <ion-item class="BG">
+            <ion-input
+              class="Email"
+              style="padding-inline-start: 0%"
+              placeholder="Email"
+              type="email"
+              formControlName="email"
+              [(ngModel)]="email1"
+              required
+            ></ion-input>
+            <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Email is invalid</ion-note>
+          </ion-item>
+
+          <ion-item class="BG">
+            <ion-input
+              class="Password"
+              placeholder="Contraseña"
+              type="password"
+              formControlName="password"
+              [(ngModel)]="password1"
+              required
+            ></ion-input>
+            <ion-label class="Show" (click)="mostrarPassword()">Mostrar</ion-label>
+            <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Password needs to be 6 characters</ion-note>
+
+          </ion-item>
+
+          <div>
+            <ion-label class="Olvidaste-tu-contrasea" (click)="mostrarPassword()">¿Olvidaste tu contraseña?</ion-label>
+          </div>
+
+        </ion-item-group>
+        <ion-button color="loginbutton" class="ButtonLogin" type="submit" expand="block" [disabled]="!credentials.valid"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">log in</span> </ion-button>
+       <!-- <ion-button color="loginbutton" class="ButtonLogin" (click)="login()"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">Ingresar</span> </ion-button> -->
+        <ion-button color="loginbutton" class="ButtonLogin" type="button" expand="block" (click)="register()"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">Crear cuenta</span></ion-button>
+
         <div>
-          <ion-label class="Olvidaste-tu-contrasea" (click)="mostrarPassword()">¿Olvidaste tu contraseña?</ion-label>
+          <ion-label class="O-inicia-sesin-con">O inicia sesión con:</ion-label>
+          <div  class="redeSociales" >
+            <ion-button color="primary" class="ButtonRedesSociales" (click)="iniciarConFacebook()">
+              <ion-icon name="logo-facebook" style="zoom:3.0;"></ion-icon>
+            </ion-button>
+            <ion-button color="light" class="ButtonRedesSociales" (click)="iniciarConGoogle()">
+              <ion-icon src="../../assets/icon/iconGmail.svg" style="zoom:3.0;"></ion-icon>
+            </ion-button>
+          </div>
         </div>
-      </ion-item-group>
-      <ion-button color="loginbutton" class="ButtonLogin" (click)="login()"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">Ingresar</span> </ion-button>
-      
-      <div>
-        <ion-label class="O-inicia-sesin-con">O inicia sesión con:</ion-label>
-        <div  class="redeSociales" >
-          <ion-button color="primary" class="ButtonRedesSociales" (click)="iniciarConFacebook()">
-            <ion-icon name="logo-facebook" style="zoom:3.0;"></ion-icon>
-          </ion-button>
-          <ion-button color="light" class="ButtonRedesSociales" (click)="iniciarConGoogle()">
-            <ion-icon src="../../assets/icon/iconGmail.svg" style="zoom:3.0;"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
+      </form>
     </div>
+
   </ion-content>
   
   

@@ -1,0 +1,57 @@
+<ion-app>
+  <ion-header class="ion-no-border" collapse="fade">
+    <ion-toolbar class="Page-Header">
+      <ion-title class="Log-In" >Unos pasos más</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+  
+    <div style="margin-top: 0.5em">
+      <!--Colocar la imagen del restaurante dueno de la aplicacion-->
+      <div  class="redeSociales" >
+        <ion-icon src="../../assets/icon/corazon.svg" ></ion-icon>
+      </div>
+    </div>
+    
+    <div style="margin-top: 1em">
+      <ion-item-group>
+        <ion-item class="BG">
+          <ion-input
+            class="Email"
+            style="padding-inline-start: 0%"
+            placeholder="Edad"
+            type="edad"
+            [(ngModel)]="edad"
+            required
+          ></ion-input>
+          
+        </ion-item>
+        <ion-item class="BG">
+          <ion-input
+            class="Password"
+            placeholder="Genero"
+            type="Genero"
+            [(ngModel)]="genero"
+            required
+          ></ion-input>
+        </ion-item>
+      
+      </ion-item-group>
+      <ion-button color="loginbutton" class="ButtonLogin" (click)="seguir()"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">A comentar! </span> </ion-button>
+      
+     
+    </div>
+  </ion-content>
+  
+  
+  <ion-footer collapse="fade">
+    <ion-toolbar>
+      <div class="footerDerechosAutor">
+        <ion-label class="derechosAutor">
+          &#169; 2022 Todos los derechos reservados | Developed by JB & KB
+        </ion-label>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+</ion-app>
