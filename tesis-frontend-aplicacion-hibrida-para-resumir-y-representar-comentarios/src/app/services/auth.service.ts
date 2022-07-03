@@ -3,12 +3,12 @@ import {
   Auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signOut
-} from '@angular/fire/auth';
- 
+  signOut,
 
+
+} from '@angular/fire/auth';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
 
@@ -26,6 +26,10 @@ export class AuthService {
       return null;
     }
   }
+
+
+
+
  
   async login({ email, password }) {
     try {
@@ -35,10 +39,39 @@ export class AuthService {
       return null;
     }
   }
+
+
+
+
  
   logout() {
     return signOut(this.auth);
+    this.auth.signOut();
+  }
+
+
+
+  async getUid(){
+    const user = await this.auth.currentUser
+    if (user){
+      return user.uid;
+    } else {
+      return null;
+    }  
+  }
+
+  async getCorreo(){
+    const correoU = await this.auth.currentUser
+    if (correoU){
+      return correoU.email;
+    } else {
+      return null;
+    }  
   }
 
   
+  
+
+ 
+
 }

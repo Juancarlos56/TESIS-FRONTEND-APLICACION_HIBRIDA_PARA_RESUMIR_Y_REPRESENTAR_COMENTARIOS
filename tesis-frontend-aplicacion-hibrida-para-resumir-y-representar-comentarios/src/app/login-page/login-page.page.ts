@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { AlertController, isPlatform, LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class LoginPagePage implements OnInit {
 
+  
   public password1 = "";
   public email1 = "";
   public gmailIcon = "../../assets/images/gmail.png"
@@ -23,7 +25,16 @@ export class LoginPagePage implements OnInit {
     private alertController: AlertController,
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {
+    if (!isPlatform('capacitor')){
+      GoogleAuth.initialize({
+        clientId: '973370360772-vo9uf5gemmvbakbpduvljfkfupevtf4m.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+        grantOfflineAccess: true,
+      });
+    }
+
+   }
 
   get email(){
     return this.credentials.get('email');
@@ -83,22 +94,36 @@ export class LoginPagePage implements OnInit {
     await alert.present();
   }
 
+
+
+
   public iniciarConFacebook(){
     console.log("entra al metodo login: "+this.email1+" "+this.password1);
   }
 
   async iniciarConGoogle(){
-    console.log("entra al metodo login: "+this.email1+" "+this.password1);
-   
-    try {
-      //const user = await this.authService.loginGoogle();
-      //if (user){
-      //  console.log('user', user);
-      //}
-    }
-    catch(error){
-      console.log('error',error)}
+    const usuario = await GoogleAuth.signIn();
+    console.log('user:', usuario);
+
+  }
+ 
+  
+
+  async iniciarGoogleA(){
+  //  const usuario = await GoogleAuth.signIn();
+  // console.log('user:', usuario);
+  }
+
+  async refresh(){
+    const authCode = await GoogleAuth.refresh();
+    console.log('refresh', authCode)
+  }
+
+  async singOutG (){
+    await GoogleAuth.signOut();
+  // usuario=null
   }
 
   
 }
+
