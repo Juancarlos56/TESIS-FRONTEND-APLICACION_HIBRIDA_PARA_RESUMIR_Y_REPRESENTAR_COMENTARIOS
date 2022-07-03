@@ -1,100 +1,138 @@
 <ion-app>
   <ion-header class="ion-no-border" collapse="fade">
     <ion-toolbar class="Page-Header">
-      <ion-title class="Log-In" >REGISTRARSE</ion-title>
+      <ion-title class="Log-In">REGISTRARSE</ion-title>
     </ion-toolbar>
   </ion-header>
-  
+
   <ion-content>
-  
-    <div >
+    <div>
       <!--Colocar la imagen del restaurante dueno de la aplicacion-->
-      <div  class="redeSociales" >
-        <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:7.0;"></ion-icon>
+      <div class="redeSociales">
+        <ion-icon
+          src="../../assets/icon/terracerestaurant.svg"
+          style="zoom: 7"
+        ></ion-icon>
       </div>
     </div>
-    
+
     <div style="margin-top: 1em">
-      <ion-item-group>
+      <form (ngSubmit)="register()" [formGroup]="datos">
+        <ion-item-group>
+          <ion-item class="BG">
+            <ion-input
+              class="nombre"
+              style="padding-inline-start: 0%"
+              placeholder="Nombres"
+              type="text"
+              [(ngModel)]="nombres"
+              required
+              formControlName="nombresForm"
+            ></ion-input>
+            <ion-icon name="close-circle-sharp" *ngIf="(nombresForm.dirty || nombresForm.touched) && (nombresForm.errors)"></ion-icon>
+            <ion-icon  name="checkmark-circle-outline" *ngIf="(nombresForm.dirty || nombresForm.touched) && (nombresForm.errors == null)"></ion-icon>
+            
+          </ion-item>
 
-        <ion-item class="BG">
-          <ion-input
-            class="nombre"
-            style="padding-inline-start: 0%"
-            placeholder="Nombres"
-            type="nombre"
-            [(ngModel)]="nombres"
-            required
-          ></ion-input>
-        </ion-item>
+          <ion-item class="BG">
+            <ion-input
+              class="apellidos"
+              style="padding-inline-start: 0%"
+              placeholder="Apellidos"
+              type="text"
+              [(ngModel)]="apellidos"
+              required
+              formControlName="apellidosForm"
+            ></ion-input>
+            <ion-icon name="close-circle-sharp" *ngIf="(apellidosForm.dirty || apellidosForm.touched) && (apellidosForm.errors)"></ion-icon>
+            <ion-icon  name="checkmark-circle-outline" *ngIf="(apellidosForm.dirty || apellidosForm.touched) && (apellidosForm.errors == null)"></ion-icon>
+            
+          </ion-item>
 
-        <ion-item class="BG">
-          <ion-input
-            class="apellidos"
-            style="padding-inline-start: 0%"
-            placeholder="Apellidos"
-            type="apellidos"
-            [(ngModel)]="apellidos"
-            required
-          ></ion-input>
-        </ion-item>
+          <ion-item class="BG">
+            <ion-input
+              class="Email"
+              style="padding-inline-start: 0%"
+              placeholder="Correo Electrónico "
+              type="email"
+              [(ngModel)]="email"
+              required
+              formControlName="emailForm"
+            ></ion-input>
+            <ion-icon name="close-circle-sharp" *ngIf="(emailForm.dirty || emailForm.touched) && (emailForm.errors)"></ion-icon>
+            <ion-icon  name="checkmark-circle-outline" *ngIf="(emailForm.dirty || emailForm.touched) && (emailForm.errors == null)"></ion-icon>
+            
+          </ion-item>
 
-        <ion-item class="BG">
-          <ion-input
-            class="Email"
-            style="padding-inline-start: 0%"
-            placeholder="Email"
-            type="email"
-            [(ngModel)]="email"
-            required
-          ></ion-input>
-        </ion-item>
-
-        <ion-item class="BG">
-          <ion-input
-            class="Password"
-            placeholder="Contraseña"
-            type="password"
-            [(ngModel)]="password"
-            required
-          ></ion-input>
-          <ion-label class="Show" (click)="mostrarPassword()">Mostrar</ion-label>
-        </ion-item>
-
-        <ion-item class="BG">
-          <ion-input
-            class="Password2"
-            placeholder="Confirmar Contraseña"
-            type="password2"
-            [(ngModel)]="password2"
-            required
-          ></ion-input>
-          <ion-label class="Show" (click)="mostrarPassword()">Mostrar</ion-label>
-        </ion-item>
-
-
+          <ion-item class="BG">
+            <ion-input
+              class="Password"
+              placeholder="Contraseña"
+              type="password"
+              [(ngModel)]="password"
+              required
+              formControlName="passwordForm"
+              (keyup)="validarRobustezPassword($event)" 
+              [color]="passwordStrong"
+            ></ion-input>
+            <ion-label class="Show" (click)="mostrarPassword()">Mostrar</ion-label>
+            <ion-icon name="close-circle-sharp" *ngIf="(passwordForm.dirty || passwordForm.touched) && (passwordForm.errors)"></ion-icon>
+            <ion-icon  name="checkmark-circle-outline" *ngIf="(passwordForm.dirty || passwordForm.touched) && (passwordForm.errors == null)"></ion-icon>
+          </ion-item>
       
-      </ion-item-group>
-      <ion-button color="loginbutton" class="ButtonLogin" (click)="registrar()"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">Registrar</span> </ion-button>
-      
+          <ion-item class="BG">
+            <ion-input
+              class="Password2"
+              placeholder="Confirmar Contraseña"
+              type="password"
+              formControlName="passwordValidacionForm"
+              [(ngModel)]="passwordValidacion"
+              required
+              (keyup)="validarIgualdadPassword($event)" 
+              [color]="passwordStrongVerificacion"
+            ></ion-input>
+            <ion-label class="Show" (click)="mostrarPassword()">Mostrar</ion-label>
+            <ion-icon name="close-circle-sharp" *ngIf="(passwordValidacionForm.dirty || passwordValidacionForm.touched) && (passwordValidacionForm.errors)"></ion-icon>
+            <ion-icon  name="checkmark-circle-outline" *ngIf="(passwordValidacionForm.dirty || passwordValidacionForm.touched) && (passwordValidacionForm.errors == null)"></ion-icon>
+          </ion-item>
+        </ion-item-group>
+        <ion-button color="loginbutton" class="ButtonRegistrar" type="submit" expand="block" [disabled]="!datos.valid"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">Registrar</span> </ion-button>
+      </form>
+
       <div>
         <ion-label class="O-inicia-sesin-con">O registrate con:</ion-label>
 
-        <div  class="redeSociales" >
-          
-          <ion-button color="primary" class="ButtonRedesSociales" (click)="registrarConFacebook()">
-            <ion-icon name="logo-facebook" style="zoom:3.0;"></ion-icon>
+        <div class="redeSociales">
+          <ion-button
+            color="primary"
+            class="ButtonRedesSociales"
+            (click)="registrarConFacebook()"
+          >
+            <ion-icon name="logo-facebook" style="zoom: 3"></ion-icon>
           </ion-button>
 
-          <ion-button color="light" class="ButtonRedesSociales" (click)="registrarConGoogle()">
-            <ion-icon src="../../assets/icon/iconGmail.svg" style="zoom:3.0;"></ion-icon>
+          <ion-button
+            color="light"
+            class="ButtonRedesSociales"
+            (click)="registrarConGoogle()"
+          >
+            <ion-icon
+              src="../../assets/icon/iconGmail.svg"
+              style="zoom: 3"
+            ></ion-icon>
           </ion-button>
         </div>
       </div>
+
+      <div class="linkToLogin">
+        <ion-label class="linkToLoginStyle">
+          Ya tienes cuenta,
+          <a [routerLink]="['/login-page']"> Inicia Sesión Ahora</a>
+        </ion-label>
+      </div>
     </div>
   </ion-content>
-  
-  
+
   <ion-footer collapse="fade">
     <ion-toolbar>
       <div class="footerDerechosAutor">

@@ -37,7 +37,7 @@ export class LoginPagePage implements OnInit {
     this.credentials = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
-        password: ['',[Validators.required, Validators.minLength(6)]]
+        password: ['',[Validators.required, Validators.minLength(8)]]
       }
     );
   }
@@ -47,19 +47,6 @@ export class LoginPagePage implements OnInit {
     console.log("entra al metodo"+this.password1);
   }
 
-  async register() {
-    const loading = await this.loadingController.create();
-    await loading.present();
- 
-    const user = await this.authService.register(this.credentials.value);
-    await loading.dismiss();
- 
-    if (user) {
-      this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
-    } else {
-      this.showAlert('Registration failed', 'Please try again!');
-    }
-  }
 
   async login() {
     const loading = await this.loadingController.create();
@@ -71,9 +58,10 @@ export class LoginPagePage implements OnInit {
     if (user) {
       this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
     } else {
-      this.showAlert('Login failed', 'Please try again!');
+      this.showAlert('Login fallido', 'Por favor intente de nuevo!');
     }
   }
+  
   async showAlert(header, message) {
     const alert = await this.alertController.create({
       header,

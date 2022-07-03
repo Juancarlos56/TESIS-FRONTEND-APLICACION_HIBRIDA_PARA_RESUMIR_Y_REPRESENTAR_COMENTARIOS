@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-usuario-add-info',
@@ -10,9 +11,11 @@ export class UsuarioAddInfoPage implements OnInit {
   public edad = "";
   public genero = "";
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    const user = this.authService.getUid()
+    console.log("UID = " + user.then(rest => console.log(rest)))
   }
 
   public seguir(){
