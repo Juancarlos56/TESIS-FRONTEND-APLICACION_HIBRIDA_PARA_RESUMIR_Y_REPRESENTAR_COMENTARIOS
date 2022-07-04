@@ -14,8 +14,8 @@ export class UsuarioAddInfoPage implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    const user = this.authService.getUid()
-    console.log("UID = " + user.then(rest => console.log(rest)))
+    const user = this.authService.getUserProfile()
+    console.log("UID = " + user)
   }
 
   public seguir(){

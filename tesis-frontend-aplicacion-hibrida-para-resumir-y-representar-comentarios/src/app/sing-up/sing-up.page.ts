@@ -134,11 +134,8 @@ export class SingUpPage implements OnInit {
   }
 
   async registrarConGoogle(){
-    //const user = await this.authService.elPoderosoLOGINCONGOOGLE();
-    this.firestroreData.getUsuarios().subscribe(res =>{
-      console.log(res)
-    })
-    //this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
+    await this.authService.registrarConGoogle();
+    //this.router.navigateByUrl('usuario-add-info', { replaceUrl: true });
   }
 
 }

@@ -10,8 +10,9 @@ import { UsuarioMenuPage } from './usuario/usuario-menu/usuario-menu.page';
 
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
-const redirectLoggedInToUsuarioInfo = () => redirectLoggedInTo(['usuario-menu/usuario-perfil']);
+const redirectLoggedInToUsuarioInfo = () => redirectLoggedInTo(['usuario-menu']);
 const redirectLoggedInToAdminInfo = () => redirectLoggedInTo(['admin-menu']);
+const redirectRegistroToUserInfo = () => redirectLoggedInTo(['usuario-add-info']);
 
 const routes: Routes = [
   {
@@ -27,7 +28,7 @@ const routes: Routes = [
 
   {
     path: 'sing-up',
-    loadChildren: () => import('./sing-up/sing-up.module').then( m => m.SingUpPageModule)
+    loadChildren: () => import('./sing-up/sing-up.module').then( m => m.SingUpPageModule),...canActivate(redirectRegistroToUserInfo)
   },
 
   {
@@ -36,7 +37,11 @@ const routes: Routes = [
     ...canActivate(redirectLoggedInToUsuarioInfo)
   },
 
-
+  {
+    path: 'usuario-add-info',
+    loadChildren: () => import('./usuario/usuario-add-info/usuario-add-info.module').then( m => m.UsuarioAddInfoPageModule),
+    ...canActivate(redirectUnauthorizedToLogin) 
+  },
 
   {
     path: 'usuario-menu',
@@ -56,11 +61,6 @@ const routes: Routes = [
       {
         path: 'usuario-comentario',
         loadChildren: () => import('./usuario/usuario-comentario/usuario-comentario.module').then( m => m.UsuarioComentarioPageModule),
-        ...canActivate(redirectUnauthorizedToLogin) 
-      },
-      {
-        path: 'usuario-add-info',
-        loadChildren: () => import('./usuario/usuario-add-info/usuario-add-info.module').then( m => m.UsuarioAddInfoPageModule),
         ...canActivate(redirectUnauthorizedToLogin) 
       },
       {
