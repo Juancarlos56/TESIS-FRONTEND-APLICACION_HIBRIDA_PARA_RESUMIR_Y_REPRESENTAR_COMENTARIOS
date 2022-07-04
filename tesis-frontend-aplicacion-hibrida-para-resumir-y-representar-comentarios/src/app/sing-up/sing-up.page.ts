@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, isPlatform } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ElementRef } from '@angular/core';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 @Component({
   selector: 'app-sing-up',
@@ -29,7 +31,17 @@ export class SingUpPage implements OnInit {
     private alertController: AlertController,
     private authService: AuthService,
     private router: Router
-  ) { }
+  ) {
+    if (!isPlatform('capacitor')){
+      GoogleAuth.initialize({
+        clientId: '973370360772-vo9uf5gemmvbakbpduvljfkfupevtf4m.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+        grantOfflineAccess: true,
+      });
+
+
+    }
+   }
 
   ngOnInit() {
     this.datos = this.fb.group(
@@ -119,8 +131,10 @@ export class SingUpPage implements OnInit {
     console.log("entra al metodo login: "+this.email+" "+this.password);
   }
 
-  public registrarConGoogle(){
-    console.log("entra al metodo login: "+this.email+" "+this.password);
+  async registrarConGoogle(){
+    const usuario = await GoogleAuth.signIn();
+    console.log('user:', usuario);  
+    this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
   }
 
 }

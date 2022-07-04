@@ -90,16 +90,13 @@ export class LoginPagePage implements OnInit {
   }
 
   async iniciarConGoogle(){
-    const usuario = await GoogleAuth.signIn();
-    console.log('user:', usuario);
+    //const usuario = await GoogleAuth.signIn();
+   this.authService.elPoderosoLOGINCONGOOGLE();
+   // this.authService.login2();
+   // this.authService.login3();
+    //console.log('user:', usuario);
+    this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
 
-  }
- 
-  
-
-  async iniciarGoogleA(){
-  //  const usuario = await GoogleAuth.signIn();
-  // console.log('user:', usuario);
   }
 
   async refresh(){
