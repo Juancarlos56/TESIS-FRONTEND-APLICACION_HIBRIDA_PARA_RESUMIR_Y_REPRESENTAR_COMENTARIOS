@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { doc, Firestore, docData } from '@angular/fire/firestore';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -23,7 +24,7 @@ export class AuthService {
 
   public providerG = new GoogleAuthProvider();
 
-  constructor(private auth: Auth) {
+  constructor(private auth: Auth, private firestore: Firestore) {
 
   }
 
@@ -61,7 +62,7 @@ export class AuthService {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        this.saveUser(user)
+        return user;
       })
       .catch((error) => {
         // Handle Errors here.
@@ -73,11 +74,6 @@ export class AuthService {
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
-  }
-
-  saveUser(user){
-    console.log("Usuario: "+user)
-    //this.logout()
   }
   
   async register(email, password) {
@@ -123,4 +119,11 @@ export class AuthService {
       return null;
     }
   }
+  
+  getUserProfile(){
+    const user = this.auth.currentUser;
+    const userDocRef = doc(this.firestore, 'users/${user.uid}')
+    return docData(userDocRef)
+  }
+
 }
