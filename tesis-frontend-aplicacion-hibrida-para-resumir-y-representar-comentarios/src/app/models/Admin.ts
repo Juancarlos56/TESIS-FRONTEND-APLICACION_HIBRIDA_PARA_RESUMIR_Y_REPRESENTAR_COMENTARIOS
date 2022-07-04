@@ -14,8 +14,14 @@ export class Admin implements PerfilInterface{
     edad = null;
     
     //Metodos
-    calcularEdad(){
-        var timeDiff = Math.abs(Date.now() - this.fechaNacimiento);
-        this.age = Math.ceil((timeDiff / (1000 * 3600 * 24)) / 365);
-    } 
+    public calcularEdad():void {
+        const today: Date = new Date();
+        const birthDate: Date = new Date(this.fechaNacimiento);
+        let age: number = today.getFullYear() - birthDate.getFullYear();
+        const month: number = today.getMonth() - birthDate.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        this.edad = age;
+    }
 }
