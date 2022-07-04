@@ -4,7 +4,7 @@ export interface PerfilInterface{
     apellido: String;
     email:String;
     password: String;
-    fechaNacimiento: number;
+    fechaNacimiento: Date;
     uid: string;
     perfil: String;
     direccion : string;

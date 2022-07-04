@@ -11,9 +11,17 @@ export class Usuario implements PerfilInterface{
     perfil= "Usuario";
     direccion = null;
     genero = null;
+    edad = null;
     
     //Metodos
-    calcularEdad(){
-
-    } 
+    public calcularEdad():void {
+        const today: Date = new Date();
+        const birthDate: Date = new Date(this.fechaNacimiento);
+        let age: number = today.getFullYear() - birthDate.getFullYear();
+        const month: number = today.getMonth() - birthDate.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        this.edad = age;
+    }
 }

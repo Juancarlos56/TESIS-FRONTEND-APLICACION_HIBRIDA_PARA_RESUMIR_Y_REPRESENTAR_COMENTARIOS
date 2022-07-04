@@ -132,8 +132,7 @@ export class SingUpPage implements OnInit {
   }
 
   async registrarConGoogle(){
-    const usuario = await GoogleAuth.signIn();
-    console.log('user:', usuario);  
+    const user = this.authService.elPoderosoLOGINCONGOOGLE();
     this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
   }
 
