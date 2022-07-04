@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ElementRef } from '@angular/core';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { GoogleAuthProvider } from 'firebase/auth';
+import { FirestoreService } from '../services/firestore.service';
 
 @Component({
   selector: 'app-sing-up',
@@ -30,7 +31,8 @@ export class SingUpPage implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private firestroreData: FirestoreService
   ) {
     if (!isPlatform('capacitor')){
       GoogleAuth.initialize({
@@ -132,8 +134,11 @@ export class SingUpPage implements OnInit {
   }
 
   async registrarConGoogle(){
-    const user = this.authService.elPoderosoLOGINCONGOOGLE();
-    this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
+    //const user = await this.authService.elPoderosoLOGINCONGOOGLE();
+    this.firestroreData.getUsuarios().subscribe(res =>{
+      console.log(res)
+    })
+    //this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
   }
 
 }
