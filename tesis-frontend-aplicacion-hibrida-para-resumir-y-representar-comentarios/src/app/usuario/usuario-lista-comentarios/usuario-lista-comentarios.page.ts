@@ -24,6 +24,7 @@ export class UsuarioListaComentariosPage implements OnInit {
 
   }
 
+
   listarComentario(){
     const usuarioemail = this.listaService.getUsuarioEmail();
     console.log(usuarioemail)
