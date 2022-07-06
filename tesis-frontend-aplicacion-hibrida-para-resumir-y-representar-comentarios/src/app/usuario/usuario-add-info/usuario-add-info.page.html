@@ -1,50 +1,132 @@
 <ion-app>
   <ion-header class="ion-no-border" collapse="fade">
     <ion-toolbar class="Page-Header">
-      <ion-title class="Log-In" >Unos pasos más</ion-title>
+      <ion-title class="title">Unos pasos más</ion-title>
     </ion-toolbar>
   </ion-header>
-  
+
   <ion-content>
-  
-    <div style="margin-top: 0.5em">
+    <div style="margin-top: 3em">
       <!--Colocar la imagen del restaurante dueno de la aplicacion-->
-      <div  class="redeSociales" >
-        <ion-icon src="../../../assets/icon/sonriendoFace.svg" style="zoom: 15;"></ion-icon>
+      <div class="redeSociales">
+        <ion-icon
+          src="../../../assets/icon/sonriendoFace.svg"
+          style="zoom: 12"
+        ></ion-icon>
       </div>
     </div>
-    
-    <div style="margin-top: 1em">
-      <ion-item-group>
-        <ion-item class="BG">
-          <ion-input
-            class="Email"
-            style="padding-inline-start: 0%"
-            placeholder="Edad"
-            type="edad"
-            [(ngModel)]="edad"
-            required
-          ></ion-input>
-          
-        </ion-item>
-        <ion-item class="BG">
-          <ion-input
-            class="Password"
-            placeholder="Genero"
-            type="Genero"
-            [(ngModel)]="genero"
-            required
-          ></ion-input>
-        </ion-item>
-      
-      </ion-item-group>
-      <ion-button color="loginbutton" class="ButtonLogin" (click)="seguir()"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">A comentar! </span> </ion-button>
-      
-     
+
+    <div style="margin-top: 3em">
+      <form (ngSubmit)="guardarInformacion()" [formGroup]="datos">
+        <ion-item-group>
+          <ion-item class="BG">
+            <ion-input
+              class="nombre"
+              style="padding-inline-start: 0%"
+              placeholder="Nombres"
+              type="text"
+              required
+              formControlName="nombresForm"
+            ></ion-input>
+            <ion-icon
+              name="close-circle-sharp"
+              *ngIf="(nombresForm.dirty || nombresForm.touched) && (nombresForm.errors)"
+            ></ion-icon>
+            <ion-icon
+              name="checkmark-circle-outline"
+              *ngIf="(nombresForm.dirty || nombresForm.touched) && (nombresForm.errors == null)"
+            ></ion-icon>
+          </ion-item>
+
+          <ion-item class="BG">
+            <ion-input
+              class="apellidos"
+              style="padding-inline-start: 0%"
+              placeholder="Apellidos"
+              type="text"
+              required
+              formControlName="apellidosForm"
+            ></ion-input>
+            <ion-icon
+              name="close-circle-sharp"
+              *ngIf="(apellidosForm.dirty || apellidosForm.touched) && (apellidosForm.errors)"
+            ></ion-icon>
+            <ion-icon
+              name="checkmark-circle-outline"
+              *ngIf="(apellidosForm.dirty || apellidosForm.touched) && (apellidosForm.errors == null)"
+            ></ion-icon>
+          </ion-item>
+
+          <ion-item class="BG">
+            <ion-input
+              class="direccion"
+              style="padding-inline-start: 0%"
+              placeholder="Dirección"
+              type="text"
+              required
+              formControlName="direccionForm"
+            ></ion-input>
+            <ion-icon
+              name="close-circle-sharp"
+              *ngIf="(direccionForm.dirty || direccionForm.touched) && (direccionForm.errors)"
+            ></ion-icon>
+            <ion-icon
+              name="checkmark-circle-outline"
+              *ngIf="(direccionForm.dirty || direccionForm.touched) && (direccionForm.errors == null)"
+            ></ion-icon>
+          </ion-item>
+
+          <ion-item class="BG" (click)="showPicker = !showPicker">
+            <ion-label>Fecha de Nacimiento:</ion-label>
+            <ion-text slot="end"> {{formattedString}} </ion-text>
+          </ion-item>
+          <ion-datetime
+            #datatime
+            [value]="dataValue"
+            *ngIf="showPicker"
+            presentation="date"
+            size="cover"
+            (ionChange)="cambiarFecha(datatime.value)"
+            [max]="dataValueTodayMax"
+            (ionCancel)="showPicker=false"
+            style="background-color: white"
+            formControlName="fechaForm"
+          >
+          </ion-datetime>
+          <ion-list class="BG">
+            <ion-item>
+              <ion-select
+                #selectGenero
+                (ionChange)="eleccionGeneroUsuario(selectGenero.value)"
+                cancelText="Cancelar"
+                interface="action-sheet"
+                placeholder="Genero"
+                slot="start"
+                formControlName="generoForm"
+              >
+                <ion-select-option value="Mujeres">Mujeres</ion-select-option>
+                <ion-select-option value="Hombres">Hombres</ion-select-option>
+                <ion-select-option value="lgbtiq+">LGBTIQ+</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-item-group>
+        
+        <ion-button
+          color="loginbutton"
+          class="Comenzar"
+          type="submit"
+          expand="block"
+          [disabled]="!datos.valid"
+          ><span
+            style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold"
+            >A comentar!</span
+          >
+        </ion-button>
+      </form>
     </div>
   </ion-content>
-  
-  
+
   <ion-footer collapse="fade">
     <ion-toolbar>
       <div class="footerDerechosAutor">

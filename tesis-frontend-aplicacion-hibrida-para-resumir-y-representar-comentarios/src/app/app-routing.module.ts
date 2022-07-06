@@ -11,7 +11,6 @@ import { UsuarioMenuPage } from './usuario/usuario-menu/usuario-menu.page';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 const redirectLoggedInToUsuarioInfo = () => redirectLoggedInTo(['usuario-menu']);
-const redirectLoggedInToAdminInfo = () => redirectLoggedInTo(['admin-menu']);
 const redirectRegistroToUserInfo = () => redirectLoggedInTo(['usuario-add-info']);
 
 const routes: Routes = [
@@ -91,7 +90,6 @@ const routes: Routes = [
     path: 'admin-menu',
     component: AdminMenuPage,
     children:[
-
       {
         path: 'admin-resumen',
         loadChildren: () => import('./admin/admin-resumen/admin-resumen.module').then( m => m.AdminResumenPageModule),
@@ -111,9 +109,15 @@ const routes: Routes = [
         path: 'admin-perfil',
         loadChildren: () => import('./admin/admin-perfil/admin-perfil.module').then( m => m.AdminPerfilPageModule),
         ...canActivate(redirectUnauthorizedToLogin)
-      }
+      },
+      {
+        path: '',
+        redirectTo: 'admin-perfil',
+        pathMatch: 'prefix'
+      },
     ]
-  }
+  },
+  
 
 ];
 

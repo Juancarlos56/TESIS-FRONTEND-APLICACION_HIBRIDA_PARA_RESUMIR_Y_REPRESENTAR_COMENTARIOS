@@ -67,7 +67,13 @@ export class LoginPagePage implements OnInit {
     await loading.dismiss();
  
     if (user) {
-      this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
+      //Inicio de secion para Admin
+      if(user.user.uid == 'k98iqZcvpCakwvYBuPIGXHK1AHJ3'){
+        this.router.navigateByUrl('/admin-menu/admin-perfil', { replaceUrl: true });
+      }else{
+        //sesion para Usuario
+        this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
+      }
     } else {
       this.showAlert('Login fallido', 'Por favor intente de nuevo!');
     }

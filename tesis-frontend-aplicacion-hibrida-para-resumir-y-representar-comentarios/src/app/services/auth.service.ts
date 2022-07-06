@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { doc, Firestore, docData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { PerfilInterface } from '../models/UserInterface';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -139,8 +140,7 @@ export class AuthService {
   
   getUserProfile(){
     const user = this.auth.currentUser;
-    const userDocRef = doc(this.firestore, 'users/${user.uid}')
-    return docData(userDocRef)
+    return user;
   }
 
 }
