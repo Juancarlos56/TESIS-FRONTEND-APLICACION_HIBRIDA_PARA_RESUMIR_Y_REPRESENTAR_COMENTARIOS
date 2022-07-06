@@ -1,18 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection, docData, doc, addDoc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, docData} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { PerfilInterface } from '../models/UserInterface';
 import { Usuario } from '../models/Usuario';
+import { Auth } from '@angular/fire/auth';
+import { Storage, StorageReference } from '@angular/fire/storage';
+import { addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+
+
+export interface Note{
+    //Atributos 
+    id?: String;
+    correo_comentario:String
+    title: String;
+    text:String;
+
+}
 
 @Injectable({
   providedIn: 'root'
 })
+ 
 export class FirestoreService {
 
-  constructor(private database: Firestore) { 
+  constructor(
+    private firestore : Firestore,
+    private storage: Storage,
+    private auth: Auth,
+    private database: Firestore
+  ) { }
 
-  }
-  
   getUsuarios():Observable<PerfilInterface[]>{
     const userCollection = collection(this.database, 'users');
     return collectionData(userCollection, {idField:'id'}) as Observable<PerfilInterface[]>;
@@ -41,5 +58,49 @@ export class FirestoreService {
     return addDoc(userCollectionRef, userJson);
   }
 
-}
+  getUsuario(){
+    const user = this.auth.currentUser;
+    const usercorreo = this.auth.currentUser.email;
+    const userDocRef = doc(this.firestore, 'users/${user.uid}');
+    return docData(userDocRef)
+  }
+
+  getUsuarioEmail(){
+    const user = this.auth.currentUser.email;
+    return user
+  }
+
+
+  async agregarComentario(comentario:String){
+    const user = this.auth.currentUser;
+    const path= 'Comentario/Comentario/'
+  }
+
+
+  getNotes(){
+    const notesRef = collection(this.firestore, 'Comentario');
+    return collectionData(notesRef);
+  }
+
+  getNotesById(id):Observable<Note>{
+    const noteDocRef = doc(this.firestore, `Comentario/${id}`);
+    return docData(noteDocRef, {idField:'id'}) as Observable<Note>
+  }
+
+  addNote(note:Note){
+    const notesRef = collection(this.firestore, 'Comentario');
+    return addDoc(notesRef, note)
+  }
+
+  deleteNote(note:Note){
+    const noteDocRef = doc(this.firestore, `Comentario/${note.id}`);
+    return deleteDoc(noteDocRef);
+  }
+
+  updateNote(note:Note){
+    const noteDocRef = doc(this.firestore, 'Comentario/${note.id}');
+    return updateDoc(noteDocRef, {})
+  }
+
+  }
   
