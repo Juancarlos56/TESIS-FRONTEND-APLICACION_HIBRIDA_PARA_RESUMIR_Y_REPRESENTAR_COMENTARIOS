@@ -26,6 +26,8 @@ export class UsuarioAddInfoPage implements OnInit {
   selectedMode = 'date';
   public userAccount = null;
 
+
+
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
@@ -33,7 +35,7 @@ export class UsuarioAddInfoPage implements OnInit {
     private router: Router,
     private alertController: AlertController
   ) {
-    this.setToday();
+    this.setToday()
   }
 
   setToday() {

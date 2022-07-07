@@ -1,20 +1,49 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Listar datos JSON
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-app>
+  <ion-header class="ion-no-border" collapse="fade">
+    <ion-toolbar class="Page-Header">
+      <ion-title class="Log-In" >COMENTARIOS</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+  
+    <div >
+      <!--Colocar la imagen del restaurante dueno de la aplicacion-->
+      <div  class="redeSociales" >
+        <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:15.0;"></ion-icon>
+      </div>
+    </div>
 
-<ion-content>
-  <div class="ion-padding">
-    <ion-button (click)="onClickDescargarDatos()">
-      Descargar datos
-    </ion-button>
-    <ion-list>
-      <ion-item *ngFor="let tarea of tareas"> 
-        <p>{{ tarea.title }}</p>
-      </ion-item>
-    </ion-list>
-  </div>
-</ion-content>
+    <div>
+      <ion-list>
+          <ion-card *ngFor = "let note of notes" (click)="listarComentario(note)" >
+            <ion-card-header>
+              <ion-card-subtitle>Fecha: 7/5/2022</ion-card-subtitle>
+              <ion-card-subtitle>Tipo: {{note.tipo_comentario}}</ion-card-subtitle>
+              <ion-card-title> Resumen:{{note.resumen_comentario}}</ion-card-title>
+            </ion-card-header>
+          
+           
+            <ion-card-content>
+                {{note.comentario_completo}}
+            </ion-card-content>
+
+          </ion-card>
+      </ion-list>
+    </div>
+
+
+
+  </ion-content>
+  
+  
+  <ion-footer collapse="fade">
+    <ion-toolbar>
+      <div class="footerDerechosAutor">
+        <ion-label class="derechosAutor">
+          &#169; 2022 Todos los derechos reservados | Developed by JB & KB
+        </ion-label>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+</ion-app>

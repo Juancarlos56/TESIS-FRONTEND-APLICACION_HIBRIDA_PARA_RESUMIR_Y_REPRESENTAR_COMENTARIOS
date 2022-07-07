@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Auth } from '@angular/fire/auth';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { ResumenServiceService } from 'src/app/services/resumen-service.service';
+
+
+
 
 @Component({
   selector: 'app-usuario-comentario',
@@ -7,42 +14,106 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./usuario-comentario.page.scss'],
 })
 export class UsuarioComentarioPage implements OnInit {
+  
+  value = "hhhhhhhhh";
+  public comentario1=""
+  comen: FormGroup;
 
-  public descripcion = "";
-  iud: string = null
-  correoU: string = null
-  constructor(private authService: AuthService) { }
+  constructor(private fbb: FormBuilder,
+              private auth: Auth,
+              private resumen : ResumenServiceService,
+              private alertController: AlertController,
+              private router: Router,
+              private loadingCtrl: LoadingController
+    ) 
+    {
+
+    }
 
 
+  get comentario(){
+        return this.comen.get('comentario');
+  }  
+  
+      
+           
   ngOnInit() {
    // this.authService.stateUser().subscribe(res =>{
      // console.log('estado', res)
     //})
-    this.getUid();
-    this.creaComentario
+    this.comen = this.fbb.group(
+      {
+        comentario: ['', [Validators.required, Validators.minLength(3)]]      }
+    );
   }
 
-  async getUid (){
-    const iud =  await this.authService.getUid();
-    if(iud){
-        this.iud = iud
-        console.log('uide', this.iud)
+ 
+    
+  
 
-    }else {
-      console.log('no existe')
-    }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Estamos creando tu comentario,  3 segundos...',
+      duration: 7000
+    });
+    
+    loading.present();
   }
 
-  async creaComentario (){
-    const correo = await this.authService.getCorreo();
-    if(correo){
-      this.correoU = correo
-      console.log('correo', this.iud)
 
-  }else {
-    console.log('no existe')
+  async guadarComentario(){
+
+    const user = this.auth.currentUser;
+    const usercorreo = this.auth.currentUser.email;
+    const comentarioValor = this.comentario.value;
+    this.resumen.tipoComentarioApiRest(comentarioValor).then(async res=>{
+      const response= await this.resumen.guardarComentario( usercorreo, comentarioValor, res.label);
+      if (response=='True') {
+        this.showAlertGuardaComentario('Comentario Guardado','Sigue agregando más comentarios');
+      } else {
+        this.showAlert('Comentario Fallido', 'Por favor, Intente de nuevo!');
+      }  
+    })
+    
+    //const tipo_comentario= "Malo";
+    /*
+    const response= await this.resumen.guardarComentario( usercorreo, comentarioValor, tipo_comentario);
+    if (response=='True') {
+      this.showAlertGuardaComentario('Comentario Guardado','Sigue agregando más comentarios');
+    } else {
+      this.showAlert('Comentario Fallido', 'Por favor, Intente de nuevo!');
+    }*/
   }
-  }
+
+  async showAlert(header, message) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+
+  }  
+
+  async showAlertGuardaComentario(header, message){
+
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+
+    });
+
+    await alert.present();
+    //this.router.navigateByUrl('/usuario-menu/usuario-comentario', { replaceUrl: true });
+    this.comen = this.fbb.group(
+      {
+        comentario: ['', [Validators.required, Validators.minLength(3)]]      }
+    );
+
+  }  
+  
 
 
 }

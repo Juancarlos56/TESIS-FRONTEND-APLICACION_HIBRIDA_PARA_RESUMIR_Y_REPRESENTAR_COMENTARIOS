@@ -1,8 +1,100 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>adminPerfil</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-app>
+  <ion-header>
+    <ion-toolbar class="Page-Header">
+      <div class="Rectangle-239">
+        <div class="logoInicio">
+
+          <ion-title class="title">Perfil Administrador</ion-title>
+          <ion-icon src="../../../assets/icon/sushi.svg" class="Ellipse-6" slot="end"></ion-icon>
+        </div>
+
+      </div>
+    </ion-toolbar>
+
+  </ion-header>
+
+
+
+  <ion-content>
+
+    <div>
+      <!--Colocar la imagen del restaurante dueno de la aplicacion-->
+      <div class="redeSociales">
+        <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:15.0;"></ion-icon>
+      </div>
+    </div>
+
+    <div>
+
+      <form (ngSubmit)="cargarResumenFechas()" [formGroup]="datos">
+
+        <ion-item class="BG" (click)="showPickerInicio = !showPickerInicio">
+          <ion-label>Fecha Inicio:</ion-label>
+          <ion-text slot="end"> {{formattedStringInicio}} </ion-text>
+        </ion-item>
+        <ion-datetime #datatimeInicio [value]="dataValue" *ngIf="showPickerInicio" presentation="date" size="cover"
+          (ionChange)="cambiarFechaInicio(datatimeInicio.value)" [max]="dataValueTodayMax"
+          (ionCancel)="showPickerInicio=false" style="background-color: white" formControlName="fechaInicioForm">
+        </ion-datetime>
+
+        <ion-item class="BG" (click)="showPickerFin = !showPickerFin">
+          <ion-label>Fecha Fin:</ion-label>
+          <ion-text slot="end"> {{formattedStringFin}} </ion-text>
+        </ion-item>
+        <ion-datetime #datatimeFin [value]="dataValue" *ngIf="showPickerFin" presentation="date" size="cover"
+          (ionChange)="cambiarFechaFin(datatimeFin.value)" [max]="dataValueTodayMax" (ionCancel)="showPickerFin=false"
+          style="background-color: white" formControlName="fechaFinForm">
+        </ion-datetime>
+
+        <ion-button color="loginbutton" class="BG" type="submit" expand="block" [disabled]="!datos.valid"><span
+            style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold">Ver Comentarios</span>
+        </ion-button>
+      </form>
+    </div>
+
+
+    <div>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let note of notes">
+            <div>
+              <ion-list>
+                <ion-card style="height: 150px ;max-height: 200px; min-width: 300px;">
+                  <ion-card-header>
+                    <ion-card-subtitle>Fecha: 7/5/2022</ion-card-subtitle>
+                    <ion-card-subtitle>Tipo: {{note.tipo_comentario}}</ion-card-subtitle>
+                    <ion-card-title>Resumen:{{note.resumen_comentario}} </ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content>
+                  </ion-card-content>
+
+                </ion-card>
+              </ion-list>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+
+
+
+  </ion-content>
+
+
+  <ion-footer collapse="fade">
+    <ion-toolbar>
+      <div class="footerDerechosAutor">
+        <ion-label class="derechosAutor">
+          &#169; 2022 Todos los derechos reservados | Developed by JB & KB
+        </ion-label>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+</ion-app>
+
+<!--
+
 
 
 <ion-card>
@@ -26,3 +118,4 @@
     <ion-label>Card Button Item 2</ion-label>
   </ion-item>
 </ion-card>
+-->
