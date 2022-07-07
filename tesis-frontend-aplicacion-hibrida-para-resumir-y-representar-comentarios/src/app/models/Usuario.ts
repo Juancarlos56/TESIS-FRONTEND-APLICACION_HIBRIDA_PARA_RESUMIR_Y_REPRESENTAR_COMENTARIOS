@@ -5,7 +5,6 @@ export class Usuario implements PerfilInterface{
     nombres = null;
     apellido = null;
     email=null;
-    password= null;
     fechaNacimiento= null;
     uid= null;
     perfil= "Usuario";

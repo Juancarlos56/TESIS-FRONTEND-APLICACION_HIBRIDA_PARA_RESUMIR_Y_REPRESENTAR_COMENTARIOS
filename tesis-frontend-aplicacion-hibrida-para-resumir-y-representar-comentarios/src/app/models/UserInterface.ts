@@ -3,7 +3,6 @@ export interface PerfilInterface{
     nombres: String;
     apellido: String;
     email:String;
-    password: String;
     fechaNacimiento: Date;
     uid: string;
     perfil: String;

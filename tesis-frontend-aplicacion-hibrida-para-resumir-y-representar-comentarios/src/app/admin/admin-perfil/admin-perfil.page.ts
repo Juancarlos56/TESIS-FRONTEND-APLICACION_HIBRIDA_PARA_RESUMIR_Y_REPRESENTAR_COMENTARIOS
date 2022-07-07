@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AdminPerfilPage implements OnInit {
 
   constructor() { }
-
+  varsssd = ''
   ngOnInit() {
   }
 

@@ -17,8 +17,6 @@ import { FirestoreService } from '../services/firestore.service';
 export class SingUpPage implements OnInit {
 
   public datos: FormGroup;
-  public nombres:string = "";
-  public apellidos = "";
   public passwordValidacion = "";
   public password = "";
   public email = "";
@@ -28,11 +26,9 @@ export class SingUpPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private loadingController: LoadingController,
     private alertController: AlertController,
     private authService: AuthService,
-    private router: Router,
-    private firestroreData: FirestoreService
+    private router: Router
   ) {
     if (!isPlatform('capacitor')){
       GoogleAuth.initialize({
@@ -51,8 +47,6 @@ export class SingUpPage implements OnInit {
         emailForm: ['', [Validators.required, Validators.email]],
         passwordForm: ['',[Validators.required, Validators.minLength(8)]],
         passwordValidacionForm: ['',[Validators.required, Validators.minLength(8)]], 
-        nombresForm: ['',[Validators.required, Validators.maxLength(20), Validators.minLength(3)]], 
-        apellidosForm: ['',[Validators.required, Validators.maxLength(20), Validators.minLength(3)]], 
       }
     );
   }
@@ -113,7 +107,7 @@ export class SingUpPage implements OnInit {
   
     const user = await this.authService.register(this.email, this.password);
     if (user) {
-      this.router.navigateByUrl('/usuario-menu/usuario-add-info', { replaceUrl: true });
+      this.router.navigateByUrl('/usuario-add-info', { replaceUrl: true });
     } else {
       this.showAlert('Registro Fallido', 'Por favor, Intente de nuevo!');
     }
@@ -134,11 +128,8 @@ export class SingUpPage implements OnInit {
   }
 
   async registrarConGoogle(){
-    //const user = await this.authService.elPoderosoLOGINCONGOOGLE();
-    this.firestroreData.getUsuarios().subscribe(res =>{
-      console.log(res)
-    })
-    //this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
+    await this.authService.registrarConGoogle();
+    //this.router.navigateByUrl('usuario-add-info', { replaceUrl: true });
   }
 
 }

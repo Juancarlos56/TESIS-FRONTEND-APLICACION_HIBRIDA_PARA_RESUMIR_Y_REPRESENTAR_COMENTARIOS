@@ -12,7 +12,11 @@ export const environment = {
     apiKey: 'AIzaSyB5Kv8v_DpH6GeMEeHcmExz4o0P-8OFjoU',
     authDomain: 'aplicacion-resumen-comentarios.firebaseapp.com',
     messagingSenderId: '973370360772',
-  }
+  },
+  //WS_PATH : 'http://172.16.221.49:8080/api/'
+
+  WS_PATH : 'http://192.168.100.184:8080/api/'
+
 };
 
 /*

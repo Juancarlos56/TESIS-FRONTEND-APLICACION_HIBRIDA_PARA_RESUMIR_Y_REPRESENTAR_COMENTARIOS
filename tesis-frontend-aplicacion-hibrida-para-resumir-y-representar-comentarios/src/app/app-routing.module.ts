@@ -10,8 +10,10 @@ import { UsuarioMenuPage } from './usuario/usuario-menu/usuario-menu.page';
 
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
-const redirectLoggedInToUsuarioInfo = () => redirectLoggedInTo(['usuario-menu/usuario-perfil']);
-const redirectLoggedInToAdminInfo = () => redirectLoggedInTo(['admin-menu']);
+const redirectLoggedInToUsuarioInfo = () => redirectLoggedInTo(['usuario-menu']);
+const redirectLoggedInToAmdinUsuario = () => redirectLoggedInTo(['admin-menu']);
+
+const redirectRegistroToUserInfo = () => redirectLoggedInTo(['usuario-add-info']);
 
 const routes: Routes = [
   {
@@ -27,7 +29,7 @@ const routes: Routes = [
 
   {
     path: 'sing-up',
-    loadChildren: () => import('./sing-up/sing-up.module').then( m => m.SingUpPageModule)
+    loadChildren: () => import('./sing-up/sing-up.module').then( m => m.SingUpPageModule),...canActivate(redirectRegistroToUserInfo)
   },
 
   {
@@ -36,7 +38,11 @@ const routes: Routes = [
     ...canActivate(redirectLoggedInToUsuarioInfo)
   },
 
-
+  {
+    path: 'usuario-add-info',
+    loadChildren: () => import('./usuario/usuario-add-info/usuario-add-info.module').then( m => m.UsuarioAddInfoPageModule),
+    ...canActivate(redirectUnauthorizedToLogin) 
+  },
 
   {
     path: 'usuario-menu',
@@ -56,11 +62,6 @@ const routes: Routes = [
       {
         path: 'usuario-comentario',
         loadChildren: () => import('./usuario/usuario-comentario/usuario-comentario.module').then( m => m.UsuarioComentarioPageModule),
-        ...canActivate(redirectUnauthorizedToLogin) 
-      },
-      {
-        path: 'usuario-add-info',
-        loadChildren: () => import('./usuario/usuario-add-info/usuario-add-info.module').then( m => m.UsuarioAddInfoPageModule),
         ...canActivate(redirectUnauthorizedToLogin) 
       },
       {
@@ -91,7 +92,6 @@ const routes: Routes = [
     path: 'admin-menu',
     component: AdminMenuPage,
     children:[
-
       {
         path: 'admin-resumen',
         loadChildren: () => import('./admin/admin-resumen/admin-resumen.module').then( m => m.AdminResumenPageModule),
@@ -111,9 +111,15 @@ const routes: Routes = [
         path: 'admin-perfil',
         loadChildren: () => import('./admin/admin-perfil/admin-perfil.module').then( m => m.AdminPerfilPageModule),
         ...canActivate(redirectUnauthorizedToLogin)
-      }
+      },
+      {
+        path: '',
+        redirectTo: 'admin-perfil',
+        pathMatch: 'prefix'
+      },
     ]
-  }
+  },
+  
 
 ];
 

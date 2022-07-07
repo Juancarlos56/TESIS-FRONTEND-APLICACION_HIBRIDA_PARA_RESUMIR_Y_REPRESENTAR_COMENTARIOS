@@ -7,13 +7,37 @@
   
   <ion-content>
   
-    <div style="margin-top: 0.5em">
+    <div >
       <!--Colocar la imagen del restaurante dueno de la aplicacion-->
       <div  class="redeSociales" >
-        <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:17.0;"></ion-icon>
+        <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:15.0;"></ion-icon>
       </div>
     </div>
-    
+
+    <div >
+      
+      <form (ngSubmit)="guadarComentario()" [formGroup]="comen">
+      
+     
+          <ion-item class="BG">
+            <ion-textarea
+            #textComment
+            style="padding-inline-start: 0%"
+            placeholder="Añade un comentario"
+            type="text"
+            formControlName="comentario"
+            required
+            [value]="comentario1"
+            style="height: 150px; margin-left: 5%;"
+          ></ion-textarea>
+          <ion-note slot="error" *ngIf="(comentario.dirty || comentario.touched) && comentario.errors">no es Valido</ion-note>
+         </ion-item>
+         <ion-button color="loginbutton" class="ButtonLogin" (click)="showLoading()"   type="submit" [disabled]="!comen.valid"><span style=" color: #f6f6f6; font-size: 20px; font-family: Inter-Bold ">Agregar comentario</span> </ion-button>
+
+        </form>
+       
+      
+    </div>
   
   </ion-content>
   

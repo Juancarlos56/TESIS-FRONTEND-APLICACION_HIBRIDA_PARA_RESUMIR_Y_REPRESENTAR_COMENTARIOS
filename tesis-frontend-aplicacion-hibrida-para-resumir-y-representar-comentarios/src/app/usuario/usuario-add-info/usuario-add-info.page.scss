@@ -3,9 +3,9 @@
     margin-top: 1em;
 }
 
-.Log-In {
+.title {
     font-family: Inter-Bold !important;
-    font-size: 27px;
+    font-size: 24px;
     font-weight: 600;
     font-stretch: normal;
     font-style: normal;
@@ -13,12 +13,23 @@
     letter-spacing: normal;
     text-align: center;
     color: #767676;
+    
+}
+
+.Comenzar {
+  margin:  2em 2.25em 0.5em 2.25em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  border-radius: 100px;
 }
 
 .BG {
     //arriba - derecha - abajo - izquierda
     //margin: 44px 30px 18px 30px;
-    margin: 1.0em 1.5em 1.25em 1.0em;
+    margin: 1.0em 1.75em 1.25em 1.75em;
     height: 50px !important;
     min-height: 30px;
     max-height: 100px;
@@ -26,7 +37,6 @@
     border-radius: 15px;
     background-color: #f6f6f6;
 }
-
 
 .Email {
     font-weight: 500;
@@ -36,6 +46,11 @@
     letter-spacing: normal;
     text-align: left;
 }
+
+.fechaNac {
+  
+}
+
 
 .Password {
     font-weight: 500;

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { doc, Firestore, docData } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
+import { PerfilInterface } from '../models/UserInterface';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -24,7 +26,7 @@ export class AuthService {
 
   public providerG = new GoogleAuthProvider();
 
-  constructor(private auth: Auth, private firestore: Firestore) {
+  constructor(private router: Router,private auth: Auth, private firestore: Firestore) {
 
   }
 
@@ -62,7 +64,6 @@ export class AuthService {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        return user;
       })
       .catch((error) => {
         // Handle Errors here.
@@ -74,6 +75,23 @@ export class AuthService {
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
+  }
+
+  async  registrarConGoogle() {
+    signInWithRedirect(this.auth, this.providerG);
+    getRedirectResult(this.auth)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+      
   }
   
   async register(email, password) {
@@ -99,7 +117,8 @@ export class AuthService {
   }
 
   logout() {
-    return signOut(this.auth);
+   return this.auth.signOut();
+
   }
 
   async getUid() {
@@ -122,8 +141,7 @@ export class AuthService {
   
   getUserProfile(){
     const user = this.auth.currentUser;
-    const userDocRef = doc(this.firestore, 'users/${user.uid}')
-    return docData(userDocRef)
+    return user;
   }
 
 }
