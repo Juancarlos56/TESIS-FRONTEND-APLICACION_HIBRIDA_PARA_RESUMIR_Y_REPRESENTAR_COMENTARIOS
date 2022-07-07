@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { ResumenServiceService } from 'src/app/services/resumen-service.service';
 @Component({
@@ -10,18 +11,34 @@ export class UsuarioListaComentariosPage implements OnInit {
 
   notes = []
   constructor(private listaService : FirestoreService,
-              private resumenService: ResumenServiceService) { }
+              private resumenService: ResumenServiceService,
+              private loadingCtrl: LoadingController) { }
 
 
   ngOnInit() {
    
-    this.listarComentario();
+    this.listaService.getNotes().subscribe(
+      res=>{
+
+        console.log(res);
+        this.notes = res;
+      }
+    )
   }
 
   async listarComentarioService(){
     const usercorreo = this.listaService.getUsuarioEmail();
     const response= await this.resumenService.listarComentariosUsuario(usercorreo);
 
+  }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Estamos creando tu comentario,  3 segundos...',
+      duration: 6000
+    });
+    
+    loading.present();
   }
 
 
@@ -32,7 +49,7 @@ export class UsuarioListaComentariosPage implements OnInit {
       res=>{
 
         console.log(res);
-      
+        this.notes = res;
       }
     )
 

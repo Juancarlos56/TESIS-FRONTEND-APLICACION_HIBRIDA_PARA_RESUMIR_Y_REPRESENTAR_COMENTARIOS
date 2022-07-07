@@ -11,6 +11,8 @@ import { UsuarioMenuPage } from './usuario/usuario-menu/usuario-menu.page';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 const redirectLoggedInToUsuarioInfo = () => redirectLoggedInTo(['usuario-menu']);
+const redirectLoggedInToAmdinUsuario = () => redirectLoggedInTo(['admin-menu']);
+
 const redirectRegistroToUserInfo = () => redirectLoggedInTo(['usuario-add-info']);
 
 const routes: Routes = [

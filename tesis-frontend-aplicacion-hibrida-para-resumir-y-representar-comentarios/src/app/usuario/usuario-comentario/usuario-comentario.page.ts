@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { ResumenServiceService } from 'src/app/services/resumen-service.service';
 
 
@@ -15,15 +15,16 @@ import { ResumenServiceService } from 'src/app/services/resumen-service.service'
 })
 export class UsuarioComentarioPage implements OnInit {
   
-  value = "";
-  comentario1=""
+  value = "hhhhhhhhh";
+  public comentario1=""
   comen: FormGroup;
 
   constructor(private fbb: FormBuilder,
               private auth: Auth,
               private resumen : ResumenServiceService,
               private alertController: AlertController,
-              private router: Router
+              private router: Router,
+              private loadingCtrl: LoadingController
     ) 
     {
 
@@ -51,22 +52,38 @@ export class UsuarioComentarioPage implements OnInit {
   
 
 
-  
-
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Estamos creando tu comentario,  3 segundos...',
+      duration: 7000
+    });
+    
+    loading.present();
+  }
 
 
   async guadarComentario(){
+
     const user = this.auth.currentUser;
     const usercorreo = this.auth.currentUser.email;
     const comentarioValor = this.comentario.value;
-    const tipo_comentario= "Malo";
-
+    this.resumen.tipoComentarioApiRest(comentarioValor).then(async res=>{
+      const response= await this.resumen.guardarComentario( usercorreo, comentarioValor, res.label);
+      if (response=='True') {
+        this.showAlertGuardaComentario('Comentario Guardado','Sigue agregando más comentarios');
+      } else {
+        this.showAlert('Comentario Fallido', 'Por favor, Intente de nuevo!');
+      }  
+    })
+    
+    //const tipo_comentario= "Malo";
+    /*
     const response= await this.resumen.guardarComentario( usercorreo, comentarioValor, tipo_comentario);
     if (response=='True') {
       this.showAlertGuardaComentario('Comentario Guardado','Sigue agregando más comentarios');
     } else {
       this.showAlert('Comentario Fallido', 'Por favor, Intente de nuevo!');
-    }
+    }*/
   }
 
   async showAlert(header, message) {
@@ -76,6 +93,7 @@ export class UsuarioComentarioPage implements OnInit {
       buttons: ['OK'],
     });
     await alert.present();
+
   }  
 
   async showAlertGuardaComentario(header, message){
@@ -88,7 +106,11 @@ export class UsuarioComentarioPage implements OnInit {
     });
 
     await alert.present();
-    this.router.navigateByUrl('/usuario-menu/usuario-comentario', { replaceUrl: true });
+    //this.router.navigateByUrl('/usuario-menu/usuario-comentario', { replaceUrl: true });
+    this.comen = this.fbb.group(
+      {
+        comentario: ['', [Validators.required, Validators.minLength(3)]]      }
+    );
 
   }  
   

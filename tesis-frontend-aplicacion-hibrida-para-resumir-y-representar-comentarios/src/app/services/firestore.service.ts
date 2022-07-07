@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 import { PerfilInterface } from '../models/UserInterface';
 import { Usuario } from '../models/Usuario';
 import { Auth } from '@angular/fire/auth';
-import { Storage, StorageReference } from '@angular/fire/storage';
+import { Storage,ref } from '@angular/fire/storage';
 import { addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { getDownloadURL } from '@angular/fire/storage';
 
 
 export interface Note{
@@ -35,9 +36,9 @@ export class FirestoreService {
     return collectionData(userCollection, {idField:'id'}) as Observable<PerfilInterface[]>;
   }
 
-  getUsuarioByID(id):Observable<PerfilInterface>{
-    const userCollectionRef = doc(this.database, 'users/${id}');
-    return docData(userCollectionRef, {idField:'id'}) as Observable<PerfilInterface>;
+  getUsuarioByID(uid):Observable<PerfilInterface>{
+    const userCollectionRef = doc(this.database, 'users/${uid}');
+    return docData(userCollectionRef, {idField:'uid'}) as Observable<PerfilInterface>;
   }
 
   addUsuario(user: Usuario){
@@ -59,10 +60,9 @@ export class FirestoreService {
   }
 
   getUsuario(){
-    const user = this.auth.currentUser;
+    const user = this.auth.currentUser.uid;
     const usercorreo = this.auth.currentUser.email;
-    const userDocRef = doc(this.firestore, 'users/${user.uid}');
-    return docData(userDocRef)
+    return user
   }
 
   getUsuarioEmail(){
@@ -100,6 +100,16 @@ export class FirestoreService {
   updateNote(note:Note){
     const noteDocRef = doc(this.firestore, 'Comentario/${note.id}');
     return updateDoc(noteDocRef, {})
+  }
+
+   traerImagenesStorage(){
+    const user = this.auth.currentUser.uid;
+    const path = `images/edades/edadesUsuariosApp.png`
+    const storageRef = ref(this.storage, path)
+    
+    const imagenUrl = getDownloadURL(storageRef);
+    console.log(imagenUrl)
+    return imagenUrl;
   }
 
   }

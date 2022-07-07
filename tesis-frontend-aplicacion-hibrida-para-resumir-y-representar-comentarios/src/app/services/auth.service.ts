@@ -117,7 +117,8 @@ export class AuthService {
   }
 
   logout() {
-    return signOut(this.auth);
+   return this.auth.signOut();
+
   }
 
   async getUid() {
