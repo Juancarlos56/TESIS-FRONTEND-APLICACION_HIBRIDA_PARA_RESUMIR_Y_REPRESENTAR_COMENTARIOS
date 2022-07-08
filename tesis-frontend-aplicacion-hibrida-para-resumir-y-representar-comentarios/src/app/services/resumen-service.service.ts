@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { Http, HttpOptions, HttpResponse } from '@capacitor-community/http';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })

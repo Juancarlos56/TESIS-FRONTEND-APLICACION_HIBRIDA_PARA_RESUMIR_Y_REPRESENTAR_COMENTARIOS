@@ -1,4 +1,4 @@
-
+<ion-app>
 <ion-header>
   <ion-toolbar class="Page-Header">
     <div class="Rectangle-239">
@@ -17,7 +17,86 @@
 </ion-header>
 
 <ion-content>
+
   <div>
-    <canvas id="myChart" width="400" height="400"></canvas>
-   </div>
+    <!--Colocar la imagen del restaurante dueno de la aplicacion-->
+    <div class="redeSociales">
+      <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:15.0;"></ion-icon>
+    </div>
+  </div>
+
+  <div>
+
+    
+  </div>
+
+
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            
+            <ion-list>
+
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
+                  <ion-card-title>Resumen Total</ion-card-title>
+                </ion-card-header>
+              
+                <ion-card-content>
+                  <img [src]="imagenKeywords3" style="zoom:1.0;"/>
+                </ion-card-content>
+              </ion-card>
+                
+
+                <ion-card>
+                  <ion-card-header>
+                    <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
+                    <ion-card-title>Comentarios Positivos</ion-card-title>
+                  </ion-card-header>
+                
+                  <ion-card-content>
+                    <img [src]="imagenKeywords1" style="zoom:1.0;"/>
+                  </ion-card-content>
+                </ion-card>
+
+            </ion-list>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  
+
+
+  <div>
+    
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
+        <ion-card-title>Rango de Fecha</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <img [src]="imagenKeywords2" style="zoom:1.0;"/>
+      </ion-card-content>
+    </ion-card>
+
+    
+  </div>
 </ion-content>
+
+
+<ion-footer collapse="fade">
+  <ion-toolbar>
+    <div class="footerDerechosAutor">
+      <ion-label class="derechosAutor">
+        &#169; 2022 Todos los derechos reservados | Developed by JB & KB
+      </ion-label>
+    </div>
+  </ion-toolbar>
+</ion-footer>
+</ion-app>

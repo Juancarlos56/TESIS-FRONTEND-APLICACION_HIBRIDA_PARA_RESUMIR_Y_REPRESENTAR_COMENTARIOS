@@ -1,17 +1,81 @@
+<ion-app>
+  
 <ion-header>
-  <ion-toolbar class="Page-Header">
     <div class="Rectangle-239">
       <div class="logoInicio">
         
         <ion-title class="title">Perfil Administrador</ion-title>
         <ion-icon src="../../../assets/icon/sushi.svg" class="Ellipse-6" slot="end"></ion-icon>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+
       </div>
       
     </div>
-  </ion-toolbar>
+  
    
 </ion-header>
 
 <ion-content>
 
+  <div>
+    <!--Colocar la imagen del restaurante dueno de la aplicacion-->
+    <div class="redeSociales">
+      <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:15.0;"></ion-icon>
+    </div>
+  </div>
+
+  <div>
+
+    <ion-list>        
+           
+      <ion-item class="BG"> 
+        <ion-label               class="nombre"        >N-Gramas</ion-label>
+        <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+          <ion-select-option value="1grama">1-Grama</ion-select-option>
+          <ion-select-option value="2grama">2-Grama</ion-select-option>
+          <ion-select-option value="3grama">3-Grama</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item class="BG">
+        <ion-label               class="nombre"        >Lista de palabras (10)</ion-label>
+        <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+          <ion-select-option value="3">3</ion-select-option>
+          <ion-select-option value="4">4</ion-select-option>
+          <ion-select-option value="5">5</ion-select-option>
+          <ion-select-option value="6">6</ion-select-option>
+          <ion-select-option value="7">7</ion-select-option>
+          <ion-select-option value="8">8</ion-select-option>
+          <ion-select-option value="9">9</ion-select-option>
+          <ion-select-option value="10">10</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+   
+
+  </div>
+
+
+
+    <div class="chart-container">
+      <canvas id="linearChar"></canvas>
+    </div>
+
+  
+   
+  
+
+   
+
 </ion-content>
+<ion-footer collapse="fade">
+  <ion-toolbar>
+    <div class="footerDerechosAutor">
+      <ion-label class="derechosAutor">
+        &#169; 2022 Todos los derechos reservados | Developed by JB & KB
+      </ion-label>
+    </div>
+  </ion-toolbar>
+</ion-footer>
+</ion-app>
