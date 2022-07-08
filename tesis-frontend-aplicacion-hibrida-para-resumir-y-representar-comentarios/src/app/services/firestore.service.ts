@@ -104,7 +104,7 @@ export class FirestoreService {
 
    traerImagenesStorage(){
     const user = this.auth.currentUser.uid;
-    const path = `images/edades/edadesUsuariosApp.png`
+    const path = `images/nubePalabras/topPalabrasMasImportantesComentarioBy-very positive.png`
     const storageRef = ref(this.storage, path)
     
     const imagenUrl = getDownloadURL(storageRef);
