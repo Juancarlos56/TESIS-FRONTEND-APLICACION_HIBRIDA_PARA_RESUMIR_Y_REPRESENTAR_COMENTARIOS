@@ -102,9 +102,9 @@ export class FirestoreService {
     return updateDoc(noteDocRef, {})
   }
 
-   traerImagenesStorage(){
+   traerImagenesStorage(urlI){
     const user = this.auth.currentUser.uid;
-    const path = `images/nubePalabras/topPalabrasMasImportantesComentarioBy-very positive.png`
+    const path = urlI
     const storageRef = ref(this.storage, path)
     
     const imagenUrl = getDownloadURL(storageRef);
