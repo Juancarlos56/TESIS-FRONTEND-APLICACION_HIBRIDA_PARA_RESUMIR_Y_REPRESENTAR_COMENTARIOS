@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { doc, Firestore, docData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { PerfilInterface } from '../models/UserInterface';
+import { AlertController } from '@ionic/angular';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -26,7 +27,7 @@ export class AuthService {
 
   public providerG = new GoogleAuthProvider();
 
-  constructor(private router: Router,private auth: Auth, private firestore: Firestore) {
+  constructor(private router: Router,private auth: Auth, private firestore: Firestore, private alertController: AlertController) {
 
   }
 
@@ -110,15 +111,32 @@ export class AuthService {
   async login({ email, password }) {
     try {
       const user = await signInWithEmailAndPassword(this.auth, email, password);
-      return user;
+      if (user) {
+        if(user.user.uid == 'k98iqZcvpCakwvYBuPIGXHK1AHJ3'){
+          this.router.navigateByUrl('/admin-menu/admin-perfil', { replaceUrl: true });
+        }else{ 
+          this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
+        }
+      } else {
+        this.showAlert('Login fallido', 'Por favor intente de nuevo!');
+        return null;
+      }
+
     } catch (e) {
       return null;
     }
   }
-
+  async showAlert(header, message) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+  
   logout() {
    return this.auth.signOut();
-
   }
 
   async getUid() {

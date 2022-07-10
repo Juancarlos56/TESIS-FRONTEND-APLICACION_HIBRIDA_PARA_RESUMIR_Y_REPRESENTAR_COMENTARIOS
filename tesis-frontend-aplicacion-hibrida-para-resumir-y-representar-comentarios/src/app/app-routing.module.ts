@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 import {
   redirectUnauthorizedTo,
   redirectLoggedInTo,
   canActivate,
 }from '@angular/fire/auth-guard' 
-import { AdminMenuPage } from './admin/admin-menu/admin-menu.page';
-import { UsuarioMenuPage } from './usuario/usuario-menu/usuario-menu.page';
 
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
@@ -46,8 +45,7 @@ const routes: Routes = [
 
   {
     path: 'admin-menu',
-    loadChildren: () => import('./admin/admin-menu/admin-menu.module').then( m => m.AdminMenuPageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+    loadChildren: () => import('./admin/admin-menu/admin-menu.module').then( m => m.AdminMenuPageModule), canActivate: [AuthGuard]
   },
 
 ];
