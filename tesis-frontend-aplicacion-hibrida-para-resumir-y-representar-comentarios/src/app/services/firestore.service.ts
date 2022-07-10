@@ -70,6 +70,11 @@ export class FirestoreService {
     return user
   }
 
+  getUsuarioNombre(){
+    const user = this.auth.currentUser.displayName;
+    return user
+  }
+
 
   async agregarComentario(comentario:String){
     const user = this.auth.currentUser;
