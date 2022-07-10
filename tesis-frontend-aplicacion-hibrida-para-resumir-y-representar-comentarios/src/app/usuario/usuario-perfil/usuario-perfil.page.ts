@@ -71,12 +71,7 @@ export class UsuarioPerfilPage implements OnInit {
       generoForm: ['', [Validators.required]],
     });
   }
-  //Atributos
-  /*
-
-email=null;
-uid= null;
-*/
+  
   public guardarInformacion() {
     const userNew: Usuario = new Usuario();
     userNew.nombres = this.datos.get('nombresForm').value;
