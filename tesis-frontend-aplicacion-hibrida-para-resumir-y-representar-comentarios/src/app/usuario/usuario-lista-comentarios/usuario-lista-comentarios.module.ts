@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { UsuarioListaComentariosPageRoutingModule } from './lista-comentarios-routing.module';
 
 import { UsuarioListaComentariosPage } from './usuario-lista-comentarios.page';
+import { NgxStarRatingModule } from 'ngx-star-rating';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    UsuarioListaComentariosPageRoutingModule
+    UsuarioListaComentariosPageRoutingModule,
+    NgxStarRatingModule
   ],
   declarations: [UsuarioListaComentariosPage]
 })

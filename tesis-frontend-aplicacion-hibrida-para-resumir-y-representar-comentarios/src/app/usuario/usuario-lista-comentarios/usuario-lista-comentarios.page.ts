@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { ResumenServiceService } from 'src/app/services/resumen-service.service';
+import { Comentario } from '../../models/Note';
+import { NgxStarRatingModule } from 'ngx-star-rating';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-usuario-lista-comentarios',
   templateUrl: './usuario-lista-comentarios.page.html',
@@ -10,49 +14,38 @@ import { ResumenServiceService } from 'src/app/services/resumen-service.service'
 export class UsuarioListaComentariosPage implements OnInit {
 
   notes = []
+  @ViewChild('popover') popover;
+  rating3: number;
+  public form: FormGroup;
+  public isOpen = false;
+  public contenidoComentario:String = ''
+
   constructor(private listaService : FirestoreService,
               private resumenService: ResumenServiceService,
-              private loadingCtrl: LoadingController) { }
+              private loadingCtrl: LoadingController,) { 
+         
+  }
 
 
   ngOnInit() {
-   
-    this.listaService.getNotes().subscribe(
-      res=>{
-
-        console.log(res);
-        this.notes = res;
-      }
-    )
+    this.listarComentarioService()
   }
 
-  async listarComentarioService(){
-    const usercorreo = this.listaService.getUsuarioEmail();
-    const response= await this.resumenService.listarComentariosUsuario(usercorreo);
-
-  }
-
-  async showLoading() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Estamos creando tu comentario,  3 segundos...',
-      duration: 6000
-    });
+  listarComentarioService(){
     
-    loading.present();
+    const usercorreo = this.listaService.getUsuarioEmail();
+    this.resumenService.listarComentariosUsuario(usercorreo).then(res=>{
+      this.notes = res as Array<Comentario>
+    });
   }
 
+  openModalComentario(note:Comentario, isOpen: boolean) {
+    this.contenidoComentario = note.comentario_completo;
+    this.isOpen = isOpen;
+  }
 
-  listarComentario(){
-    const usuarioemail = this.listaService.getUsuarioEmail();
-    console.log(usuarioemail)
-    this.listaService.getNotes().subscribe(
-      res=>{
-
-        console.log(res);
-        this.notes = res;
-      }
-    )
-
+  setOpen(isOpen: boolean) {
+    this.isOpen = isOpen;
   }
 
 }

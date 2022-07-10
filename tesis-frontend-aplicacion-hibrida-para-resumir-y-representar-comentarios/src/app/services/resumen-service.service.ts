@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, HttpOptions, HttpResponse } from '@capacitor-community/http';
 import { environment } from 'src/environments/environment';
+import { Comentario } from '../models/Note';
 @Injectable({
   providedIn: 'root'
 })
@@ -40,15 +41,27 @@ export class ResumenServiceService {
   async listarComentariosUsuario( usercorreo:string)  {
     
     const options:HttpOptions = {
-      url: environment.WS_PATH+'listarComentariosUsuario',
+      url: environment.WS_PATH+'comentariosUsuario',
       method:'POST',
       data: {'correoComentario': usercorreo},
       headers: {'Content-Type':  'application/json'}
     }
     const response: HttpResponse = await Http.request(options);
-    return response.data.stateComment
+    return response.data.comentarios 
   }
 
+  async listarComentariosCompletos()  {
+    
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'todosComentariosAdmin',
+      method:'GET',
+      headers: {'Content-Type':  'application/json'}
+    }
+    const response: HttpResponse = await Http.request(options);
+    return response.data.comentarios 
+  }
+
+  
 
   async listarComentarioPorFecha(fechaInicio: string, fechaFin:string){
     const options:HttpOptions = {
@@ -58,7 +71,30 @@ export class ResumenServiceService {
       headers: {'Content-Type':  'application/json'}
     }
     const response: HttpResponse = await Http.request(options);
-    return response.data.stateComment
+    return response.data.comentarios
   }
 
+  async listarComentarioPorSentimiento(sentimiento: string){
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'listarComentarioSentimiento',
+      method:'POST',
+      data: {'sentimiento':sentimiento},
+      headers: {'Content-Type':  'application/json'}
+    }
+    const response: HttpResponse = await Http.request(options);
+    return response.data.comentarios
+  }
+
+  async listarComentarioPorFechaSentimiento(fechaInicio: string, fechaFin:string, sentimiento: string){
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'listarComentarioSentimientoFecha',
+      method:'POST',
+      data: {'fechaInicio': fechaInicio, 'fechaFin': fechaFin, "sentimiento": sentimiento},
+      headers: {'Content-Type':  'application/json'}
+    }
+    const response: HttpResponse = await Http.request(options);
+    return response.data.comentarios
+  }
+  
+  
 }
