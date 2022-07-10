@@ -2,7 +2,7 @@
 <ion-header>
   <ion-toolbar class="Page-Header">
     <div class="Rectangle-239">
-      <div class="logoInicio">
+      <div class="logoInicio" >
         
         <ion-title class="title">Perfil Administrador</ion-title>
         <ion-icon src="../../../assets/icon/sushi.svg" class="Ellipse-6" slot="end"></ion-icon> 
@@ -31,62 +31,65 @@
   </div>
 
 
-  <div>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <div>
-            
-            <ion-list>
+  <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+    
+      <div >
+        <ion-grid>
+          <ion-card style="min-height: 360px; max-width: 360px;" >
+            <ion-card-header>
+              <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
+              <ion-card-title>Resumen Total</ion-card-title>
+            </ion-card-header>
+      
+            <ion-card-content>
+              <img [src]="imagenKeywords3" />
+            </ion-card-content>
+          </ion-card>
 
-              <ion-card>
-                <ion-card-header>
-                  <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
-                  <ion-card-title>Resumen Total</ion-card-title>
-                </ion-card-header>
-              
-                <ion-card-content>
-                  <img [src]="imagenKeywords3" style="zoom:1.0;"/>
-                </ion-card-content>
-              </ion-card>
+        </ion-grid>
+      </div>
+             
+      
+ 
+    
+    
+      <div >
+        <ion-grid>
+          <ion-card style="min-height: 360px; max-width: 360px;">
+            <ion-card-header>
+              <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
+              <ion-card-title>Comentarios Positivos</ion-card-title>
+            </ion-card-header>
+          
+            <ion-card-content >
+              <img [src]="imagenKeywords1" />
+            </ion-card-content>
+          </ion-card>
+
+        </ion-grid>
+      </div>
                 
-
-                <ion-card>
-                  <ion-card-header>
-                    <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
-                    <ion-card-title>Comentarios Positivos</ion-card-title>
-                  </ion-card-header>
-                
-                  <ion-card-content>
-                    <img [src]="imagenKeywords1" style="zoom:1.0;"/>
-                  </ion-card-content>
-                </ion-card>
-
-            </ion-list>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-
+    
+   
+      <div >
+        <ion-grid>
+          <ion-card style="min-height: 360px; max-width: 360px;">
+            <ion-card-header>
+              <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
+              <ion-card-title>Rango de Fecha</ion-card-title>
+            </ion-card-header>
+          
+            <ion-card-content>
+              <img [src]="imagenKeywords2" />
+            </ion-card-content>
+          </ion-card>
+        </ion-grid>
+      </div>
+      
   
-
-
-  <div>
-    
-    <ion-card>
-      <ion-card-header>
-        <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
-        <ion-card-title>Rango de Fecha</ion-card-title>
-      </ion-card-header>
-    
-      <ion-card-content>
-        <img [src]="imagenKeywords2" style="zoom:1.0;"/>
-      </ion-card-content>
-    </ion-card>
-
-    
   </div>
+
+
 </ion-content>
 
 

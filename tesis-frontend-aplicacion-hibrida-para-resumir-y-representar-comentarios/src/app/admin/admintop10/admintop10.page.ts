@@ -14,7 +14,7 @@ export class Admintop10Page implements OnInit {
   private barChart: Chart;
   public data =[20,2,7,3,6,9];
   public idGrafico='linearChar';
-  public idGrafico1='linearChar2';
+  public idGrafico1='linearChar1';
   public idGrafico2='linearChar2';
 
 
@@ -22,24 +22,20 @@ export class Admintop10Page implements OnInit {
 
   ngOnInit() {
 
-    this.graficaLineal(this.data);
+    this.graficaLineal(this.data, this.idGrafico);
+    this.graficaLineal(this.data, this.idGrafico1);
+    this.graficaLineal(this.data, this.idGrafico2);
+
    // this.graficaLineal(this.data, this.idGrafico1);
 
     
 
   }
 
-  dataParaLinearChart(){
 
-  }
+graficaLineal(data, idGrafico){
 
- 
-
-
-
-graficaLineal(data){
-
-    this.barChart  = new Chart('linearChar', {
+    this.barChart  = new Chart(idGrafico, {
       type: 'bar',
       data: {
         labels: ['PALABRA 1', 'PALABRA 2', 'PALABRA 3', 'PALABRA 4', 'PALABRA 5', 'PALABRA 6'],

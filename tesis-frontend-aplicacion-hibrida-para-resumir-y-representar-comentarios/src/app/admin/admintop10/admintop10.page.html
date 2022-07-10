@@ -29,7 +29,7 @@
     <ion-list>        
            
       <ion-item class="BG"> 
-        <ion-label               class="nombre"        >N-Gramas</ion-label>
+        <ion-label class="nombre">N-Gramas</ion-label>
         <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
           <ion-select-option value="1grama">1-Grama</ion-select-option>
           <ion-select-option value="2grama">2-Grama</ion-select-option>
@@ -38,7 +38,7 @@
       </ion-item>
 
       <ion-item class="BG">
-        <ion-label               class="nombre"        >Lista de palabras (10)</ion-label>
+        <ion-label class="nombre">Lista de palabras (10)</ion-label>
         <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
           <ion-select-option value="3">3</ion-select-option>
           <ion-select-option value="4">4</ion-select-option>
@@ -56,26 +56,33 @@
 
   </div>
 
+  <div>
+    <ion-grid style="display: flex; flex-direction: row; flex-wrap: wrap;">
+      <ion-card style="min-width: 360px ;" >
+        <div class="chart-container">
+          <canvas id="linearChar"></canvas>
+        </div>    
+      </ion-card>
 
+      <ion-card style="min-width: 360px ;" >
+        <div class="chart-container">
+          <canvas id="linearChar1"></canvas>
+        </div>    
+      </ion-card>
 
-    <div class="chart-container">
-      <canvas id="linearChar"></canvas>
-    </div>
+      <ion-card style="min-width: 360px ;" >
+        <div class="chart-container">
+          <canvas id="linearChar2"></canvas>
+        </div>    
+      </ion-card>
+    </ion-grid>
+  </div>
+
+</ion-content>   
+
 
   
    
   
 
    
-
-</ion-content>
-<ion-footer collapse="fade">
-  <ion-toolbar>
-    <div class="footerDerechosAutor">
-      <ion-label class="derechosAutor">
-        &#169; 2022 Todos los derechos reservados | Developed by JB & KB
-      </ion-label>
-    </div>
-  </ion-toolbar>
-</ion-footer>
-</ion-app>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import Chart from 'chart.js/auto';
 
 
@@ -9,25 +10,55 @@ import Chart from 'chart.js/auto';
 })
 export class AdminPerfilPage implements OnInit {
 
-  private milinearChart : Chart;
-  private linearChart : Chart;
+  public milinearChart : Chart;
+  public milinearChart1 : Chart;
+  public milinearChart2: Chart;
+  public linearChart : Chart;
 
-  constructor() { }
-  varsssd = ''
+
+  public data =[2,7,3,6];
+  public idGrafico='pastel1';
+  public idGrafico1='pastel2';
+  public idGrafico2='pastel3';
+  public idGrafico3= 'pastel4'
+
+  public dataL =[20,2,7,3,6,9];
+  public idGraficoL='linear1';
+  public idGraficoL1='linear2';
+  public idGraficoL2='linear3';
+
+
+
+  constructor(private platform: Platform) { 
+
+  }
   ngOnInit() {
-    this.graficaPastel();
-    this.graficaLineal();
+  
+    this.crearGraficas();
   }
 
-  
-graficaPastel(){
-  this.milinearChart  = new Chart('myChart', { 
+
+  crearGraficas(){
+    this.graficaPastel(this.data, this.idGrafico);
+    this.graficaPastel(this.data, this.idGrafico1);
+    this.graficaPastel(this.data, this.idGrafico2);
+    this.graficaPastel(this.data, this.idGrafico3)
+
+    this.graficaLineal(this.dataL, this.idGraficoL);
+    this.graficaLineal(this.dataL, this.idGraficoL1);
+    this.graficaLineal(this.dataL, this.idGraficoL2);
+
+
+  }
+
+graficaPastel(data, idGraficaP){
+  this.milinearChart= new Chart(idGraficaP, { 
     type: 'doughnut',
     data : {
       labels: ['Red','Blue','Yellow'],
       datasets: [{
         label: 'My First Dataset',
-        data: [300, 50, 100],
+        data: data,
         backgroundColor: [
           '#446AA3',
           '#DEE2FF',
@@ -43,15 +74,15 @@ graficaPastel(){
   });
 }
 
-graficaLineal(){
+graficaLineal(dataL, idGraficaL){
 
-    this.linearChart  = new Chart('myChart1', {
+    this.linearChart= new Chart(idGraficaL, {
       type: 'line',
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: dataL,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)'
             ],
