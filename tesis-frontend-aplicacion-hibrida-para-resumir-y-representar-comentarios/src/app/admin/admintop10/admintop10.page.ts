@@ -9,13 +9,11 @@ import Chart from 'chart.js/auto';
 })
 export class Admintop10Page implements OnInit {
 
-  private pruebaChart : Chart;
+  private linearCharAdmintop : Chart;
   private milinearChart : Chart;
   private barChart: Chart;
   public data =[20,2,7,3,6,9];
-  public idGrafico='linearChar';
-  public idGrafico1='linearChar1';
-  public idGrafico2='linearChar2';
+  public idGrafico='linearCharAdmintop';
 
 
   constructor() { }
@@ -23,8 +21,6 @@ export class Admintop10Page implements OnInit {
   ngOnInit() {
 
     this.graficaLineal(this.data, this.idGrafico);
-    this.graficaLineal(this.data, this.idGrafico1);
-    this.graficaLineal(this.data, this.idGrafico2);
 
    // this.graficaLineal(this.data, this.idGrafico1);
 
@@ -35,7 +31,7 @@ export class Admintop10Page implements OnInit {
 
 graficaLineal(data, idGrafico){
 
-    this.barChart  = new Chart(idGrafico, {
+    this.linearCharAdmintop  = new Chart(idGrafico, {
       type: 'bar',
       data: {
         labels: ['PALABRA 1', 'PALABRA 2', 'PALABRA 3', 'PALABRA 4', 'PALABRA 5', 'PALABRA 6'],

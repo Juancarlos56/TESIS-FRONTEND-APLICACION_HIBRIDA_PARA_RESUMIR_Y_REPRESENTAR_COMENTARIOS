@@ -26,58 +26,51 @@
 
   <div>
 
-    <ion-list>        
+    <div  style="display: flex; flex-direction: row; flex-wrap: wrap;     align-self: flex-start">
+      <ion-grid >
+       
+          <ion-card style="min-width: 366px;">
+            <ion-item class="BG"> 
+              <ion-label class="nombre">N-Gramas</ion-label>
+              <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+                <ion-select-option value="1grama">1-Grama</ion-select-option>
+                <ion-select-option value="2grama">2-Grama</ion-select-option>
+                <ion-select-option value="3grama">3-Grama</ion-select-option>
+              </ion-select>
+            </ion-item>
+      
+            <ion-item class="BG">
+              <ion-label class="nombre">Lista de palabras (10)</ion-label>
+              <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+                <ion-select-option value="3">3</ion-select-option>
+                <ion-select-option value="4">4</ion-select-option>
+                <ion-select-option value="5">5</ion-select-option>
+                <ion-select-option value="6">6</ion-select-option>
+                <ion-select-option value="7">7</ion-select-option>
+                <ion-select-option value="8">8</ion-select-option>
+                <ion-select-option value="9">9</ion-select-option>
+                <ion-select-option value="10">10</ion-select-option>
+              </ion-select>
+            </ion-item>
+          
+
+          </ion-card>      
            
-      <ion-item class="BG"> 
-        <ion-label class="nombre">N-Gramas</ion-label>
-        <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
-          <ion-select-option value="1grama">1-Grama</ion-select-option>
-          <ion-select-option value="2grama">2-Grama</ion-select-option>
-          <ion-select-option value="3grama">3-Grama</ion-select-option>
-        </ion-select>
-      </ion-item>
+      </ion-grid>
 
-      <ion-item class="BG">
-        <ion-label class="nombre">Lista de palabras (10)</ion-label>
-        <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
-          <ion-select-option value="3">3</ion-select-option>
-          <ion-select-option value="4">4</ion-select-option>
-          <ion-select-option value="5">5</ion-select-option>
-          <ion-select-option value="6">6</ion-select-option>
-          <ion-select-option value="7">7</ion-select-option>
-          <ion-select-option value="8">8</ion-select-option>
-          <ion-select-option value="9">9</ion-select-option>
-          <ion-select-option value="10">10</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
 
-   
+      <ion-grid>
+        <ion-card style="min-width: 300px " >
+          <div class="chart-container">
+            <canvas id="linearCharAdmintop"></canvas>
+          </div>    
+        </ion-card>
 
+      </ion-grid>
+
+  
   </div>
-
-  <div>
-    <ion-grid style="display: flex; flex-direction: row; flex-wrap: wrap;">
-      <ion-card style="min-width: 360px ;" >
-        <div class="chart-container">
-          <canvas id="linearChar"></canvas>
-        </div>    
-      </ion-card>
-
-      <ion-card style="min-width: 360px ;" >
-        <div class="chart-container">
-          <canvas id="linearChar1"></canvas>
-        </div>    
-      </ion-card>
-
-      <ion-card style="min-width: 360px ;" >
-        <div class="chart-container">
-          <canvas id="linearChar2"></canvas>
-        </div>    
-      </ion-card>
-    </ion-grid>
-  </div>
-
+ </div>
 </ion-content>   
 
 
