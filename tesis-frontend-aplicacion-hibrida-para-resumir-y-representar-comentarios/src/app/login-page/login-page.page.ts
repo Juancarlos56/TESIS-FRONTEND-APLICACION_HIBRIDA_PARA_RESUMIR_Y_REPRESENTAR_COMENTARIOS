@@ -22,7 +22,6 @@ export class LoginPagePage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private loadingController: LoadingController,
-    private alertController: AlertController,
     private authService: AuthService,
     private router: Router
   ) {
@@ -65,31 +64,7 @@ export class LoginPagePage implements OnInit {
  
     const user = await this.authService.login(this.credentials.value);
     await loading.dismiss();
- 
-    if (user) {
-      //Inicio de secion para Admin
-      if(user.user.uid == 'k98iqZcvpCakwvYBuPIGXHK1AHJ3'){
-        this.router.navigateByUrl('/admin-menu/admin-perfil', { replaceUrl: true });
-      }else{
-        //sesion para Usuario
-        this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
-      }
-    } else {
-      this.showAlert('Login fallido', 'Por favor intente de nuevo!');
-    }
   }
-  
-  async showAlert(header, message) {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ['OK'],
-    });
-    await alert.present();
-  }
-
-
-
 
   public iniciarConFacebook(){
     console.log("entra al metodo login: "+this.email1+" "+this.password1);
