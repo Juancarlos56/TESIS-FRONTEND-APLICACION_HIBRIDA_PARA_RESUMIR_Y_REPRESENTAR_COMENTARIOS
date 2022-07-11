@@ -29,19 +29,50 @@
     <div  style="display: flex; flex-direction: row; flex-wrap: wrap;     align-self: flex-start">
       <ion-grid >
        
-          <ion-card style="min-width: 366px;">
-            <ion-item class="BG"> 
-              <ion-label class="nombre">N-Gramas</ion-label>
-              <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
-                <ion-select-option value="1grama">1-Grama</ion-select-option>
-                <ion-select-option value="2grama">2-Grama</ion-select-option>
-                <ion-select-option value="3grama">3-Grama</ion-select-option>
-              </ion-select>
-            </ion-item>
-      
-            <ion-item class="BG">
-              <ion-label class="nombre">Lista de palabras (10)</ion-label>
-              <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Select One">
+        <div class="BG" style="margin-right: 2em;">
+          <ion-list-header>Filtros</ion-list-header>
+          <ion-segment style="margin-top: 1em;" value="" (ionChange)="tipoBusqueda($event)">
+            <ion-segment-button value="Contenido">
+              <ion-label>Contenido</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Palabras">
+              <ion-label>Palabras</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Clasificacion">
+              <ion-label>Clasificación</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Ngrama">
+              <ion-label>Ngrama</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+
+        <div *ngIf="filtroContenido"  class="BG" >
+          <ion-grid>
+            <ion-radio-group (ionChange)="tipoContenido($event)">
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Comentarios</ion-label>
+                    <ion-radio slot="start" color="primary" value="comentario"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Resumen</ion-label>
+                    <ion-radio slot="start" color="medium" value="resumen"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-grid>
+        </div>
+
+        <div *ngIf="filtroPalabras"  class="BG" >
+          <ion-grid>
+            <ion-item>
+              <ion-label class="nombre">Lista de palabras</ion-label>
+              <ion-select (ionChange)="numeroPalabrasFilter($event)" [interfaceOptions]="customActionSheetOptions" interface="action-sheet" value="7" placeholder="Select One">
                 <ion-select-option value="3">3</ion-select-option>
                 <ion-select-option value="4">4</ion-select-option>
                 <ion-select-option value="5">5</ion-select-option>
@@ -52,17 +83,110 @@
                 <ion-select-option value="10">10</ion-select-option>
               </ion-select>
             </ion-item>
+          </ion-grid>
+        </div>
+
+        <div *ngIf="filtroClasificacion"  class="BG" >
+          <ion-grid>
+            <ion-radio-group (ionChange)="filtroClasificacionSentimiento($event)">
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Todos</ion-label>
+                    <ion-radio slot="start" color="primary" value="SinClasificacion"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Exelente</ion-label>
+                    <ion-radio slot="start" color="success" value="very positive"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+    
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Bueno</ion-label>
+                    <ion-radio slot="start" color="primary" value="positive"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Normal</ion-label>
+                    <ion-radio slot="start" color="medium" value="mixed"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+    
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Malo</ion-label>
+                    <ion-radio slot="start" color="warning" value="negative"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Muy Malo</ion-label>
+                    <ion-radio slot="start" color="danger" value="very negative"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-grid>
+        </div>
+
+        <div *ngIf="filtroNgrama"  class="BG" >
+          <ion-grid>
+            <ion-radio-group >
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label class="nombre">N-Gramas</ion-label>
+                    <ion-select (ionChange)="cantidadNgramaFilter($event)" [interfaceOptions]="customActionSheetOptions" interface="action-sheet" value="1" placeholder="Select One">
+                      <ion-select-option value="1">1-Grama</ion-select-option>
+                      <ion-select-option value="2">2-Grama</ion-select-option>
+                      <ion-select-option value="3">3-Grama</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-grid>
+        </div>
+
+        <div class="BG" style="margin-right: 2em;">
+          <ion-list-header>Valores: </ion-list-header>
+          <ion-list>
+            <ion-item>
+              <ion-icon></ion-icon>
+              <ion-label>Contenido: {{tipoComentario}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon></ion-icon>
+              <ion-label>Palabras: {{numeroPalabras}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon></ion-icon>
+              <ion-label>Sentimiento: {{clasificacionSentimiento}}</ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-icon></ion-icon>
+              <ion-label>Ngrama: {{ngramaValor}}</ion-label>
+            </ion-item>
+            
+          </ion-list>
+        </div>
           
 
-          </ion-card>      
-           
       </ion-grid>
 
 
       <ion-grid>
         <ion-card style="min-width: 300px " >
           <div class="chart-container">
-            <canvas id="linearCharAdmintop"></canvas>
+            <canvas #canvaID id="linearCharAdmintop"></canvas>
           </div>    
         </ion-card>
 

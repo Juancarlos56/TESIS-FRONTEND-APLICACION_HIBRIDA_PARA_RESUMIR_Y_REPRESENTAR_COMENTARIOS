@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { GraficaServiceService } from 'src/app/services/grafica-service.service';
+import { deleteDoc } from 'firebase/firestore';
 
 
 @Component({
@@ -15,35 +16,99 @@ export class Admintop10Page implements OnInit {
   private barChart: Chart;
   public data =[20,2,7,3,6,9];
   public idGrafico='linearCharAdmintop';
+  public filtroContenido = false;
+  public filtroPalabras = false;
+  public filtroClasificacion = false;
+  public filtroNgrama = false;
 
+  public tipoComentario = 'comentario'
+  public numeroPalabras = 7
+  public clasificacionSentimiento = 'SinClasificacion'
+  public ngramaValor = 1
+  public label= [];
+  public titulo = ''
+  @ViewChild('canvaID') canvaID: ElementRef;
 
   constructor( private dataGraficaService: GraficaServiceService) { }
 
   ngOnInit() {
 
-    this.graficaLineal(this.data, this.idGrafico);
+    //this.graficaLineal(this.data, this.idGrafico);
     this.generarDatos();
 
    // this.graficaLineal(this.data, this.idGrafico1);
   }
 
   generarDatos(){
-    this.dataGraficaService.dataNGrama('comentario', 10, 2, 'mixed').then(res=>{
+    this.dataGraficaService.dataNGrama(this.tipoComentario, this.numeroPalabras, this.ngramaValor, this.clasificacionSentimiento).then(res=>{
       console.log(res)
+      this.label = res.token_text as [];
+      this.data = res.count as []
+      this.linearCharAdmintop.destroy()
+      this.graficaLineal(this.data, this.idGrafico, this.label)
     });
   }
 
- 
+  tipoBusqueda(event: any) {
+    switch (event.detail.value) {
+      case 'Contenido':
+        this.filtroContenido = true
+        this.filtroPalabras = false;
+        this.filtroClasificacion = false;
+        this.filtroNgrama = false;
+        break;
+      case 'Palabras':
+        this.filtroPalabras = true
+        this.filtroContenido = false;
+        this.filtroClasificacion = false;
+        this.filtroNgrama = false;
+        break;
+      case 'Clasificacion':
+        this.filtroClasificacion = true
+        this.filtroContenido = false;
+        this.filtroPalabras = false;
+        this.filtroNgrama = false;
+        break;
+      case 'Ngrama':
+        this.filtroNgrama = true
+        this.filtroContenido = false;
+        this.filtroPalabras = false;
+        this.filtroClasificacion = false;
+        break;
+      default:
+        break;
+    }
+  }
+  
+  async tipoContenido(event: any) {
+    this.tipoComentario = event.detail.value
+    this.generarDatos()
+  }
+
+  async numeroPalabrasFilter(event: any) {
+    this.numeroPalabras = event.detail.value
+    this.generarDatos()
+  }
+  
+  async filtroClasificacionSentimiento(event: any) {
+    this.clasificacionSentimiento = event.detail.value
+    this.generarDatos()
+  }
+
+  async cantidadNgramaFilter(event: any) {
+    this.ngramaValor = event.detail.value
+    this.generarDatos()
+  }
   
 
-graficaLineal(data, idGrafico){
+graficaLineal(data, idGrafico, label){
 
     this.linearCharAdmintop  = new Chart(idGrafico, {
       type: 'bar',
       data: {
-        labels: ['PALABRA 1', 'PALABRA 2', 'PALABRA 3', 'PALABRA 4', 'PALABRA 5', 'PALABRA 6'],
+        labels: label,
         datasets: [{
-            label: 'palabra1', 
+            label: '', 
             data: data,
             backgroundColor: [
               '#446AA3',

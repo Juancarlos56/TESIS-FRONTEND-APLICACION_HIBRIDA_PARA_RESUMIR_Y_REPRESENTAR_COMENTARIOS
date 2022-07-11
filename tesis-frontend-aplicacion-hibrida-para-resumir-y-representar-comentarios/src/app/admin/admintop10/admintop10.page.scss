@@ -46,17 +46,10 @@ color: #767676;
 }
 
 .BG {
-//arriba - derecha - abajo - izquierda
-//margin: 44px 30px 18px 30px;
-margin: 1.0em 1.75em 1.25em 1.75em;
-height: 50px !important;
-min-height: 30px;
-max-height: 100px;
-border: solid 4px #f6f6f6;
-border-radius: 15px;
-background-color: #f6f6f6;
-//display: flexbox;
-//justify-content: flex-start;
+  //arriba - derecha - abajo - izquierda
+  //margin: 44px 30px 18px 30px;
+  margin: 0.0em 1em 1em 1em;
+  align-items: center;
 }
 
 

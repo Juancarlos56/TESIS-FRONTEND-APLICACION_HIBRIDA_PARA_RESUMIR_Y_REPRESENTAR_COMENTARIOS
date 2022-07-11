@@ -68,7 +68,6 @@ export class AdminPerfilPage implements OnInit {
     });
 
     this.dataGraficaService.dataNumeroComentariosPorTipo().then(res=>{
-      console.log(res)
       this.labelL = res.sentimiento as [];
       this.dataL = res.count as [];
       const titulo='Comentarios por tipo'
@@ -77,7 +76,6 @@ export class AdminPerfilPage implements OnInit {
     });
 
     this.dataGraficaService.dataEdadUsuarios().then(res=>{
-      console.log(res)
       this.label = res.rango as [];
       this.data = res.count as []
       const titulo = 'Edad de Usuarios'
