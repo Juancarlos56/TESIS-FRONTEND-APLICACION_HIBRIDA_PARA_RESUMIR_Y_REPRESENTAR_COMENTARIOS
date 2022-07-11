@@ -27,28 +27,10 @@ export class AdminkeywordsPage implements OnInit {
     this.mostrarImagen(this.url);
     this.mostrarImagen(this.url1);
     this.mostrarImagen(this.url2);
-    this.graficaNubePalabras();
 
   }
 
-  graficaNubePalabras(){
-    const config = {
-      type: 'wordCloud',
-      data: {
-        // text
-        labels: ['Hello', 'world', 'normally', 'you', 'want', 'more', 'words', 'than', 'this'],
-        datasets: [
-          {
-            label: 'DS',
-            // size in pixel
-            data: [90, 80, 70, 60, 50, 40, 30, 20, 10],
-          },
-        ],
-      },
-      options: {},
-    };
-  }
-
+ 
   mostrarImagen(urlI){
 
     this.serviceStorage.traerImagenesStorage(urlI).then(res=>{
