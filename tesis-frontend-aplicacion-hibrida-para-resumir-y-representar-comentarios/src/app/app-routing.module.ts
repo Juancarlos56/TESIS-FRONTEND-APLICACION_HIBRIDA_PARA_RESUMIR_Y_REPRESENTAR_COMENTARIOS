@@ -5,12 +5,14 @@ import {
   redirectUnauthorizedTo,
   redirectLoggedInTo,
   canActivate,
+  hasCustomClaim,
 }from '@angular/fire/auth-guard' 
 
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['']);
 const redirectLoggedInToUsuarioInfo = () => redirectLoggedInTo(['usuario-menu']);
-const redirectLoggedInToAmdinUsuario = () => redirectLoggedInTo(['admin-menu']);
+//const redirectLoggedInToAmdinUsuario = () => redirectLoggedInTo(['admin-menu']);
+const adminOnly = () => hasCustomClaim('admin');
 
 const redirectRegistroToUserInfo = () => redirectLoggedInTo(['usuario-add-info']);
 
@@ -45,7 +47,7 @@ const routes: Routes = [
 
   {
     path: 'admin-menu',
-    loadChildren: () => import('./admin/admin-menu/admin-menu.module').then( m => m.AdminMenuPageModule), canActivate: [AuthGuard]
+    loadChildren: () => import('./admin/admin-menu/admin-menu.module').then( m => m.AdminMenuPageModule), canActivate:[AuthGuard]
   },
 
 ];

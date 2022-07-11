@@ -31,7 +31,7 @@
                     <ion-card-title style="text-transform: capitalize">
                       {{note.resumen_comentario}}</ion-card-title
                     >
-                    <ion-card-subtitle style="margin-top: 2em"><ion-icon name="calendar"></ion-icon> {{note.fecha_comentario  | date:'short':'UTC'}}</ion-card-subtitle >
+                    <ion-card-subtitle style="margin-top: 2em"><ion-icon name="calendar"></ion-icon> {{note.fecha_comentario  | date:'short':'ISO'}}</ion-card-subtitle >
                     <ion-card-subtitle style="margin-top: 1em;color: #61E196;" *ngIf="note.tipo_comentario=='very positive'">Excelente</ion-card-subtitle>
                     <ion-card-subtitle style="margin-top: 1em;color: #91d08f;" *ngIf="note.tipo_comentario=='positive'">Bueno</ion-card-subtitle>
                     <ion-card-subtitle style="margin-top: 1em;color: #E0A246;" *ngIf="note.tipo_comentario=='mixed'">Neutro</ion-card-subtitle>
