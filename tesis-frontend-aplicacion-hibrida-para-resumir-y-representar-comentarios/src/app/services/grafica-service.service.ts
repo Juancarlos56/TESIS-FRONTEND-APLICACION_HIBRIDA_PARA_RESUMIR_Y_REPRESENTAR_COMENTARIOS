@@ -44,5 +44,18 @@ export class GraficaServiceService {
     return response.data
   }
 
+  async dataNGrama(analizarComentario: string, numeroPalabras:number, numeroNgrama:number , clasificacionComment:string){
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'graficasNgramasPalabras',
+      method:'POST',
+      data: {'analizarComentario': analizarComentario, 'numeroPalabras': numeroPalabras, 'numeroNgrama': numeroNgrama, "clasificacionComment": clasificacionComment},
+      headers: {'Content-Type':  'application/json'}
+    }
+      const response: HttpResponse = await Http.request(options);
+      return response.data
+  }
+    
+
+
   
 }

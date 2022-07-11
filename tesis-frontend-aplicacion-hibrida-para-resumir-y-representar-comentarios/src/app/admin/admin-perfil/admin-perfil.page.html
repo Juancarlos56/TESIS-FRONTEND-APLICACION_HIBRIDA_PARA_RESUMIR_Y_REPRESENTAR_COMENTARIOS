@@ -16,6 +16,16 @@
 
 
 <ion-content fullscreen >
+
+  <div>
+    <!--Colocar la imagen del restaurante dueno de la aplicacion-->
+    <div class="redeSociales">
+      <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:15.0;"></ion-icon>
+    </div>
+  </div>
+
+
+
   <div >
     <div  style="display: flex; flex-direction: row; flex-wrap: wrap;     align-self: flex-start">
       <ion-grid >
@@ -27,15 +37,6 @@
             
           </ion-card>
   
-        
-  
-        
-          <ion-card style="min-height: 360px; max-width: 355px;" >
-            <div class="chart-container">
-              <canvas id="pastel2"></canvas>
-            </div>
-      
-          </ion-card>   
       </ion-grid>
 
 
@@ -43,23 +44,17 @@
 
         <div >
           
-            
-            <ion-card  style="min-width:355px ;" >
+            <ion-card>
+              <ion-header>
+                
+              </ion-header>
+            </ion-card>
+            <ion-card style="min-width:355px ;"  >
               <div class="chart-container">
                 <canvas id="linear1"></canvas>
               </div>
             </ion-card> 
-          
-      
-          <ion-card style="min-width:355px ;" >
-            <div class="chart-container">
-              <canvas id="bar1"></canvas>
-            </div>
-      
-          </ion-card>
 
-          
-      
        </div>
       </ion-grid>
 
@@ -69,21 +64,14 @@
         <div >
           <ion-grid>
             
-            <ion-card style="min-height: 360px; max-width: 355px;">
+            <ion-card style="min-width:355px ;" >
               <div class="chart-container">
-                <canvas id="pastel3"></canvas>
+                <canvas id="bar1"></canvas>
               </div>
         
             </ion-card>
           </ion-grid>
 
-
-          <ion-card style="min-height: 360px; max-width: 355px;">
-            <div class="chart-container">
-              <canvas id="pastel4"></canvas>
-            </div>
-      
-          </ion-card>
       
        </div>
       </ion-grid>
