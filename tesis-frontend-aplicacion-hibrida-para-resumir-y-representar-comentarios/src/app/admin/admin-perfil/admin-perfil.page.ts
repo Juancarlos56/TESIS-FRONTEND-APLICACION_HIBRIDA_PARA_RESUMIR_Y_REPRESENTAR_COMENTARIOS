@@ -44,7 +44,7 @@ export class AdminPerfilPage implements OnInit {
   public idGraficoB='bar1';
   public idGraficoL2='linear3';
 
-  public 
+
 
 
 
