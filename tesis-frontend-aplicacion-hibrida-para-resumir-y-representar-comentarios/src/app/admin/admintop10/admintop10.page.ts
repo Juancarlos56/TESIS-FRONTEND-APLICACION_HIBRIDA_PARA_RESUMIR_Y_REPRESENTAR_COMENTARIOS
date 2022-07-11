@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { GraficaServiceService } from 'src/app/services/grafica-service.service';
 
 
 @Component({
@@ -16,18 +17,24 @@ export class Admintop10Page implements OnInit {
   public idGrafico='linearCharAdmintop';
 
 
-  constructor() { }
+  constructor( private dataGraficaService: GraficaServiceService) { }
 
   ngOnInit() {
 
     this.graficaLineal(this.data, this.idGrafico);
+    this.generarDatos();
 
    // this.graficaLineal(this.data, this.idGrafico1);
-
-    
-
   }
 
+  generarDatos(){
+    this.dataGraficaService.dataNGrama('comentario', 10, 2, 'mixed').then(res=>{
+      console.log(res)
+    });
+  }
+
+ 
+  
 
 graficaLineal(data, idGrafico){
 
