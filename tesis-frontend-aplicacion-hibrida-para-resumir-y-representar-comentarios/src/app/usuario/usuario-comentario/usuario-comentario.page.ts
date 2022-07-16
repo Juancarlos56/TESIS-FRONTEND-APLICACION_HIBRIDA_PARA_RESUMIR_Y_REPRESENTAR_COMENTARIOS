@@ -19,6 +19,11 @@ export class UsuarioComentarioPage implements OnInit {
   public comentario1=""
   comen: FormGroup;
 
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400
+  };
+  
   constructor(private fbb: FormBuilder,
               private auth: Auth,
               private resumen : ResumenServiceService,

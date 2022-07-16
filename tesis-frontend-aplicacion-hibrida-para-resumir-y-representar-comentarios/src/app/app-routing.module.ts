@@ -32,6 +32,10 @@ const routes: Routes = [
     loadChildren: () => import('./login-page/login-page.module').then( m => m.LoginPagePageModule),
     ...canActivate(redirectLoggedInToUsuarioInfo)
   },
+  {
+    path: 'usuario-bienvenida',
+    loadChildren: () => import('./usuario/usuario-bienvenida/usuario-bienvenida.module').then( m => m.UsuarioBienvenidaPageModule)
+  },
 
   {
     path: 'usuario-add-info',
@@ -49,6 +53,7 @@ const routes: Routes = [
     path: 'admin-menu',
     loadChildren: () => import('./admin/admin-menu/admin-menu.module').then( m => m.AdminMenuPageModule),// canActivate:[AuthGuard]
   },
+  
 
 ];
 

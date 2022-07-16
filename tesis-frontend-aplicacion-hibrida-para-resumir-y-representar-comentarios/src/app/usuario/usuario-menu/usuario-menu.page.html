@@ -1,30 +1,62 @@
-<ion-tabs>
+<ion-app>
   
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="usuario-comentario">
-      <ion-icon name="chatbubble-ellipses"></ion-icon>     
-      <ion-label>Nuevo Comentario</ion-label>
-    </ion-tab-button>
 
-    <ion-tab-button tab="usuario-lista-comentarios">
-      <ion-icon name="list-circle"></ion-icon>
-      <ion-label>Lista de comentarios</ion-label>
-    </ion-tab-button>
+  <ion-split-pane when="s" contentId="main">
+    
+      <ion-menu side="start" contentId="main">
+        <ion-header>
+          <ion-toolbar translucent>
+            <ion-title class="menu">Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+  
+        <ion-content>
+          <ion-list>
+            <ion-item href="/usuario-menu/usuario-comentario">
+              <ion-tab-button class="button_inner">
+                <ion-icon name="chatbubble-ellipses"></ion-icon>     
+                <ion-label>Nuevo Comentario</ion-label>
+              </ion-tab-button>
+            </ion-item>
+  
+            <ion-item href="/usuario-menu/usuario-lista-comentarios">
+              <ion-tab-button class="button_inner" >
+                <ion-icon name="list-circle"></ion-icon>
+                <ion-label> Lista de comentarios</ion-label>
+              </ion-tab-button>
+            </ion-item>
+            
+            <ion-item href="/usuario-menu/usuario-perfil">
+              <ion-tab-button class="button_inner" >
+                <ion-icon name="person-circle"></ion-icon>      
+                <ion-label >Perfil</ion-label>
+              </ion-tab-button>
+          
+            </ion-item>
+           
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+  
+      
+   
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-split-pane>
 
-    <ion-tab-button tab="usuario-perfil">
-      <ion-icon name="person-circle"></ion-icon>      
-      <ion-label>Perfil</ion-label>
-    </ion-tab-button>
+  </ion-app>
 
-  </ion-tab-bar>
 
-  <ion-footer collapse="fade">
-    <ion-toolbar>
-      <div class="footerDerechosAutor">
-        <ion-label class="derechosAutor">
-          &#169; 2022 Todos los derechos reservados | Developed by JB & KB
-        </ion-label>
-      </div>
-    </ion-toolbar>
-  </ion-footer>
-</ion-tabs>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
