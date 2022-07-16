@@ -44,7 +44,7 @@ export class Admintop10Page implements OnInit {
       console.log(res)
       this.label = res.token_text as [];
       this.data = res.count as []
-      this.linearCharAdmintop.destroy()
+      //this.linearCharAdmintop.destroy()
       this.graficaLineal(this.data, this.idGrafico, this.label)
     });
   }
