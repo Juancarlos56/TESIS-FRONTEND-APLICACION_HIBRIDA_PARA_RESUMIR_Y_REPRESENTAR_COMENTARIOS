@@ -14,6 +14,36 @@
     line-height: normal;
     letter-spacing: normal;
     text-align: left;
-    color: #000000;
+    color: #ead2a1;
     
+  }
+
+  .button_inner {
+    display: flex;
+    flex: 0 0 0;
+    
+    /* position: relative; */
+    flex-flow: inherit;
+    /* align-items: inherit; */
+    /* justify-content: inherit; */
+    /* width: 100%; */
+    /* height: 100%; */
+    /* z-index: 1; */
+    color: #ead2a1;
+}
+
+  .my-custom-menu {
+    --width: 500px;
+  }
+
+  .menu{
+    font-family: auto;
+    
+    text-anchor: unset;
+    /* background-color: powderblue; */
+    color: #ff7600;
+  }
+
+  ion-label{
+    font: menu;
   }
