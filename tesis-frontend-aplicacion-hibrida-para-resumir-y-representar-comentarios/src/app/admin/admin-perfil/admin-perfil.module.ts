@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { AdminPerfilPageRoutingModule } from './admin-perfil-routing.module';
 
 import { AdminPerfilPage } from './admin-perfil.page';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AdminPerfilPageRoutingModule
+    AdminPerfilPageRoutingModule,
+    NgApexchartsModule
   ],
   declarations: [AdminPerfilPage]
 })

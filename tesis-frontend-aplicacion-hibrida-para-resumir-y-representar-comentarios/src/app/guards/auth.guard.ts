@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     const user = this.auth.currentUser
     const esAutentificado = user ? true : false; 
     if(esAutentificado){ 
-      if (user.uid == "k98iqZcvpCakwvYBuPIGXHK1AHJ3") {
+      if (user.uid == "V2vRbCk3qUWSyx1A2L00upQZJqb2") {
         return true;
       }
     

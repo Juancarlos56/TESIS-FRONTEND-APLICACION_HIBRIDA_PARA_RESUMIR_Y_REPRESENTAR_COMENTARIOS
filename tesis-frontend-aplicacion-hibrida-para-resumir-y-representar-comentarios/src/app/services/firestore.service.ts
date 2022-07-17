@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection, docData} from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, docData, addDoc, deleteDoc, doc, setDoc, updateDoc, getDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { PerfilInterface } from '../models/UserInterface';
 import { Usuario } from '../models/Usuario';
 import { Auth } from '@angular/fire/auth';
 import { Storage,ref } from '@angular/fire/storage';
-import { addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { getDownloadURL } from '@angular/fire/storage';
 
 
@@ -28,20 +27,21 @@ export class FirestoreService {
     private firestore : Firestore,
     private storage: Storage,
     private auth: Auth,
-    private database: Firestore
   ) { }
 
   getUsuarios():Observable<PerfilInterface[]>{
-    const userCollection = collection(this.database, 'users');
-    return collectionData(userCollection, {idField:'id'}) as Observable<PerfilInterface[]>;
+    const userCollection = collection(this.firestore, 'users');
+    return collectionData(userCollection, {idField:'uid'}) as Observable<PerfilInterface[]>;
   }
 
-  getUsuarioByID(uid):Observable<PerfilInterface>{
-    const userCollectionRef = doc(this.database, 'users/${uid}');
-    return docData(userCollectionRef, {idField:'uid'}) as Observable<PerfilInterface>;
+  getUsuarioByID(uid:string):Observable<PerfilInterface>{
+    
+    const noteDocRef = doc(this.firestore, `users/${uid}`);
+    return docData(noteDocRef, {idField:'id'}) as Observable<PerfilInterface>
+
   }
 
-  addUsuario(user: Usuario){
+  async addUsuario(user: Usuario){
     const userJson = {
       nombres: user.nombres,
       apellido: user.apellido,
@@ -54,9 +54,7 @@ export class FirestoreService {
       edad: user.edad,
   
     }
-    const userCollectionRef = collection(this.database, 'users');
-    userCollectionRef.id
-    return addDoc(userCollectionRef, userJson);
+    await setDoc(doc(this.firestore, "users", this.auth.currentUser.uid), userJson)
   }
 
   getUsuario(){
