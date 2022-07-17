@@ -22,7 +22,7 @@
 
   <ion-content >
     <div style="height:100% ; width:100% ; display: contents;">
-      <ion-slides style="height: 90% ;" pager="true" [options]="slideOpts">
+      <ion-slides pager="true" [options]="slideOpts">
         <ion-slide>
           
           <ion-img  src="../../../assets/images/slide1.png"></ion-img>
@@ -48,14 +48,20 @@
     
       <div class="gridEtiquetas1">
         <!--Colocar la imagen del restaurante dueno de la aplicacion-->
-        <div>
+        <div style="min-width: 48% ;">
           <ion-card>
             <ion-card-header>
-              <ion-label class="textoContenido">
-                Por favor ayudanos a mejorar nuestro restaurante.<br>
-                Para hacerlo solo tienes que opinar <br> 
-                acerca de nuestro servicios 
-                <Br>Lo que tu piensas es importante para nosotros.
+              <ion-card-title class="textoComentarioTitulo">
+                Eres importante para nosotros.
+              </ion-card-title>
+              <ion-label class="textoContenido"> 
+                Por favor ayúdanos a mejorar nuestro restaurante. <br>
+                Para hacerlo solo tienes que opinar<br>
+                acerca de nuestros servicios <br>
+                <br>
+
+               
+              
               </ion-label>
             </ion-card-header>
           </ion-card>
@@ -73,8 +79,8 @@
                  class="cajaTexto">
               </ion-textarea>
               <ion-note  slot="error" *ngIf="(comentario.dirty || comentario.touched) && comentario.errors">no es Valido</ion-note>
-            <ion-button class="ButtonLogin" (click)="showLoading()"   type="submit" [disabled]="!comen.valid">
-              <span style=" font-size: 20px; font-family: Inter-Bold ">Agregar comentario</span> 
+            <ion-button color="botonClienteInicio" class="ButtonLogin" (click)="showLoading()"   type="submit" [disabled]="!comen.valid">
+              <span>Agregar comentario</span> 
             </ion-button>
           </form>
         </div> 

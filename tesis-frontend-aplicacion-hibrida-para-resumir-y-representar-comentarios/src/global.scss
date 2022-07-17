@@ -43,6 +43,23 @@
 	--ion-color-tint: var(--ion-color-loginbutton-tint);
 }
 
+:root {
+	--ion-color-botonClienteInicio: #f26113;
+	--ion-color-botonClienteInicio-rgb: 104,191,101;
+	--ion-color-botonClienteInicio-contrast: #000000;
+	--ion-color-botonClienteInicio-contrast-rgb: 0,0,0;
+	--ion-color-botonClienteInicio-shade: #ff8000;
+	--ion-color-botonClienteInicio-tint: #ff7c02;
+}
+
+.ion-color-botonClienteInicio {
+	--ion-color-base: var(--ion-color-botonClienteInicio);
+	--ion-color-base-rgb: var(--ion-color-botonClienteInicio-rgb);
+	--ion-color-contrast: var(--ion-color-botonClienteInicio-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-botonClienteInicio-contrast-rgb);
+	--ion-color-shade: var(--ion-color-botonClienteInicio-shade);
+	--ion-color-tint: var(--ion-color-botonClienteInicio-tint);
+}
 
 @font-face {   
 	font-family: 'Inter-Thin';    //This is what we are going to call
@@ -57,4 +74,14 @@
 @font-face {   
 	font-family: 'Inter-Bold';    //This is what we are going to call
 	src: url('./assets/fonts/static/Inter-Bold.ttf');
+}
+
+@font-face {   
+	font-family: 'Julius-Sans-One';    //This is what we are going to call
+	src: url('./assets/fonts/fontsK/JuliusSansOne-Regular.ttf');
+}
+
+@font-face {   
+	font-family: 'OpenSans-Italic-VariableFont_wdth,wght';    //This is what we are going to call
+	src: url('./assets/fonts/fontsK/OpenSans-Italic-VariableFont_wdth,wght.ttf');
 }

@@ -1,160 +1,182 @@
 <ion-app>
   <ion-header class="ion-no-border" collapse="fade">
-    <ion-toolbar class="Page-Header">
-      <ion-title class="title">Edita tu Perfil</ion-title>
+    <ion-toolbar>
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
+      <div class="centrarLogo">
+        <H2>Bienvenido</H2>
+        <div class="redeSociales">
+          <ion-img class="img"  src="../../../assets/images/logo1.png" ></ion-img>
+        </div>
+      </div>
     </ion-toolbar>
   </ion-header>
 
+
+
   <ion-content>
-    <div style="margin-top: 1,5em">
-      <!--Colocar la imagen del restaurante dueno de la aplicacion-->
-      <div class="redeSociales">
-        <ion-icon
-          src="../../../assets/icon/usuPerfil.svg"
-          style="zoom: 10"
-        ></ion-icon>
-      </div>
-    </div>
+    <div class="background" >
+      <div  class="gridEtiquetas1">
+        <div style="min-width: 48% ;">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title class="textoComentarioTitulo">
+                Querido cliente, estás en tu perfil.
+              </ion-card-title>
+              <ion-label class="textoContenido"> 
+                <br>
+                En esta página puedes actualizar tu información, <br>
+                basica y de contacto támbien puedes salir al <br>
+                presionar el botón "LOGOUT". <br>
+                En ese caso esperamos esperamos que vuelva pronto.
+                <br>
 
-    <div style="margin-top: 1em">
-      <form (ngSubmit)="guardarInformacion()" [formGroup]="datos">
-        <ion-item-group>
-          <ion-item class="BG">
-            <ion-input
-              class="nombre"
-              style="padding-inline-start: 0%"
-              placeholder="Nombres"
-              type="text"
-              required
-              formControlName="nombresForm"
-            ></ion-input>
-            <ion-icon
-              name="close-circle-sharp"
-              *ngIf="(nombresForm.dirty || nombresForm.touched) && (nombresForm.errors)"
-            ></ion-icon>
-            <ion-icon
-              name="checkmark-circle-outline"
-              *ngIf="(nombresForm.dirty || nombresForm.touched) && (nombresForm.errors == null)"
-            ></ion-icon>
-          </ion-item>
-
-          <ion-item class="BG">
-            <ion-input
-              class="apellidos"
-              style="padding-inline-start: 0%"
-              placeholder="Apellidos"
-              type="text"
-              required
-              formControlName="apellidosForm"
-            ></ion-input>
-            <ion-icon
-              name="close-circle-sharp"
-              *ngIf="(apellidosForm.dirty || apellidosForm.touched) && (apellidosForm.errors)"
-            ></ion-icon>
-            <ion-icon
-              name="checkmark-circle-outline"
-              *ngIf="(apellidosForm.dirty || apellidosForm.touched) && (apellidosForm.errors == null)"
-            ></ion-icon>
-          </ion-item>
-
-          <ion-item class="BG">
-            <ion-input
-              class="direccion"
-              style="padding-inline-start: 0%"
-              placeholder="Dirección"
-              type="text"
-              required
-              formControlName="direccionForm"
-            ></ion-input>
-            <ion-icon
-              name="close-circle-sharp"
-              *ngIf="(direccionForm.dirty || direccionForm.touched) && (direccionForm.errors)"
-            ></ion-icon>
-            <ion-icon
-              name="checkmark-circle-outline"
-              *ngIf="(direccionForm.dirty || direccionForm.touched) && (direccionForm.errors == null)"
-            ></ion-icon>
-          </ion-item>
-
-          <ion-item class="BG" (click)="showPicker = !showPicker">
-            <ion-label>Fecha de Nacimiento:</ion-label>
-            <ion-text slot="end"> {{formattedString}} </ion-text>
-          </ion-item>
-          <ion-datetime
-            #datatime
-            [value]="dataValue"
-            *ngIf="showPicker"
-            presentation="date"
-            size="cover"
-            (ionChange)="cambiarFecha(datatime.value)"
-            [max]="dataValueTodayMax"
-            (ionCancel)="showPicker=false"
-            style="background-color: white"
-            formControlName="fechaForm"
-          >
-          </ion-datetime>
-          <ion-list class="BG">
-            <ion-item>
-              <ion-select
-                #selectGenero
-                (ionChange)="eleccionGeneroUsuario(selectGenero.value)"
-                cancelText="Cancelar"
-                interface="action-sheet"
-                placeholder="Genero"
-                slot="start"
-                formControlName="generoForm"
-              >
-                <ion-select-option value="Mujeres">Mujeres</ion-select-option>
-                <ion-select-option value="Hombres">Hombres</ion-select-option>
-                <ion-select-option value="lgbtiq+">LGBTIQ+</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-list>
-        </ion-item-group>
-        <div class = "centrar">
-
-            <ion-button
-            color="loginbutton"
-            class="Comenzar"
-            type="submit"
-            [disabled]="!datos.valid"
-            ><span
-              style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold"
-              >ACTUALIZAR </span
-            >
-          </ion-button>
-
-          <ion-button
-            class="Comenzar"
-            color="loginbutton"
-            (click)="salir()"
-            ><span
-              style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold"
-              >LOGOUT</span>
-          </ion-button>
+               
+              
+              </ion-label>
+            </ion-card-header>
+          </ion-card>
         </div>
-      
-
-      </form>
-    </div>
-
-    <div>
-
-      
-    </div>
-  </ion-content>
-
-  <ion-footer collapse="fade">
-    <ion-toolbar>
-      <div class="footerDerechosAutor">
-        <ion-label class="derechosAutor">
-          &#169; 2022 Todos los derechos reservados | Developed by JB & KB
-        </ion-label>
+        
+        <div style="min-width: 48% ;">
+          <ion-card>
+            <div style="margin-top: 1em">
+              <form (ngSubmit)="guardarInformacion()" [formGroup]="datos">
+                <ion-item-group>
+                  <ion-item class="BG">
+                    <ion-input
+                      class="nombre"
+                      style="padding-inline-start: 0%"
+                      placeholder="Nombres"
+                      type="text"
+                      required
+                      formControlName="nombresForm"
+                    ></ion-input>
+                    <ion-icon
+                      name="close-circle-sharp"
+                      *ngIf="(nombresForm.dirty || nombresForm.touched) && (nombresForm.errors)"
+                    ></ion-icon>
+                    <ion-icon
+                      name="checkmark-circle-outline"
+                      *ngIf="(nombresForm.dirty || nombresForm.touched) && (nombresForm.errors == null)"
+                    ></ion-icon>
+                  </ion-item>
+        
+                  <ion-item class="BG">
+                    <ion-input
+                      class="apellidos"
+                      style="padding-inline-start: 0%"
+                      placeholder="Apellidos"
+                      type="text"
+                      required
+                      formControlName="apellidosForm"
+                    ></ion-input>
+                    <ion-icon
+                      name="close-circle-sharp"
+                      *ngIf="(apellidosForm.dirty || apellidosForm.touched) && (apellidosForm.errors)"
+                    ></ion-icon>
+                    <ion-icon
+                      name="checkmark-circle-outline"
+                      *ngIf="(apellidosForm.dirty || apellidosForm.touched) && (apellidosForm.errors == null)"
+                    ></ion-icon>
+                  </ion-item>
+        
+                  <ion-item class="BG">
+                    <ion-input
+                      class="direccion"
+                      style="padding-inline-start: 0%"
+                      placeholder="Dirección"
+                      type="text"
+                      required
+                      formControlName="direccionForm"
+                    ></ion-input>
+                    <ion-icon
+                      name="close-circle-sharp"
+                      *ngIf="(direccionForm.dirty || direccionForm.touched) && (direccionForm.errors)"
+                    ></ion-icon>
+                    <ion-icon
+                      name="checkmark-circle-outline"
+                      *ngIf="(direccionForm.dirty || direccionForm.touched) && (direccionForm.errors == null)"
+                    ></ion-icon>
+                  </ion-item>
+        
+                  <ion-item class="BG" (click)="showPicker = !showPicker">
+                    <ion-label>Fecha de Nacimiento:</ion-label>
+                    <ion-text slot="end"> {{formattedString}} </ion-text>
+                  </ion-item>
+                  <ion-datetime
+                    #datatime
+                    [value]="dataValue"
+                    *ngIf="showPicker"
+                    presentation="date"
+                    size="cover"
+                    (ionChange)="cambiarFecha(datatime.value)"
+                    [max]="dataValueTodayMax"
+                    (ionCancel)="showPicker=false"
+                    style="background-color: white"
+                    formControlName="fechaForm"
+                  >
+                  </ion-datetime>
+                  <ion-list class="BG">
+                    <ion-item>
+                      <ion-select
+                        #selectGenero
+                        (ionChange)="eleccionGeneroUsuario(selectGenero.value)"
+                        cancelText="Cancelar"
+                        interface="action-sheet"
+                        placeholder="Genero"
+                        slot="start"
+                        formControlName="generoForm"
+                      >
+                        <ion-select-option value="Mujeres">Mujeres</ion-select-option>
+                        <ion-select-option value="Hombres">Hombres</ion-select-option>
+                        <ion-select-option value="lgbtiq+">LGBTIQ+</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </ion-list>
+                </ion-item-group>
+                <div class = "centrar">
+        
+                    <ion-button
+                    color="botonClienteInicio"
+                    class="Comenzar"
+                    type="submit"
+                    [disabled]="!datos.valid"
+                    ><span
+                      style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold"
+                      >ACTUALIZAR </span
+                    >
+                  </ion-button>
+        
+                  <ion-button
+                    class="Comenzar"
+                    color="botonClienteInicio"
+                    (click)="salir()"
+                    ><span
+                      style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold"
+                      >LOGOUT</span>
+                  </ion-button>
+                </div>
+              
+        
+              </form>
+            </div>
+    
+          </ion-card>
+        </div >
+        
       </div>
-    </ion-toolbar>
-  </ion-footer>
-  
+     
+    </div>
+    <ion-footer collapse="fade">
+      <ion-toolbar>
+        <div class="footerDerechosAutor">
+          <ion-label class="derechosAutor">
+            &#169; 2022 Todos los derechos reservados | Developed by JB & KB
+          </ion-label>
+        </div>
+      </ion-toolbar>
+    </ion-footer>
+  </ion-content>  
 </ion-app>

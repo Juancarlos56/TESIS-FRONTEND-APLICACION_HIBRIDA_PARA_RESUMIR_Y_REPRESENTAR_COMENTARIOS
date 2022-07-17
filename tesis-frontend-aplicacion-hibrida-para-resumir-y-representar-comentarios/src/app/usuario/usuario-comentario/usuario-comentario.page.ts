@@ -20,7 +20,7 @@ export class UsuarioComentarioPage implements OnInit {
   comen: FormGroup;
 
   slideOpts = {
-    initialSlide: 1,
+    initialSlide: 0,
     speed: 400
   };
   
