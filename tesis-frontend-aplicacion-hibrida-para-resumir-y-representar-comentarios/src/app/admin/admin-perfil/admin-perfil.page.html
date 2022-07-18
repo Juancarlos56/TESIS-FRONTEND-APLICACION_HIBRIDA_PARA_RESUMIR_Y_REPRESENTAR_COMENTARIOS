@@ -59,13 +59,19 @@
         <ion-grid>
           <div>
             <ion-grid>
-              <ion-card style="min-height: 355px; max-width: 355px">
+              <ion-card style="min-height: 250px; max-width: 355px">
                 <ion-card-title class="title1"><ion-icon name="people-sharp"></ion-icon> Sexo</ion-card-title>
                 <ion-icon src="../../../assets/icon/man.svg" class="iconImageGender"></ion-icon>
                 <ion-icon src="../../../assets/icon/woman.svg" class="iconImageGender"></ion-icon>
 
-                <apx-chart [series]="series" [chart]="chartBarHorizontal" [colors]="colors" [plotOptions]="plotOptions" [yaxis]="axesY"></apx-chart>
-           
+
+                <ion-card-content style="text-align: justify;">
+                  <apx-chart [series]="series" [chart]="chartBarHorizontal" [colors]="colors" [plotOptions]="plotOptions" [yaxis]="axesY"></apx-chart>
+                  
+                  {{nombre}}, su negocio cuenta con un total de {{cantidadHombres+cantidadMujeres}} clientes registrados en la aplicación, {{cantidadHombres}} son hombres y {{cantidadMujeres}} Mujeres
+                
+                </ion-card-content>
+                <!--  Informacion de Estrayegias para el negocio
                 <ion-card-content style="text-align: justify;">
                   https://www.nrn.com/consumer-trends/cents-woman-targeting-female-customers
                   https://www.foodabletv.com/blog/2016/3/15/brand-building-connect-female-customer
@@ -73,6 +79,7 @@
                   https://www.dasradler.com/how-to-attract-single-men-and-women-to-your-restaurant-and-increase-profit/
                   https://www.superbexperience.com/experience-matters/restaurant-and-bar-promotion-event-ideas
                 </ion-card-content>
+                -->
               </ion-card>
             </ion-grid>
           </div>
@@ -81,14 +88,23 @@
         <ion-grid>
           <div>
             <ion-card style="min-height: 250px; max-width: 355px">
-              <ion-card-title class="title1"><ion-icon name="people-sharp"></ion-icon> Restaurante</ion-card-title>
+    
+              <ion-card-title class="title1"><ion-icon name="heart"></ion-icon> sus tipos de comentarios</ion-card-title>
             
-              <div style="margin-bottom: 30px" class="chart-container">
-                <canvas id="linear1"></canvas>
-              </div>
-              <ion-content class="ion-padding">
-                <ion-card-content style="text-align: justify;">Ofrezca una comida gratis para niños una noche cada semana para atraer a familias, una hora feliz los fines de semanas para captar a los jóvenes, entre otras. </ion-card-content>
-              </ion-content>
+              
+              <ion-card-content>
+                <apx-chart
+                [series]="chartCalificacionOptions.series"
+                [chart]="chartCalificacionOptions.chart"
+                [colors]="chartCalificacionOptions.colors"
+                [plotOptions]="chartCalificacionOptions.plotOptions"
+                ></apx-chart>
+
+                <ion-card-content style="text-align: justify;">¿Desea observa que opinan sus clientes sobre su negocio?</ion-card-content>
+                <ion-button color="veropciones" class="ButtonVerEstrategias" routerLink="/admin-menu/admin-resumen">Ver Opiniones</ion-button>
+               
+              </ion-card-content>
+              
             </ion-card>
           </div>
         </ion-grid>

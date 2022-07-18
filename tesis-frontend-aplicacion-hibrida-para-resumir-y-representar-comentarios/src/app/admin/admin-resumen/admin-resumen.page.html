@@ -1,30 +1,27 @@
 <ion-app>
   <ion-header>
-    <ion-toolbar class="Page-Header">
-      <div class="Rectangle-239">
-        <div class="logoInicio">
-
-          <ion-title class="title">Perfil Administrador</ion-title>
-          <ion-icon src="../../../assets/icon/sushi.svg" class="Ellipse-6" slot="end"></ion-icon>
-        </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <div class="Rectangle-239">
+      <div class="logoInicio">
+        <ion-icon
+          src="../../assets/icon/terracerestaurant.svg"
+          class="iconImage"
+          slot="end"
+        ></ion-icon>
+        <ion-title class="title">Bienvenido {{nombre}}</ion-title>
       </div>
-    </ion-toolbar>
-
+    </div>
   </ion-header>
 
 
 
   <ion-content>
 
-    <div>
-      <!--Colocar la imagen del restaurante dueno de la aplicacion-->
-      <div class="redeSociales">
-        <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:15.0;"></ion-icon>
-      </div>
-    </div>
+    
     <div class="BG">
-      <ion-list-header>Filtros</ion-list-header>
+      <ion-card-subtitle class="title2">{{nombre}}, puedes filtrar tus comentaios por: </ion-card-subtitle>
+
+      <ion-list-header></ion-list-header>
       <ion-segment style="margin-top: 1em;" value="Todos" (ionChange)="tipoBusqueda($event)">
         <ion-segment-button value="Todos">
           <ion-label>Todos</ion-label>
@@ -40,154 +37,159 @@
         </ion-segment-button>
       </ion-segment>
     </div>
+    <div class="filtro"  *ngIf="tipoBusquedaFiltro!='Todos'"  >
+      <ion-card class="filtroContent">
+        <div *ngIf="tipoBusquedaFiltro=='Sentimiento'"  class="BG" >
   
-    <div *ngIf="tipoBusquedaFiltro=='Sentimiento'"  class="BG" >
-
-      <ion-grid>
-        <ion-radio-group (ionChange)="cargarResumenSentimientos($event)">
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label style="text-align: center;">Exelente</ion-label>
-                <ion-radio slot="start" color="success" value="very positive"></ion-radio>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label>Bueno</ion-label>
-                <ion-radio slot="start" color="primary" value="positive"></ion-radio>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-label>Normal</ion-label>
-                <ion-radio slot="start" color="medium" value="mixed"></ion-radio>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col>
-              <ion-item>
-                <ion-label>Malo</ion-label>
-                <ion-radio slot="start" color="warning" value="negative"></ion-radio>
-              </ion-item>
-            </ion-col>
-            <ion-col>
-              <ion-item>
-                <ion-label>Muy Malo</ion-label>
-                <ion-radio slot="start" color="danger" value="very negative"></ion-radio>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-radio-group>
-      </ion-grid>
-    </div>
-
-    <div *ngIf="tipoBusquedaFiltro=='Fechas'" >
-      <form (ngSubmit)="cargarResumenFechas()" [formGroup]="datos">
-
-        <ion-item class="BG" (click)="showPickerInicio = !showPickerInicio">
-          <ion-label>Fecha Inicio:</ion-label>
-          <ion-text slot="end"> {{formattedStringInicio | date:'yyyy-MM-dd HH:mm:ss'}} </ion-text>
-        </ion-item>
-        <ion-datetime #datatimeInicio [value]="dataValue" *ngIf="showPickerInicio" presentation="date" size="cover"
-          (ionChange)="cambiarFechaInicio(datatimeInicio.value)" [max]="dataValueTodayMax"
-          (ionCancel)="showPickerInicio=false" style="background-color: white" formControlName="fechaInicioForm">
-        </ion-datetime>
-
-        <ion-item class="BG" (click)="showPickerFin = !showPickerFin">
-          <ion-label>Fecha Fin:</ion-label>
-          <ion-text slot="end"> {{formattedStringFin| date:'yyyy-MM-dd HH:mm:ss'}} </ion-text>
-        </ion-item>
-        <ion-datetime #datatimeFin [value]="dataValue" *ngIf="showPickerFin" presentation="date" size="cover"
-          (ionChange)="cambiarFechaFin(datatimeFin.value)" [max]="dataValueTodayMax" (ionCancel)="showPickerFin=false"
-          style="background-color: white" formControlName="fechaFinForm">
-        </ion-datetime>
-
-        <ion-button color="loginbutton" class="BG" type="submit" expand="block" [disabled]="!datos.valid"><span
-            style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold">Ver Comentarios</span>
-        </ion-button>
-      </form>
-    </div>
-
-    <!------------------------------------------------------------------------->
-    <div *ngIf="tipoBusquedaFiltro=='Ambas'"  class="BG" >
-
+          <ion-grid>
+            <ion-radio-group (ionChange)="cargarResumenSentimientos($event)">
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label style="text-align: center;">Exelente</ion-label>
+                    <ion-radio slot="start" color="success" value="very positive"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+    
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Bueno</ion-label>
+                    <ion-radio slot="start" color="primary" value="positive"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Normal</ion-label>
+                    <ion-radio slot="start" color="medium" value="mixed"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+    
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Malo</ion-label>
+                    <ion-radio slot="start" color="warning" value="negative"></ion-radio>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>Muy Malo</ion-label>
+                    <ion-radio slot="start" color="danger" value="very negative"></ion-radio>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </ion-grid>
+        </div>
+    
+        <div *ngIf="tipoBusquedaFiltro=='Fechas'" >
+          <form (ngSubmit)="cargarResumenFechas()" [formGroup]="datos">
+    
+            <ion-item class="BG" (click)="showPickerInicio = !showPickerInicio">
+              <ion-label>Fecha Inicio:</ion-label>
+              <ion-text slot="end"> {{formattedStringInicio | date:'yyyy-MM-dd HH:mm:ss'}} </ion-text>
+            </ion-item>
+            <ion-datetime #datatimeInicio [value]="dataValue" *ngIf="showPickerInicio" presentation="date" size="cover"
+              (ionChange)="cambiarFechaInicio(datatimeInicio.value)" [max]="dataValueTodayMax"
+              (ionCancel)="showPickerInicio=false" style="background-color: white" formControlName="fechaInicioForm">
+            </ion-datetime>
+    
+            <ion-item class="BG" (click)="showPickerFin = !showPickerFin">
+              <ion-label>Fecha Fin:</ion-label>
+              <ion-text slot="end"> {{formattedStringFin| date:'yyyy-MM-dd HH:mm:ss'}} </ion-text>
+            </ion-item>
+            <ion-datetime #datatimeFin [value]="dataValue" *ngIf="showPickerFin" presentation="date" size="cover"
+              (ionChange)="cambiarFechaFin(datatimeFin.value)" [max]="dataValueTodayMax" (ionCancel)="showPickerFin=false"
+              style="background-color: white" formControlName="fechaFinForm">
+            </ion-datetime>
+    
+            <ion-button color="loginbutton" class="BG" type="submit" expand="block" [disabled]="!datos.valid"><span
+                style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold">Ver Comentarios</span>
+            </ion-button>
+          </form>
+        </div>
+    
+        <!------------------------------------------------------------------------->
+        <div *ngIf="tipoBusquedaFiltro=='Ambas'"  class="BG" >
+    
+          
+          <form (ngSubmit)="cargarResumenFechasSentimiento()" [formGroup]="datos">
+            
+    
+            <ion-item class="BG" (click)="showPickerInicio = !showPickerInicio">
+              <ion-label>Fecha Inicio:</ion-label>
+              <ion-text slot="end"> {{formattedStringInicio | date:'yyyy-MM-dd HH:mm:ss'}} </ion-text>
+            </ion-item>
+            <ion-datetime #datatimeInicio [value]="dataValue" *ngIf="showPickerInicio" presentation="date" size="cover"
+              (ionChange)="cambiarFechaInicio(datatimeInicio.value)" [max]="dataValueTodayMax"
+              (ionCancel)="showPickerInicio=false" style="background-color: white" formControlName="fechaInicioForm">
+            </ion-datetime>
+    
+            <ion-item class="BG" (click)="showPickerFin = !showPickerFin">
+              <ion-label>Fecha Fin:</ion-label>
+              <ion-text slot="end"> {{formattedStringFin| date:'yyyy-MM-dd HH:mm:ss'}} </ion-text>
+            </ion-item>
+            <ion-datetime #datatimeFin [value]="dataValue" *ngIf="showPickerFin" presentation="date" size="cover"
+              (ionChange)="cambiarFechaFin(datatimeFin.value)" [max]="dataValueTodayMax" (ionCancel)="showPickerFin=false"
+              style="background-color: white" formControlName="fechaFinForm">
+            </ion-datetime>
+    
+            <ion-grid>
+              <ion-list-header>Sentimiento</ion-list-header>
+              <ion-radio-group (ionChange)="actualizarValoresBusquedas($event)">
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label style="text-align: center;">Exelente</ion-label>
+                      <ion-radio slot="start" color="success" value="very positive"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
       
-      <form (ngSubmit)="cargarResumenFechasSentimiento()" [formGroup]="datos">
-        
-
-        <ion-item class="BG" (click)="showPickerInicio = !showPickerInicio">
-          <ion-label>Fecha Inicio:</ion-label>
-          <ion-text slot="end"> {{formattedStringInicio | date:'yyyy-MM-dd HH:mm:ss'}} </ion-text>
-        </ion-item>
-        <ion-datetime #datatimeInicio [value]="dataValue" *ngIf="showPickerInicio" presentation="date" size="cover"
-          (ionChange)="cambiarFechaInicio(datatimeInicio.value)" [max]="dataValueTodayMax"
-          (ionCancel)="showPickerInicio=false" style="background-color: white" formControlName="fechaInicioForm">
-        </ion-datetime>
-
-        <ion-item class="BG" (click)="showPickerFin = !showPickerFin">
-          <ion-label>Fecha Fin:</ion-label>
-          <ion-text slot="end"> {{formattedStringFin| date:'yyyy-MM-dd HH:mm:ss'}} </ion-text>
-        </ion-item>
-        <ion-datetime #datatimeFin [value]="dataValue" *ngIf="showPickerFin" presentation="date" size="cover"
-          (ionChange)="cambiarFechaFin(datatimeFin.value)" [max]="dataValueTodayMax" (ionCancel)="showPickerFin=false"
-          style="background-color: white" formControlName="fechaFinForm">
-        </ion-datetime>
-
-        <ion-grid>
-          <ion-list-header>Sentimiento</ion-list-header>
-          <ion-radio-group (ionChange)="actualizarValoresBusquedas($event)">
-            <ion-row>
-              <ion-col>
-                <ion-item>
-                  <ion-label style="text-align: center;">Exelente</ion-label>
-                  <ion-radio slot="start" color="success" value="very positive"></ion-radio>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-  
-            <ion-row>
-              <ion-col>
-                <ion-item>
-                  <ion-label>Bueno</ion-label>
-                  <ion-radio slot="start" color="primary" value="positive"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col>
-                <ion-item>
-                  <ion-label>Normal</ion-label>
-                  <ion-radio slot="start" color="medium" value="mixed"></ion-radio>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-  
-            <ion-row>
-              <ion-col>
-                <ion-item>
-                  <ion-label>Malo</ion-label>
-                  <ion-radio slot="start" color="warning" value="negative"></ion-radio>
-                </ion-item>
-              </ion-col>
-              <ion-col>
-                <ion-item>
-                  <ion-label>Muy Malo</ion-label>
-                  <ion-radio slot="start" color="danger" value="very negative"></ion-radio>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-radio-group>
-        </ion-grid>
-
-        <ion-button color="loginbutton" class="BG" type="submit" expand="block" [disabled]="!datos.valid"><span
-            style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold">Ver Comentarios</span>
-        </ion-button>
-      </form>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>Bueno</ion-label>
+                      <ion-radio slot="start" color="primary" value="positive"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>Normal</ion-label>
+                      <ion-radio slot="start" color="medium" value="mixed"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+      
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>Malo</ion-label>
+                      <ion-radio slot="start" color="warning" value="negative"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>Muy Malo</ion-label>
+                      <ion-radio slot="start" color="danger" value="very negative"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+            </ion-grid>
+    
+            <ion-button color="loginbutton" class="BG" type="submit" expand="block" [disabled]="!datos.valid"><span
+                style="color: #f6f6f6; font-size: 20px; font-family: Inter-Bold">Ver Comentarios</span>
+            </ion-button>
+          </form>
+        </div>
+      </ion-card>
     </div>
+    
+    
     <!------------------------------------------------------------------------->
 
 

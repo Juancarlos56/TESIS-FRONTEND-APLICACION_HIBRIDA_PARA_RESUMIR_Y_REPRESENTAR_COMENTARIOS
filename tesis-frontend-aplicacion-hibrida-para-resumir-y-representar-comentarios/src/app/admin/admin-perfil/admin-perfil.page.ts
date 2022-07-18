@@ -7,12 +7,25 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import Chart from 'chart.js/auto';
+import Chart, { ChartOptions } from 'chart.js/auto';
 import { Key } from 'protractor';
 import { GraficaServiceService } from 'src/app/services/grafica-service.service';
 import { AuthService } from '../../services/auth.service';
 import { FirestoreService } from '../../services/firestore.service';
-import { NgApexchartsModule } from 'ng-apexcharts';
+import { ChartComponent, NgApexchartsModule, ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexTitleSubtitle, ApexPlotOptions, ApexLegend } from 'ng-apexcharts';
+
+
+export type ChartCalificacionOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  title: ApexTitleSubtitle;
+  plotOptions: ApexPlotOptions;
+  legend: ApexLegend;
+  colors: string[];
+};
+
+
 
 @Component({
   selector: 'app-admin-perfil',
@@ -56,6 +69,13 @@ export class AdminPerfilPage implements OnInit {
   public colors = [];
   public axesY = {};
 
+  @ViewChild("chartCalificacion") chartCalificacion: ChartComponent;
+  public chartCalificacionOptions: Partial<ChartCalificacionOptions> = {series : [{data: []}],
+                                                                        chart: {height: 350,
+                                                                        type: "treemap"},
+                                                                        title: {text: "Basic Treemap"}, 
+                                                                        colors:[]};
+
   constructor(
     private usurio: AuthService,
     private user: FirestoreService,
@@ -81,15 +101,15 @@ export class AdminPerfilPage implements OnInit {
     this.dataGraficaService.dataParaGraficaPorGenero().then((res) => {
       this.label = res.genero as [];
       this.data = res.count as [];
-      this.cantidadHombres = this.dataL[0];
-      this.cantidadMujeres = this.dataL[1];
+      this.cantidadHombres = this.data[0];
+      this.cantidadMujeres = this.data[1];
       this.graficaBarraHorizontal(this.data, this.label);
     });
 
     this.dataGraficaService.dataNumeroComentariosPorTipo().then((res) => {
       this.labelL = res.sentimiento as [];
       this.dataL = res.count as [];
-      this.graficaBar(this.dataL, this.idGraficoL, this.labelL);
+      this.graficaHeadmap(this.dataL, this.labelL);
     });
 
     this.dataGraficaService.dataEdadUsuarios().then((res) => {
@@ -180,5 +200,46 @@ export class AdminPerfilPage implements OnInit {
         },
       },
     });
+  }
+  
+  graficaHeadmap(data, label){
+    this.chartCalificacionOptions = {
+        series : [
+          {
+            data: [
+              {x:'Muy Bueno',y:data[0]},
+              {x:label[1],y:data[1]},
+              {x:label[2],y:data[2]},
+              {x:label[3],y:data[3]},
+              {x:'Muy Malo',y:data[4]}
+            ]
+          }
+        ],
+  
+        chart: {
+         
+          type: "treemap"
+        },
+        title: {
+          text: "Basic Treemap"
+        }, 
+        colors: [
+          "#76b536",
+          "#5C8282",
+          "#FFCE41",
+          "#93959E",
+          "#FF7A5B",
+          "#EC4156",
+        ],
+        plotOptions: {
+          treemap: {
+            distributed: true,
+            enableShades: false
+          }
+        }
+      };
+  
+  /*
+    */  
   }
 }

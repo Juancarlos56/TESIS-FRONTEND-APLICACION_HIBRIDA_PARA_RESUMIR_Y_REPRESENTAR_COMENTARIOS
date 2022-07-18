@@ -5,6 +5,7 @@ import { ResumenServiceService } from 'src/app/services/resumen-service.service'
 import { format, parseISO } from 'date-fns';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comentario } from 'src/app/models/Note';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-admin-resumen',
@@ -12,6 +13,10 @@ import { Comentario } from 'src/app/models/Note';
   styleUrls: ['./admin-resumen.page.scss'],
 })
 export class AdminResumenPage implements OnInit {
+
+  //Parametros para mensajes e informacion
+  public nombre: String = '';
+
 
   public notes = [];
   public agnosPersonalizados = [2020, 2016, 2008, 2004, 2000, 1996];
@@ -34,19 +39,25 @@ export class AdminResumenPage implements OnInit {
   public sentimientoFecha = ''
 
 
-  constructor(private listaService : FirestoreService,
+  constructor(private usurio: AuthService,
+              private listaService : FirestoreService,
               private resumenService: ResumenServiceService,
               private fb: FormBuilder) {
     this.setToday()
   }
   
   setToday() {
+    
     this.formattedStringInicio = format(parseISO(this.dataValue), 'yyyy-MM-d HH:mm:ss');
     this.formattedStringFin = format(parseISO(this.dataValue), 'yyyy-MM-d HH:mm:ss');
   }        
 
   ngOnInit() {
-   
+    this.listaService
+    .getUsuarioByID(this.usurio.getUserProfile().uid)
+    .subscribe((res) => {
+      this.nombre = res.nombres;
+    });
     this.obtenertodosComentarios()
     this.datos = this.fb.group({
       fechaInicioForm: ['', [Validators.required]],
