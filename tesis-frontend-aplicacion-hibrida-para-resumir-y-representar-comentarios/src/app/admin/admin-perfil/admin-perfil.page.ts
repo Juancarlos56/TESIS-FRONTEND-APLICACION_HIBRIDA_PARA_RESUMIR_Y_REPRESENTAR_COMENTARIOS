@@ -1,8 +1,30 @@
-import { Component, ElementRef, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Platform } from '@ionic/angular';
-import Chart from 'chart.js/auto';
+import Chart, { ChartOptions } from 'chart.js/auto';
 import { Key } from 'protractor';
 import { GraficaServiceService } from 'src/app/services/grafica-service.service';
+import { AuthService } from '../../services/auth.service';
+import { FirestoreService } from '../../services/firestore.service';
+import { ChartComponent, NgApexchartsModule, ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexTitleSubtitle, ApexPlotOptions, ApexLegend } from 'ng-apexcharts';
+
+
+export type ChartCalificacionOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  title: ApexTitleSubtitle;
+  plotOptions: ApexPlotOptions;
+  legend: ApexLegend;
+  colors: string[];
+};
+
 
 
 @Component({
@@ -11,193 +33,213 @@ import { GraficaServiceService } from 'src/app/services/grafica-service.service'
   styleUrls: ['./admin-perfil.page.scss'],
 })
 export class AdminPerfilPage implements OnInit {
-
-  public milinearChart : Chart;
-  public milinearChart1 : Chart;
+  public milinearChart: Chart;
+  public milinearChart1: Chart;
   public milinearChart2: Chart;
-  public linearChart : Chart;
-  public barChart : Chart;
+  public linearChart: Chart;
+  public barChart: Chart;
+
+  public data = [];
+  public data1 = [];
+
+  //GRAFICAS PASTEL
+  public label = [];
+  public label1 = [];
+
+  //GRAFICAS
+  public labelL = [];
 
 
-  public data= [];
-  public data1= [];
+  public dataL = [];
+  public idGraficoL = 'linear1';
+  public idGraficoB = 'bar1';
 
-//GRAFICAS PASTEL
-  public label= [];
-  public label1= [];
+  //Parametros para mensajes e informacion
+  public nombre: String = '';
+  public enfoqueEnEdadesMayor: number = 0;
+  public enfoqueEnEdadesMenor: number = 0;
+  public isOpen = false;
+  public cantidadHombres = '';
+  public cantidadMujeres = '';
 
-//GRAFICAS 
-  public labelL= [];
+  //Configuracion de valores para barra horizontal
+  public series = [];
+  public chartBarHorizontal = {};
+  public plotOptions = {};
+  public colors = [];
+  public axesY = {};
 
+  @ViewChild("chartCalificacion") chartCalificacion: ChartComponent;
+  public chartCalificacionOptions: Partial<ChartCalificacionOptions> = {series : [{data: []}],
+                                                                        chart: {height: 350,
+                                                                        type: "treemap"},
+                                                                        title: {text: "Basic Treemap"}, 
+                                                                        colors:[]};
 
-  
-  public label2= ['RED','AMA', 'GREEN']
-
-
-  public idGrafico='pastel1';
-  public idGrafico1='pastel2';
-  public idGrafico2='pastel3';
-  public idGrafico3= 'pastel4'
-
-  public dataL =[];
-  public idGraficoL='linear1';
-  public idGraficoB='bar1';
-  public idGraficoL2='linear3';
-
-
-
-
-
-  constructor(private platform: Platform, 
-              private  dataGraficaService: GraficaServiceService) { 
-
-  }
+  constructor(
+    private usurio: AuthService,
+    private user: FirestoreService,
+    private dataGraficaService: GraficaServiceService
+  ) {}
   ngOnInit() {
-  
+    this.user
+      .getUsuarioByID(this.usurio.getUserProfile().uid)
+      .subscribe((res) => {
+        this.nombre = res.nombres;
+      });
     this.crearData();
-
   }
 
-  crearData(){
-    this.dataGraficaService.dataParaGraficaPorGenero().then(res=>{
-      this.label = res.genero as []  ;   
-      this.data = res.count as [];
-      console.log(this.data);
-      this.graficaPastel(this.data, this.idGrafico, this.label);
+  setOpen(isOpen: boolean) {
+    this.isOpen = isOpen;
+  }
+  openModalComentario(isOpen: boolean) {
+    this.isOpen = isOpen;
+  }
 
+  crearData() {
+    this.dataGraficaService.dataParaGraficaPorGenero().then((res) => {
+      this.label = res.genero as [];
+      this.data = res.count as [];
+      this.cantidadHombres = this.data[0];
+      this.cantidadMujeres = this.data[1];
+      this.graficaBarraHorizontal(this.data, this.label);
     });
 
-    this.dataGraficaService.dataNumeroComentariosPorTipo().then(res=>{
+    this.dataGraficaService.dataNumeroComentariosPorTipo().then((res) => {
       this.labelL = res.sentimiento as [];
       this.dataL = res.count as [];
-      const titulo='Comentarios por tipo'
-      this.graficaBar(this.dataL, this.idGraficoL, this.labelL, titulo);
-
+      this.graficaHeadmap(this.dataL, this.labelL);
     });
 
-    this.dataGraficaService.dataEdadUsuarios().then(res=>{
+    this.dataGraficaService.dataEdadUsuarios().then((res) => {
       this.label = res.rango as [];
-      this.data = res.count as []
-      const titulo = 'Edad de Usuarios'
-      this.graficaBar(this.data, this.idGraficoB, this.label, titulo)
+      this.data = res.count as [];
+      let cont = 0;
+      let cont2 = 10000000000;
+      let aux = 0;
+      let posicion = -1;
+      let posicion2 = -1;
 
-    });
-
-
-
-  }
-
-
-  crearGraficas(){
-    this.graficaPastel(this.data, this.idGrafico1, this.label1);
-    this.graficaPastel(this.data, this.idGrafico2, this.label2);
-    this.graficaPastel(this.data, this.idGrafico3, this.label2)
-
-    this.graficaLineal(this.dataL, this.idGraficoL2, this.labelL);
-
-
-  }
-
-graficaPastel(data, idGraficaP, label){
-  this.milinearChart= new Chart(idGraficaP, { 
-    type: 'doughnut',
-    data : {
-      labels: label,
-      datasets: [{
-        label: 'My First Dataset',
-        data: data,
-        backgroundColor: [
-          '#446AA3',
-          '#DEE2FF',
-          '#B3B9E8'
-        ],
-      }]
-    },
-    options: {
-      
-  }
-  });
-}
-
-graficaLineal(dataL, idGraficaL, labelL){
-
-    this.linearChart= new Chart(idGraficaL, {
-      type: 'line',
-      data: {
-        labels: labelL,
-        datasets: [{
-            label: 'Tipo de Comentarios',
-            data: dataL,
-            backgroundColor: [
-              '#446AA3',
-              '#DEE2FF',
-              '#B3B9E8',
-              '#E8B3B7',
-              '#9C595F',
-              'rgba(38, 24, 74, 0.8)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-      options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
+      this.data.forEach((valor) => {
+        if (valor >= cont) {
+          cont = valor;
+          posicion = aux;
         }
-    }
+        if (valor < cont2 && valor > 0) {
+          cont2 = valor;
+          posicion2 = aux;
+        }
+        aux++;
+      });
+      this.enfoqueEnEdadesMayor = this.label[posicion];
+      this.enfoqueEnEdadesMenor = this.label[posicion2];
+
+      this.graficaBar(this.data, this.idGraficoB, this.label);
     });
   }
 
-  graficaBar(data, idGraficoBar, labelB, titulo ){
-    this.barChart  = new Chart(idGraficoBar, {
+
+  graficaBarraHorizontal(data, label) {
+    this.series = [
+      {
+        name: label[0],
+        data: [data[0]],
+      },
+      {
+        name: label[1],
+        data: [data[1]],
+      },
+    ];
+    this.colors = ['#CF9F69', '#00512D'];
+    this.axesY = {
+      show: false,
+    };
+    this.chartBarHorizontal = {
+      type: 'bar',
+      stacked: true,
+      stackType: '100%',
+    };
+
+    this.plotOptions = {
+      bar: {
+        horizontal: true,
+      },
+    };
+  }
+
+  graficaBar(data, idGraficoBar, labelB) {
+    this.barChart = new Chart(idGraficoBar, {
       type: 'bar',
       data: {
         labels: labelB,
-        datasets: [{
-            label: titulo, 
+        datasets: [
+          {
+            label: '',
             data: data,
             backgroundColor: [
-              '#446AA3',
-              '#DEE2FF',
-              '#B3B9E8',
-              '#E8B3B7',
-              '#9C595F',
-              'rgba(38, 24, 74, 0.8)'
-
-
-                        ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+              '#A2C2C2',
+              '#5C8282',
+              '#3E5858',
+              '#93959E',
+              '#56756',
+              '#eadbf9',
             ],
+
             borderWidth: 1,
             order: 1,
-        }]
-    },
+          },
+        ],
+      },
       options: {
         indexAxis: 'y',
         scales: {
-          
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
     });
-
   }
-
+  
+  graficaHeadmap(data, label){
+    this.chartCalificacionOptions = {
+        series : [
+          {
+            data: [
+              {x:'Muy Bueno',y:data[0]},
+              {x:label[1],y:data[1]},
+              {x:label[2],y:data[2]},
+              {x:label[3],y:data[3]},
+              {x:'Muy Malo',y:data[4]}
+            ]
+          }
+        ],
+  
+        chart: {
+         
+          type: "treemap"
+        },
+        title: {
+          text: "Basic Treemap"
+        }, 
+        colors: [
+          "#76b536",
+          "#5C8282",
+          "#FFCE41",
+          "#93959E",
+          "#FF7A5B",
+          "#EC4156",
+        ],
+        plotOptions: {
+          treemap: {
+            distributed: true,
+            enableShades: false
+          }
+        }
+      };
+  
+  /*
+    */  
+  }
 }

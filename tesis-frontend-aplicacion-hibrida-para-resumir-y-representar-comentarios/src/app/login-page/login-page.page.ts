@@ -71,11 +71,8 @@ export class LoginPagePage implements OnInit {
   }
 
   async iniciarConGoogle(){
-    //const usuario = await GoogleAuth.signIn();
+    
    this.authService.elPoderosoLOGINCONGOOGLE();
-   // this.authService.login2();
-   // this.authService.login3();
-    //console.log('user:', usuario);
     this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
 
   }
@@ -87,7 +84,6 @@ export class LoginPagePage implements OnInit {
 
   async singOutG (){
     await GoogleAuth.signOut();
-  // usuario=null
   }
 
   

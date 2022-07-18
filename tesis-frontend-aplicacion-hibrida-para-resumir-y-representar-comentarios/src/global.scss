@@ -1,3 +1,4 @@
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -61,6 +62,27 @@
 	--ion-color-tint: var(--ion-color-botonClienteInicio-tint);
 }
 
+
+
+:root {
+	--ion-color-veropciones: #56756d;
+	--ion-color-veropciones-rgb: 86,117,109;
+	--ion-color-veropciones-contrast: #FBFBFF;
+	--ion-color-veropciones-contrast-rgb: 86,117,109,46;
+	--ion-color-veropciones-shade: #56756d;
+	--ion-color-veropciones-tint: #56756d;
+}
+
+.ion-color-veropciones {
+	--ion-color-base: var(--ion-color-veropciones);
+	--ion-color-base-rgb: var(--ion-color-veropciones-rgb);
+	--ion-color-contrast: var(--ion-color-veropciones-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-veropciones-contrast-rgb);
+	--ion-color-shade: var(--ion-color-veropciones-shade);
+	--ion-color-tint: var(--ion-color-veropciones-tint);
+}
+
+
 @font-face {   
 	font-family: 'Inter-Thin';    //This is what we are going to call
 	src: url('./assets/fonts/static/Inter-Thin.ttf');
@@ -84,4 +106,5 @@
 @font-face {   
 	font-family: 'OpenSans-Italic-VariableFont_wdth,wght';    //This is what we are going to call
 	src: url('./assets/fonts/fontsK/OpenSans-Italic-VariableFont_wdth,wght.ttf');
+
 }

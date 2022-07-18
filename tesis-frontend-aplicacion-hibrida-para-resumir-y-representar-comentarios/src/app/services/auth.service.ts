@@ -65,6 +65,7 @@ export class AuthService {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        return user;
       })
       .catch((error) => {
         // Handle Errors here.
@@ -112,7 +113,7 @@ export class AuthService {
     try {
       const user = await signInWithEmailAndPassword(this.auth, email, password);
       if (user) {
-        if(user.user.uid == 'k98iqZcvpCakwvYBuPIGXHK1AHJ3'){
+        if(user.user.uid == 'V2vRbCk3qUWSyx1A2L00upQZJqb2'){
           this.router.navigateByUrl('/admin-menu/admin-perfil', { replaceUrl: true });
         }else{ 
           this.router.navigateByUrl('/usuario-menu', { replaceUrl: true });
