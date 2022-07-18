@@ -8,7 +8,7 @@
       </ion-buttons>
 
       <div class="centrarLogo">
-        <H2>Bienvenido</H2>
+        <H2>Aquí encontrarás todos tus comentarios</H2>
         <div class="redeSociales">
           <ion-img class="img"  src="../../../assets/images/logo1.png" ></ion-img>
   
@@ -34,13 +34,13 @@
         
       </div>
   
-      <div>
+      <div class="gridEtiquetas1">
         <ion-grid>
           <ion-row>
             <ion-col *ngFor="let note of notes">
               <div>
-                <ion-list>
-                  <ion-card (click)="openModalComentario(note, true)" style="height: 200px ;max-height: 300px; min-width: 300px;">
+                <ion-list class="estiloTarjetaBorde">
+                  <ion-card (click)="openModalComentario(note, true)" class="estiloTarjeta">
                     <ion-card-header>
                       <ion-card-title style="text-transform: capitalize">
                         {{note.resumen_comentario}}</ion-card-title

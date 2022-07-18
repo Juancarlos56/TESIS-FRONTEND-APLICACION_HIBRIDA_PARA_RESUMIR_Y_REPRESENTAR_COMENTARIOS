@@ -59,7 +59,7 @@ export class UsuarioComentarioPage implements OnInit {
 
   async showLoading() {
     const loading = await this.loadingCtrl.create({
-      message: 'Estamos creando tu comentario,  3 segundos...',
+      message: 'Estamos guardando tu comentario, espera un momento por favor',
       duration: 7000
     });
     
@@ -75,9 +75,9 @@ export class UsuarioComentarioPage implements OnInit {
     this.resumen.tipoComentarioApiRest(comentarioValor).then(async res=>{
       const response= await this.resumen.guardarComentario( usercorreo, comentarioValor, res.label);
       if (response=='True') {
-        this.showAlertGuardaComentario('Comentario Guardado','Sigue agregando más comentarios');
+        this.showAlertGuardaComentario(' Tú comentario ha sido guardado','Por favor, sigue agregando más comentarios');
       } else {
-        this.showAlert('Comentario Fallido', 'Por favor, Intente de nuevo!');
+        this.showAlert('El comentario no se guardo.', 'Por favor, Intente de nuevo!');
       }  
     })
     
