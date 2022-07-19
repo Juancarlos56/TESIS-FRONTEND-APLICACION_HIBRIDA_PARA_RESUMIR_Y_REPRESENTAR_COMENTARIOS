@@ -1,10 +1,45 @@
+.titulo{
+  color: #000000;
+  font-size: 3em;
+  font-family: Gidole-Regular !important;
+
+}
+.logo{
+  zoom: 16;
+  margin-top: 0.7em;
+}
+
+
+.logoSlide2{
+  zoom: 2.5;
+
+}
+
+
+.gridInicio{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  flex-direction: row;
+
+}
+
+.estiloLogin{
+  width: 100%;
+}
+
+
+
+
+
+
 ////////////////////////////css para encabezado
 
 .background{
-  background-image:url(../../assets/images/fondoLogin.png);
+  background-image:url(../../assets/formasIcon/blob.svg);
   width: 100%;
-  min-height: 100%;
-   
 }
 
 .centrarLogo{
@@ -61,28 +96,50 @@ h2{
 /////////////////////////////////////////////////////////
 ///contenido 
 
+.gridParaPantalla{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-content: center;
+  flex-direction: row;
+}
 .gridEtiquetas1{
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  min-width: 90%;
+  min-width: 100%;
   height: 100%;
   justify-content: center;
   align-content: center;
   flex-direction: row;
 }
 
+.gridEtiquetas2{
+  display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    min-width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: flex-start;
+    flex-direction: row;
+}
+
+
 ////////////////
 ion-card {
-  background-color: #0000003d;
+  background-color: #ffffff;
   text-align: center;
   margin-top: 4em;
+  box-shadow: none;
 }
 .textoComentarioTitulo{
-  color: #ff4800;
+  color: #000000;
   font-size: 2.5em;
-  font-family: Julius-Sans-One !important;
-  text-shadow: 0 0 black;
+  font-family: 'Gidole-Regular';
 
 }
 
@@ -114,45 +171,31 @@ ion-card {
 }
 
 .BG {
-    //arriba - derecha - abajo - izquierda
-    //margin: 44px 30px 18px 30px;
-    margin: 1.0em 1.5em 1.25em 1.0em;
-    height: 50px !important;
-    min-height: 30px;
-    max-height: 100px;
-    border: solid 4px #f6f6f6;
-    border-radius: 15px;
-    background-color: #f6f6f6;
+  height: 80px !important;
+  min-height: 30px;
+  max-height: 100px;
+  text-align: center;
+  color: black;
+  font-family: 'Gidole-Regular';
 }
 
 
 .Email {
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
+  text-align: left;
+  font-size: 1em;
+  font-family: 'Gidole-Regular';
 }
 
 .Password {
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
+  text-align: left;
+  font-size: 1em;
+  font-family: 'Gidole-Regular';
 }
 
 .Show {
-    font-size: 16px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: right;
-    color: #5db075;
+  text-align: left;
+  font-size: 1em;
+  font-family: 'Gidole-Regular';
 }
 
 .Olvidaste-tu-contrasea {
@@ -176,19 +219,15 @@ ion-card {
     align-items: center;
     gap: 12px;
     border-radius: 100px;
+    margin-top: -30px;
   }
 
   .O-inicia-sesin-con {
-    margin: 2.5em 0em 0.5em 0em;
+    margin: 2.5em 0em 2.5em 0em;
     display: flex;
+    font-family: 'Gidole-Regular';
     justify-content: center;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: center;
-    color: #ffffff;
+    font-size: 1em;
   }
 
   .redeSociales {
@@ -219,16 +258,10 @@ ion-card {
   }
 
   .linkToRegistrarStyle {
-    font-family: Inter-Thin !important;
-    margin: 1.0em 1.5em 1.5em 2.5em;
-    font-size: 13px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: #ffffff;
+    font-family: "Gidole-Regular";
+    margin-bottom: 2.5em;
+    font-size: 14px;
+    margin-top: 1.5em;
     
   }
 
