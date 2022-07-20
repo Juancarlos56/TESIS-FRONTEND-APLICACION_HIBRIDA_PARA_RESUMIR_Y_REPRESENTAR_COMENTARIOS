@@ -1,78 +1,237 @@
 <ion-app>
-  
   <ion-header>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <div class="Rectangle-239">
       <div class="logoInicio">
-        <ion-title class="title">Hola de nuevo <br>{{nombre}}</ion-title>
+        <ion-title class="title">Hola de nuevo <br />{{nombre}}</ion-title>
       </div>
     </div>
   </ion-header>
-<ion-content>
-  <div>
+  <ion-content>
+    <div>
+      <ion-list-header
+        style="
+          justify-content: center;
+          width: 100%;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          font-size: 14pt;
+          margin-top: 1em;
+          flex-direction: column;
+        "
+        >Analizando Tus Redes Sociales</ion-list-header
+      >
 
-    <div  style="display: flex; flex-direction: row; flex-wrap: wrap;     align-self: flex-start">
-        <div class="BG" >
-          <ion-list-header style="justify-content: center;">Analizando Tus Redes Sociales</ion-list-header>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-self: flex-start;
+        "
+      >
+        <div class="BG">
           <ion-card>
             <ion-card-header>
-              <ion-card-subtitle style="text-transform: none; font-size: 17px;">Ingrese esta información: </ion-card-subtitle>
+              <ion-card-subtitle style="text-transform: none; font-size: 17px"
+                >Desea buscar por Fecha:
+              </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-              
-              <ion-list style="margin-bottom: 1em;">
+              <ion-list style="margin-bottom: 1em">
                 <ion-item>
-                  <ion-label>Token: </ion-label>
-                  <ion-input placeholder="Ingrese Token Facebook" [(ngModel)]="token" required="true"></ion-input>
+                  <ion-label>Desde: </ion-label>
+                  <ion-input
+                    placeholder="buscar desde"
+                    [(ngModel)]="fechaInicio"
+                    required="true"
+                  ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label>Hasta: </ion-label>
+                  <ion-input
+                    placeholder="buscar hasta"
+                    [(ngModel)]="fechaFin"
+                    required="true"
+                  ></ion-input>
                 </ion-item>
               </ion-list>
-              
-              <ion-note slot="end" style="font-size: 15px; width: 100%; text-align: right;justify-content: right; float: left;">Token expira en una hora</ion-note>
-              <ion-label style="margin-top: 1em;">¿Desea obtener los comentarios de su pagina de Facebook?</ion-label>
-              <ion-button color="veropciones" class="ButtonObtener" (click)="obtenerComentariosFacebook()">Obtener</ion-button>  
 
+              <ion-note
+                slot="end"
+                style="
+                  font-size: 15px;
+                  width: 100%;
+                  text-align: right;
+                  justify-content: right;
+                  float: left;
+                "
+                >Token expira en una hora</ion-note
+              >
+              <ion-label style="margin-top: 1em"
+                >¿Desea obtener los comentarios de su pagina de
+                Facebook?</ion-label
+              >
+              <ion-button
+                color="veropciones"
+                class="ButtonObtener"
+                (click)="obtenerComentariosFacebook()"
+                >Obtener</ion-button
+              >
             </ion-card-content>
-            
           </ion-card>
-          
         </div>
-        
-           
-        
-      <ion-grid>
-        <ion-card style="min-width: 300px " >
-          <div class="chart-container">
-            <ion-list>
-              <ion-list-header>Lista de Comentarios</ion-list-header>
-    
-              <ion-item *ngFor="let item of comentariosObtenidos" >
-                <ion-avatar slot="start">
-                  <ion-icon style="zoom: 2.5;" name="logo-facebook"></ion-icon>
-                </ion-avatar>
-                <ion-label>
-                  <h2>{{item[3]}}</h2>
-                  <h3>{{item[1] | date:'short':'ISO' }} </h3>
-                  <p>{{item[0]}}</p>
-                </ion-label>
-              </ion-item>
+
+        <ion-grid>
+          <ion-card style="min-width: 300px">
+            <div class="chart-container">
+              <ion-list>
+                <ion-list-header>Lista de Comentarios</ion-list-header>
+
+                <ion-item *ngFor="let item of comentariosObtenidos">
+                  <ion-avatar slot="start">
+                    <ion-icon style="zoom: 2.5" name="logo-facebook"></ion-icon>
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>{{item[3]}}</h2>
+                    <h3>{{item[1] | date:'short':'ISO' }}</h3>
+                    <p>{{item[0]}}</p>
+                  </ion-label>
+                </ion-item>
               </ion-list>
-          </div>    
-          <ion-note slot="end" style="font-size: 15px; width: 100%; text-align: right;justify-content: right; float: left;">Token expira en una hora</ion-note>
-          <ion-label style="margin-top: 1em;">¿Desea guardar los comentarios de su pagina de Facebook para ser analizada?</ion-label>
-          <ion-button color="veropciones" class="ButtonObtener" (click)="presentAlert()">Guardar</ion-button>  
+            </div>
+            <ion-note
+              slot="end"
+              style="
+                font-size: 15px;
+                width: 100%;
+                text-align: right;
+                justify-content: right;
+                float: left;
+              "
+              >Token expira en una hora</ion-note
+            >
+            <ion-label style="margin-top: 1em"
+              >¿Desea guardar los comentarios de su pagina de Facebook para ser
+              analizada?</ion-label
+            >
+            <ion-button
+              color="veropciones"
+              class="ButtonObtener"
+              (click)="presentAlert()"
+              >Guardar</ion-button
+            >
+          </ion-card>
+        </ion-grid>
+      </div>
 
-        </ion-card>
+      <ion-list-header
+        style="
+          justify-content: center;
+          justify-content: center;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          font-size: 13pt;
+          margin-top: 1em;
+          flex-direction: row; ;
+        ">Obtener Nueva Información</ion-list-header>
 
-      </ion-grid>
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-self: flex-start;
+        "
+      >
+        <div class="BG">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-subtitle style="text-transform: none; font-size: 17px"
+                >Ingrese esta información:
+              </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-list style="margin-bottom: 1em">
+                <ion-item>
+                  <ion-label>Token: </ion-label>
+                  <ion-input
+                    placeholder="Ingrese Token Facebook"
+                    [(ngModel)]="token"
+                    required="true"
+                  ></ion-input>
+                </ion-item>
+              </ion-list>
 
-  
-  </div>
- </div>
-</ion-content>   
+              <ion-note
+                slot="end"
+                style="
+                  font-size: 15px;
+                  width: 100%;
+                  text-align: right;
+                  justify-content: right;
+                  float: left;
+                "
+                >Token expira en una hora</ion-note
+              >
+              <ion-label style="margin-top: 1em"
+                >¿Desea obtener los comentarios de su pagina de
+                Facebook?</ion-label
+              >
+              <ion-button
+                color="veropciones"
+                class="ButtonObtener"
+                (click)="obtenerComentariosFacebook()"
+                >Obtener</ion-button
+              >
+            </ion-card-content>
+          </ion-card>
+        </div>
 
+        <ion-grid>
+          <ion-card style="min-width: 300px">
+            <div class="chart-container">
+              <ion-list>
+                <ion-list-header>Lista de Comentarios</ion-list-header>
 
-  
-   
-  
-
-   
+                <ion-item *ngFor="let item of comentariosObtenidos">
+                  <ion-avatar slot="start">
+                    <ion-icon style="zoom: 2.5" name="logo-facebook"></ion-icon>
+                  </ion-avatar>
+                  <ion-label>
+                    <h2>{{item[3]}}</h2>
+                    <h3>{{item[1] | date:'short':'ISO' }}</h3>
+                    <p>{{item[0]}}</p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+            <ion-note
+              slot="end"
+              style="
+                font-size: 15px;
+                width: 100%;
+                text-align: right;
+                justify-content: right;
+                float: left;
+              "
+              >Token expira en una hora</ion-note
+            >
+            <ion-label style="margin-top: 1em"
+              >¿Desea guardar los comentarios de su pagina de Facebook para ser
+              analizada?</ion-label
+            >
+            <ion-button
+              color="veropciones"
+              class="ButtonObtener"
+              (click)="presentAlert()"
+              >Guardar</ion-button
+            >
+          </ion-card>
+        </ion-grid>
+      </div>
+    </div>
+  </ion-content>
+</ion-app>
