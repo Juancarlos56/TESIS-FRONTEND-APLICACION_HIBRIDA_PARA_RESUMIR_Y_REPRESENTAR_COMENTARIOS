@@ -6,6 +6,8 @@ import { Usuario } from '../../models/Usuario';
 import { FirestoreService } from '../../services/firestore.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { ResumenServiceService } from 'src/app/services/resumen-service.service';
+import { Comentario } from 'src/app/models/Note';
 
 @Component({
   selector: 'app-usuario-perfil',
@@ -13,6 +15,13 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./usuario-perfil.page.scss'],
 })
 export class UsuarioPerfilPage implements OnInit {
+  mostrarIcon=[1,2,3,4];
+  notes = [];
+  totalComentarios= 0;
+  public urlComentario='';
+  public comentarioSegunCategoria='';
+  public contenidoSegunCategoria = '';
+
   public fechaNacimiento = '';
   public selectedGenero = '';
   public datos: FormGroup;
@@ -31,7 +40,9 @@ export class UsuarioPerfilPage implements OnInit {
     private fb: FormBuilder,
     private database: FirestoreService,
     private router: Router,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private listaService : FirestoreService,
+    private resumenService: ResumenServiceService,
   ) {
     this.setToday();
   }
@@ -41,6 +52,10 @@ export class UsuarioPerfilPage implements OnInit {
   }
 
   ngOnInit() {
+    this.listarComentarioService()
+
+
+
     this.userAccount = this.authService.getUserProfile();
     this.datos = this.fb.group({
       nombresForm: [
@@ -128,6 +143,43 @@ export class UsuarioPerfilPage implements OnInit {
   eleccionGeneroUsuario(seleccionGenero) {
     this.selectedGenero = seleccionGenero;
   }
+
+  ///////////////////////////////////////////////////////////////
+
+  listarComentarioService(){
+    
+    const usercorreo = this.listaService.getUsuarioEmail();
+    this.resumenService.listarComentariosUsuario(usercorreo).then(res=>{
+      this.notes = res as Array<Comentario>
+      this.totalComentarios= this.notes.length
+      this.mostrarIconGanador(this.totalComentarios)
+    });
+  }
+
+  mostrarIconGanador(contador){
+
+    if (contador<10){
+      this.urlComentario = "../../assets/icon/happy-outline.svg";
+      this.comentarioSegunCategoria= 'Tu categoria es:  Cliente normal. '
+      this.contenidoSegunCategoria= ' Por favor sigue comentado para desbloquear tus premios.  '
+    }else  if (contador>=10){
+      this.urlComentario = "../../assets/icon/plato.svg";
+      this.comentarioSegunCategoria= 'Tu categoria es: Cliente Plata.'
+      this.contenidoSegunCategoria=' Muestra tu insignia dentro del restaurante para recibir tu premio. Recuerda seguir comentando obtener más premios '
+
+    }else if (contador>=20){
+      this.urlComentario = "../../assets/icon/barra-de-oro.svg";
+      this.comentarioSegunCategoria= 'Tu categoria es:  Cliente Oro.' 
+      this.contenidoSegunCategoria= 'Muestra tu insignia dentro del restaurante<bR> para recibir tu premio. Recuerda seguir comentando obtener más premios  '
+
+    }else if (contador>=50){
+      this.urlComentario = "../../assets/formasIcon/diamante.svg";
+      this.comentarioSegunCategoria= 'Tu categoria es:  Cliente Diamante.'
+      this.contenidoSegunCategoria= ' Muestra tu insignia dentro del restaurante para recibir tu premio.Recuerda seguir comentando obtener más premios '
+
+    }
+  }
+  
 
   salir(){
     
