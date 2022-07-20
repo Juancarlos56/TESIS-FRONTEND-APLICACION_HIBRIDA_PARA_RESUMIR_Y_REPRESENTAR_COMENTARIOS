@@ -95,6 +95,27 @@ export class ResumenServiceService {
     const response: HttpResponse = await Http.request(options);
     return response.data.comentarios
   }
-  
+
+  async obtenerComentariosFacebookAPI(token: string){
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'obtenerComentariosFacebook',
+      method:'POST',
+      data: {'tokenApi': token},
+      headers: {'Content-Type':  'application/json'}
+    }
+    const response: HttpResponse = await Http.request(options);
+    return response.data
+  }
+
+  async guardarComentariosFacebookAPI()  {
+    
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'guardarComentariosFacebook',
+      method:'GET',
+      headers: {'Content-Type':  'application/json'}
+    }
+    const response: HttpResponse = await Http.request(options);
+    return response.data.comentarios 
+  }
   
 }

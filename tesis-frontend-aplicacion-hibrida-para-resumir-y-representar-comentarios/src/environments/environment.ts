@@ -13,7 +13,7 @@ export const environment = {
     authDomain: 'aplicacion-resumen-comentarios.firebaseapp.com',
     messagingSenderId: '973370360772',
   },
-  //WS_PATH : 'http://172.16.211.67:8080/api/'
+  //WS_PATH : 'http://172.16.221.219:8080/api/'
   //WS_PATH : 'http://172.16.217.183:8080/api/'
   WS_PATH : 'http://192.168.100.184:8080/api/'
 

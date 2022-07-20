@@ -1,105 +1,87 @@
 <ion-app>
-<ion-header>
-  <ion-toolbar class="Page-Header">
+  <ion-header>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <div class="Rectangle-239">
-      <div class="logoInicio" >
+      <div class="logoInicio">
+        <ion-icon
+          src="../../assets/icon/terracerestaurant.svg"
+          class="iconImage"
+          slot="end"
+        ></ion-icon>
+        <ion-title class="title">Bienvenido {{nombre}}</ion-title>
+      </div>
+    </div>
+  </ion-header>
+
+  <ion-content>
+    <div class="BG">
+      <ion-card-subtitle class="title2"
+        ></ion-card-subtitle
+      >
+    </div>
+    <!------------------------------------------------------------------------->
+
+    <div>
+      <div>
+        <ion-grid>
+          <ion-card-subtitle class="subtitleCard">{{nombre}}, puedes ver lo que opinan sus clientes con respecto a:</ion-card-subtitle>
+          
+          <ion-card class="flexCompose">
+            <div class="contenerdorGrafica">
+
+              <div class="filterStyle">
+                <ion-select interface="action-sheet" (ionChange)="cargaServicio($event)" placeholder="Seleccione Categoria">
+                  <ion-select-option value="comida">Comida</ion-select-option>
+                  <ion-select-option value="costo">Costo</ion-select-option>
+                  <ion-select-option value="atmosfera">Atmosfera</ion-select-option>
+                  <ion-select-option value="ubicacion">Ubicación</ion-select-option>
+                  <ion-select-option value="decoracion">Decoración</ion-select-option>
+                  <ion-select-option value="limpieza">Limpieza</ion-select-option>
+                  <ion-select-option value="atencion al cliente">Atención al Cliente</ion-select-option>
+                </ion-select>
+                <ion-select #sentimiento id="sentimiento" [disabled]="sentimientoText" interface="action-sheet" (ionChange)="cargaSentimientosPalabras($event)" placeholder="Filtar por:">
+                  <ion-select-option value="SinClasificacion">Todos</ion-select-option>
+                  <ion-select-option value="very positive">Excelente</ion-select-option>
+                  <ion-select-option value="positive">Buenos</ion-select-option>
+                  <ion-select-option value="mixed">Neutro</ion-select-option>
+                  <ion-select-option value="negative">Malos</ion-select-option>
+                  <ion-select-option value="very negative">Muy Malos</ion-select-option>
+                </ion-select>
+            </div>
+            <ion-button color="veropciones" class="ButtonBuscar" (click)="reset()">Borrar</ion-button>     
+
+          </div>
+
+          <ion-card-content>
+            <img [src]="imagenKeywords1" style="filter: grayscale(100%);" alt="nubePalabras.png"/>
+          </ion-card-content>
+          
+        </ion-card>
+
+          <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)"  style="background-color: black;margin-top: 300px;height: 200px;">
+            <ion-refresher-content
+            pullingIcon="chevron-down-circle-outline"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+          </ion-refresher-content>          
+        </ion-refresher>
         
-        <ion-title class="title">Perfil Administrador</ion-title>
-        <ion-icon src="../../../assets/icon/sushi.svg" class="Ellipse-6" slot="end"></ion-icon> 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-      </div>
-    
-    
-    </div>
-  </ion-toolbar>
-   
-</ion-header>
 
-<ion-content>
+        <ion-card>
+          <div class="filtrarWords">
+            <ion-item>
+              <ion-label>Buscar por palabra:</ion-label>
+              <ion-input placeholder="" class="inputText" [(ngModel)]="texto"></ion-input>       
+            </ion-item>
+           
+            <ion-button color="veropciones" class="ButtonBuscar" (click)="filtrarComentario()">Buscar</ion-button>     
+          </div>
 
-  <div style="margin-top:-50px ;">
-    <!--Colocar la imagen del restaurante dueno de la aplicacion-->
-    <div class="redeSociales">
-      <ion-icon src="../../assets/icon/terracerestaurant.svg" style="zoom:12.0;"></ion-icon>
-    </div>
-  </div>
-
-  <div>
-
-    
-  </div>
-
-
-  <div style="display: flex; flex-direction: row; flex-wrap: wrap; text-align: center;
-  justify-content: center;">
-    
-      <div >
-        <ion-grid>
-          <ion-card style="min-height: 300px; max-width: 360px;" >
-            <ion-card-header>
-              <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
-              <ion-card-title>Resumen Total</ion-card-title>
-            </ion-card-header>
-      
-            <ion-card-content>
-              <img [src]="imagenKeywords3" />
-            </ion-card-content>
-          </ion-card>
+        </ion-card>
 
         </ion-grid>
       </div>
-             
-      
- 
-    
-    
-      <div >
-        <ion-grid>
-          <ion-card style="min-height: 300px; max-width: 360px;">
-            <ion-card-header>
-              <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
-              <ion-card-title>Comentarios Positivos</ion-card-title>
-            </ion-card-header>
-          
-            <ion-card-content >
-              <img [src]="imagenKeywords1" />
-            </ion-card-content>
-          </ion-card>
-
-        </ion-grid>
-      </div>
-                
-    
-   
-      <div >
-        <ion-grid>
-          <ion-card style="min-height: 300px; max-width: 360px;">
-            <ion-card-header>
-              <ion-card-subtitle>Top Palabras Más Importantes </ion-card-subtitle>
-              <ion-card-title>Rango de Fecha</ion-card-title>
-            </ion-card-header>
-          
-            <ion-card-content>
-              <img [src]="imagenKeywords2" />
-            </ion-card-content>
-          </ion-card>
-        </ion-grid>
-      </div>
-      
-  
-  </div>
-
-
-</ion-content>
-
-
-<ion-footer collapse="fade">
-  <ion-toolbar>
-    <div class="footerDerechosAutor">
-      <ion-label class="derechosAutor">
-        &#169; 2022 Todos los derechos reservados | Developed by JB & KB
-      </ion-label>
     </div>
-  </ion-toolbar>
-</ion-footer>
+  </ion-content>
 </ion-app>

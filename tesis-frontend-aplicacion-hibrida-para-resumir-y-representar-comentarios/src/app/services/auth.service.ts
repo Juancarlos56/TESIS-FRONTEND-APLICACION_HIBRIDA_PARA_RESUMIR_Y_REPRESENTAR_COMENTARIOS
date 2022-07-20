@@ -93,7 +93,6 @@ export class AuthService {
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
       });
-      
   }
   
   async register(email, password) {

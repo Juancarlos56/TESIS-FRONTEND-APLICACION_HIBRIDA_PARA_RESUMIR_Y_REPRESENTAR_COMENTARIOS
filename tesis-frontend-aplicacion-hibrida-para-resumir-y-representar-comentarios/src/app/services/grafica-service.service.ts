@@ -54,6 +54,17 @@ export class GraficaServiceService {
       const response: HttpResponse = await Http.request(options);
       return response.data
   }
+
+  async buscarComentarios(analizarComentario: string, texto:string, clasificacionComment:string){
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'buscarEnDataset',
+      method:'POST',
+      data: {'analizarComentario': analizarComentario, 'texto': texto, 'clasificacionComment': clasificacionComment},
+      headers: {'Content-Type':  'application/json'}
+    }
+      const response: HttpResponse = await Http.request(options);
+      return response.data
+  }
     
 
 
