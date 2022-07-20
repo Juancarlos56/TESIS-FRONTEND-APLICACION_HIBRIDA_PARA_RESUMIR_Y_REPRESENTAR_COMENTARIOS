@@ -1,35 +1,8 @@
-.footerDerechosAutor {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .derechosAutor {
-    font-family: Inter-Thin !important;
-    margin: 0.5em 1.5em 1.5em 2.5em;
-    font-size: 11px;
-    font-weight: 600;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: #ead2a1;
-    
-  }
-
-  .button_inner {
+.button_inner {
     display: flex;
     flex: 0 0 0;
-    
-    /* position: relative; */
     flex-flow: inherit;
-    /* align-items: inherit; */
-    /* justify-content: inherit; */
-    /* width: 100%; */
-    /* height: 100%; */
-    /* z-index: 1; */
-    color: #ead2a1;
+    color: #1b1b1b;
 }
 
   .my-custom-menu {
@@ -41,7 +14,7 @@
     
     text-anchor: unset;
     /* background-color: powderblue; */
-    color: #ff7600;
+    color: #000000;
   }
 
   ion-label{

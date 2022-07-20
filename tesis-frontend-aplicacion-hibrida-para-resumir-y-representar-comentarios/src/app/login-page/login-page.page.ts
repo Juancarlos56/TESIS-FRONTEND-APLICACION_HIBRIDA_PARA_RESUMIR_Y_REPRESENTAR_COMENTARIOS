@@ -11,7 +11,12 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login-page.page.scss'],
 })
 export class LoginPagePage implements OnInit {
-
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400
+  };
+  
+  
   
   public password1 = "";
   public email1 = "";
