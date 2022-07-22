@@ -3,6 +3,10 @@ import { ResumenServiceService } from 'src/app/services/resumen-service.service'
 import { AuthService } from '../../services/auth.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { format, parseISO } from 'date-fns';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Comentario } from 'src/app/models/Note';
 
 
 @Component({
@@ -16,13 +20,32 @@ export class Admintop10Page implements OnInit {
   public token: string = '';
   public comentariosObtenidos = []
   public loading = null;
+  public fechaInicio = '';
+  public fechaFin='';
+  public datos: FormGroup;
+
+
+  public dataValue = format(new Date(), 'yyyy-MM-dd');
+  public dataValueTodayMax = format(new Date(), 'yyyy-MM-dd');
+  public formattedStringInicio = '';
+  public formattedStringFin = '';
+  public isOpen = false;
+  public contenidoComentario:String = ''
+  public showPickerInicio = false;
+  public showPickerFin = false;
+  public listaFiltrada = true;
 
   constructor(private usurio: AuthService, 
     private serviceStorage : FirestoreService,
     private resumen: ResumenServiceService,
     private alertController: AlertController,
-    private loadingCtrl: LoadingController
-     ) { }
+    private loadingCtrl: LoadingController,
+    private fb: FormBuilder,
+    private router: Router
+     ) { 
+    
+      this.setToday()  
+  }
 
   ngOnInit() {
     this.serviceStorage
@@ -30,10 +53,46 @@ export class Admintop10Page implements OnInit {
       .subscribe((res) => {
         this.nombre = res.nombres;
       });
+      this.obtenerComentariosFacebook()
+      this.datos = this.fb.group({
+        fechaInicioForm: ['', [Validators.required]],
+        fechaFinForm: ['', [Validators.required]],
+      });
 
   }
 
+  setToday() {
+    
+    this.formattedStringInicio = format(parseISO(this.dataValue), 'yyyy-MM-d HH:mm:ss');
+    this.formattedStringFin = format(parseISO(this.dataValue), 'yyyy-MM-d HH:mm:ss');
+  }
+
+  get fechaInicioForm() {
+    return this.datos.get('fechaInicioForm');
+  }
+  get fechaFinForm() {
+    return this.datos.get('fechaFinForm');
+  }
+
+  listarComentario(){
+    this.datos.get('fechaForm').value;
+  }
+
+  cambiarFechaInicio(valorFecha) {
+    this.dataValue = valorFecha;
+    this.formattedStringInicio = format(parseISO(valorFecha), 'yyyy-MM-d HH:mm:ss');
+    this.showPickerInicio=false
+  }
+
+  cambiarFechaFin(valorFecha) {
+    this.dataValue = valorFecha;
+    this.formattedStringFin = format(parseISO(valorFecha), 'yyyy-MM-d HH:mm:ss');
+    this.showPickerFin=false
+  }
+
+
   obtenerComentariosFacebook(){
+    this.comentariosObtenidos = []
     this.resumen.obtenerComentariosFacebookAPI(this.token).then(res=>{
       const comentarios = res.comentario_completo as []
       const fechaComentario = res.fecha_comentario as []
@@ -43,19 +102,20 @@ export class Admintop10Page implements OnInit {
       for (let index = 0; index < comentarios.length; index++) {
         this.comentariosObtenidos.push([comentarios[index],fechaComentario[index],id_pagina_post[index],profileName[index]])
       }
+      this.listaFiltrada = false;
     });
   }
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: 'Guardar Comentarios!',
+      header: 'Analizar Comentarios!',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
         },
         {
-          text: 'Guardar',
+          text: 'Si',
           role: 'confirm',
           handler: () => { this.guardarComentariosFacebook()}
         }
@@ -90,8 +150,9 @@ export class Admintop10Page implements OnInit {
       header: 'Comentarios Almacenados',
       buttons: [
         {
-          text: 'Confirmar',
-          role: 'confirm'
+          text: 'OK',
+          role: 'confirm', 
+          handler: () => {this.router.navigateByUrl('/admin-menu/admin-perfil', { replaceUrl: true });}
         }
       ]
     });
@@ -100,6 +161,21 @@ export class Admintop10Page implements OnInit {
     const { role } = await alert.onDidDismiss();
   }
 
+  async buscarComentariosFacebook(){
+    this.comentariosObtenidos = []
+    await this.resumen.filtrarComentariosFacebookFecha(this.formattedStringInicio, this.formattedStringFin).then(res=>{
+      this.listaFiltrada = true;  
+      this.comentariosObtenidos = res as Array<Comentario>
+    });
+  }
+
+  openModalComentario(item:any, isOpen: boolean) {
+    this.contenidoComentario = item[0];
+    this.isOpen = isOpen;
+  }
+
+  setOpen(isOpen: boolean) {
+    this.isOpen = isOpen;
+  }
 
 }
-//'#446AA3','#DEE2FF','#B3B9E8','#E8B3B7','#9C595F' ['rgba(38, 24, 74, 0.8)', 'rgba(71, 58, 131, 0.8)','rgba(122, 120, 168, 0.8)']

@@ -13,6 +13,7 @@ import { GraficaServiceService } from 'src/app/services/grafica-service.service'
 import { AuthService } from '../../services/auth.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { ChartComponent, NgApexchartsModule, ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexTitleSubtitle, ApexPlotOptions, ApexLegend } from 'ng-apexcharts';
+import { Router } from '@angular/router';
 
 
 export type ChartCalificacionOptions = {
@@ -79,7 +80,8 @@ export class AdminPerfilPage implements OnInit {
   constructor(
     private usurio: AuthService,
     private user: FirestoreService,
-    private dataGraficaService: GraficaServiceService
+    private dataGraficaService: GraficaServiceService,
+    private router: Router
   ) {}
   ngOnInit() {
     this.user
@@ -241,5 +243,11 @@ export class AdminPerfilPage implements OnInit {
   
   /*
     */  
+  }
+
+  salir(){
+    this.usurio.logout();
+    this.router.navigateByUrl('/login-page', { replaceUrl: true });
+    console.log('salir')
   }
 }

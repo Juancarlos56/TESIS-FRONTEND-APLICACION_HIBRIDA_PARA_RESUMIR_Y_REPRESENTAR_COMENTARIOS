@@ -74,6 +74,7 @@ export class ResumenServiceService {
     return response.data.comentarios
   }
 
+  
   async listarComentarioPorSentimiento(sentimiento: string){
     const options:HttpOptions = {
       url: environment.WS_PATH+'listarComentarioSentimiento',
@@ -99,8 +100,7 @@ export class ResumenServiceService {
   async obtenerComentariosFacebookAPI(token: string){
     const options:HttpOptions = {
       url: environment.WS_PATH+'obtenerComentariosFacebook',
-      method:'POST',
-      data: {'tokenApi': token},
+      method:'GET',
       headers: {'Content-Type':  'application/json'}
     }
     const response: HttpResponse = await Http.request(options);
@@ -117,5 +117,15 @@ export class ResumenServiceService {
     const response: HttpResponse = await Http.request(options);
     return response.data.comentarios 
   }
-  
+
+  async filtrarComentariosFacebookFecha(fechaInicio: string, fechaFin:string){
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'filtrarComentariosFacebookFecha',
+      method:'POST',
+      data: {'fechaInicio': fechaInicio, 'fechaFin': fechaFin},
+      headers: {'Content-Type':  'application/json'}
+    }
+    const response: HttpResponse = await Http.request(options);
+    return response.data.ComentariosRedesSociales
+  }
 }

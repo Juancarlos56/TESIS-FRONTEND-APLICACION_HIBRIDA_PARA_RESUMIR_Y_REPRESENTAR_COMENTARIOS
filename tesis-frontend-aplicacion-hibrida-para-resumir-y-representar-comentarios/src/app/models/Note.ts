@@ -3,8 +3,7 @@ export interface Comentario{
     correo_comentario: String;
     resumen_comentario: String;
     tipo_comentario:String;
-    fechaNacimiento: Date;
-    fecha_comentario: string;
+    fecha_comentario: Date;
     comentario_completo: String;
     
 }
