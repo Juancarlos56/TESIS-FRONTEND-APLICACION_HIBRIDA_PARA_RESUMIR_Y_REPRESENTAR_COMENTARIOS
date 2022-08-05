@@ -79,6 +79,10 @@ export class FirestoreService {
     const path= 'Comentario/Comentario/'
   }
 
+  getProductos(){
+    const prodRef = collection(this.firestore, 'Producto');
+    return collectionData(prodRef);
+  }
 
   getNotes(){
     const notesRef = collection(this.firestore, 'Comentario');

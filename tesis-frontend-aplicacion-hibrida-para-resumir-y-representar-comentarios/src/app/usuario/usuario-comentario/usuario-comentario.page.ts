@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ResumenServiceService } from 'src/app/services/resumen-service.service';
+import { FirestoreService } from '../../services/firestore.service';
 
 
 
@@ -18,17 +19,27 @@ export class UsuarioComentarioPage implements OnInit {
   value = "hhhhhhhhh";
   public comentario1=""
   comen: FormGroup;
-
+  public categoriaComentario = "general";
+  public desplegarComida = false;
+  public contadorCaracteres = 0; 
   slideOpts = {
     initialSlide: 0,
     speed: 400
   };
+
+  slideOpts2 = {
+    initialSlide: 1,
+    speed: 400
+  };
+  public productos = [];
+
   
   constructor(private fbb: FormBuilder,
               private auth: Auth,
               private resumen : ResumenServiceService,
               private alertController: AlertController,
               private router: Router,
+              private listaService : FirestoreService,
               private loadingCtrl: LoadingController
     ) 
     {
@@ -41,7 +52,7 @@ export class UsuarioComentarioPage implements OnInit {
   }  
   
       
-           
+         
   ngOnInit() {
    // this.authService.stateUser().subscribe(res =>{
      // console.log('estado', res)
@@ -53,7 +64,10 @@ export class UsuarioComentarioPage implements OnInit {
   }
 
  
-    
+  onKey(event:any){
+    this.contadorCaracteres = event.target.value.length
+   
+  }
   
 
 
@@ -68,27 +82,33 @@ export class UsuarioComentarioPage implements OnInit {
 
 
   async guadarComentario(){
-
-    const user = this.auth.currentUser;
     const usercorreo = this.auth.currentUser.email;
     const comentarioValor = this.comentario.value;
     this.resumen.tipoComentarioApiRest(comentarioValor).then(async res=>{
-      const response= await this.resumen.guardarComentario( usercorreo, comentarioValor, res.label);
+      const response= await this.resumen.guardarComentario( usercorreo, comentarioValor, res.label, this.categoriaComentario);
       if (response=='True') {
         this.showAlertGuardaComentario(' Tú comentario ha sido guardado','Por favor, sigue agregando más comentarios');
       } else {
         this.showAlert('El comentario no se guardo.', 'Por favor, Intente de nuevo!');
       }  
     })
+
+  }
+
+  async guadarComentarioComidaPlato(plato: any){
+    console.log("categoriaComentario: "+this.categoriaComentario + " producto: "+ plato.nombreProducto)
     
-    //const tipo_comentario= "Malo";
-    /*
-    const response= await this.resumen.guardarComentario( usercorreo, comentarioValor, tipo_comentario);
-    if (response=='True') {
-      this.showAlertGuardaComentario('Comentario Guardado','Sigue agregando más comentarios');
-    } else {
-      this.showAlert('Comentario Fallido', 'Por favor, Intente de nuevo!');
-    }*/
+    const usercorreo = this.auth.currentUser.email;
+    const comentarioValor = this.comentario.value;
+    
+    this.resumen.tipoComentarioApiRest(comentarioValor).then(async res=>{
+      const response= await this.resumen.guardarComentarioProductoRestaurante(usercorreo, comentarioValor, res.label, this.categoriaComentario, plato.nombreProducto);
+      if (response=='True') {
+        this.showAlertGuardaComentario(' Tú comentario ha sido guardado','Por favor, sigue agregando más comentarios');
+      } else {
+        this.showAlert('El comentario no se guardo.', 'Por favor, Intente de nuevo!');
+      }  
+    })
   }
 
   async showAlert(header, message) {
@@ -114,11 +134,28 @@ export class UsuarioComentarioPage implements OnInit {
     //this.router.navigateByUrl('/usuario-menu/usuario-comentario', { replaceUrl: true });
     this.comen = this.fbb.group(
       {
-        comentario: ['', [Validators.required, Validators.minLength(3)]]      }
+        comentario: ['', [Validators.required, Validators.minLength(100)]]      }
     );
 
   }  
   
+  seleccionCategoria(event:any){
+    this.categoriaComentario = event.detail.value;
+    this.comen = this.fbb.group(
+      {
+        comentario: ['', [Validators.required, Validators.minLength(100)]]      }
+    );
+    
+    if(event.detail.value == 'Comida'){
+      this.desplegarComida = true; 
+      this.obtenerPlatos();
+      return;
+    }   
+    this.desplegarComida = false; 
+  }
 
+  obtenerPlatos(){
+    this.listaService.getProductos().subscribe(res=>{this.productos = res;})
+  }
 
 }

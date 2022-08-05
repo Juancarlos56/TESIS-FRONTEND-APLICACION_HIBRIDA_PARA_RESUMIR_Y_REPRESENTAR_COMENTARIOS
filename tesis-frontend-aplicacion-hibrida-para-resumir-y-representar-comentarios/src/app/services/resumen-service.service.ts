@@ -16,7 +16,7 @@ export class ResumenServiceService {
       method:'POST',
       headers: {
         'content-type': 'application/json',
-        'X-RapidAPI-Key': '2376c0d36cmsha5bbc926e003defp162c2djsn5f53c06cce2c',
+        'X-RapidAPI-Key': environment.TOKEN_RAPIDAPI,
         'X-RapidAPI-Host': 'multilingual-sentiment-analysis2.p.rapidapi.com',
       },
       data: {text: comentario},
@@ -26,12 +26,29 @@ export class ResumenServiceService {
   }
   
   
-  async guardarComentario( usercorreo:string, comentarioValor:string, tipo_comentario:string)  {
+  async guardarComentario( usercorreo:string, comentarioValor:string, tipo_comentario:string,  categoriaComentario: string)  {
     
     const options:HttpOptions = {
-      url: environment.WS_PATH+'guardarComentario',
+      url: environment.WS_PATH+'guardarComentarioClasificacion',
       method:'POST',
-      data: {'contenido_comentario': comentarioValor, 'tipoComentario': tipo_comentario, 'correoComentario': usercorreo},
+      data: {'contenido_comentario': comentarioValor, 'tipoComentario': tipo_comentario, 
+            'correoComentario': usercorreo, 'categoriaComentario':categoriaComentario
+          },
+      headers: {'Content-Type':  'application/json'}
+    }
+    const response: HttpResponse = await Http.request(options);
+    return response.data.stateComment
+  }
+
+  async guardarComentarioProductoRestaurante( usercorreo:string, comentarioValor:string, tipo_comentario:string, categoriaComentario: string, nombreProducto: string)  {
+    
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'guardarComentarioClasificacionProducto',
+      method:'POST',
+      data: {'contenido_comentario': comentarioValor, 'tipoComentario': tipo_comentario, 
+            'correoComentario': usercorreo, 'categoriaComentario': categoriaComentario,  
+            'nombreProducto': nombreProducto
+            },
       headers: {'Content-Type':  'application/json'}
     }
     const response: HttpResponse = await Http.request(options);
@@ -97,7 +114,7 @@ export class ResumenServiceService {
     return response.data.comentarios
   }
 
-  async obtenerComentariosFacebookAPI(token: string){
+  async obtenerComentariosFacebookAPI(){
     const options:HttpOptions = {
       url: environment.WS_PATH+'obtenerComentariosFacebook',
       method:'GET',

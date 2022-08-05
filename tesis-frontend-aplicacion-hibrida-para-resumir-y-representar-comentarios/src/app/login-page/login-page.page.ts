@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
-import { AlertController, isPlatform, LoadingController } from '@ionic/angular';
+import { AlertController, IonInput, IonLabel, isPlatform, LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -17,6 +17,8 @@ export class LoginPagePage implements OnInit {
   };
   
   
+  @ViewChild('Password') passwordVista: IonInput;
+  public labelMostrar = false;
   
   public password1 = "";
   public email1 = "";
@@ -59,7 +61,13 @@ export class LoginPagePage implements OnInit {
 
   
   public mostrarPassword(){
-    console.log("entra al metodo"+this.password1);
+    this.passwordVista.type = 'text';
+    this.labelMostrar = true;
+  }
+
+  public ocultarPassword(){
+    this.passwordVista.type = 'password';
+    this.labelMostrar = false;
   }
 
 
@@ -72,7 +80,7 @@ export class LoginPagePage implements OnInit {
   }
 
   public iniciarConFacebook(){
-    console.log("entra al metodo login: "+this.email1+" "+this.password1);
+    
   }
 
   async iniciarConGoogle(){

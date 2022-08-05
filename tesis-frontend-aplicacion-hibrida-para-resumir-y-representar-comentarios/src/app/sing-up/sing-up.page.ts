@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LoadingController, AlertController, isPlatform } from '@ionic/angular';
+import { LoadingController, AlertController, isPlatform, IonInput } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -23,6 +23,11 @@ export class SingUpPage implements OnInit {
   public gmailIcon = "../../assets/images/gmail.png";
   public passwordStrong = null;
   public passwordStrongVerificacion = null;
+  @ViewChild('Password') passwordVista: IonInput;
+  public labelMostrar = false;
+
+  @ViewChild('PasswordConfirmacion') passwordVistaConfirmacion: IonInput;
+  public labelMostrarConfirmacion = false;
 
   constructor(
     private fb: FormBuilder,
@@ -72,7 +77,23 @@ export class SingUpPage implements OnInit {
   }
   
   public mostrarPassword(){
-    console.log("entra al metodo"+this.password + " formulario: "+this.nombresForm);
+    this.passwordVista.type = 'text';
+    this.labelMostrar = true;
+  }
+
+  public ocultarPassword(){
+    this.passwordVista.type = 'password';
+    this.labelMostrar = false;
+  }
+
+  public mostrarPasswordConfirmacion(){
+    this.passwordVistaConfirmacion.type = 'text';
+    this.labelMostrarConfirmacion = true;
+  }
+
+  public ocultarPasswordConfirmacion(){
+    this.passwordVistaConfirmacion.type = 'password';
+    this.labelMostrarConfirmacion = false;
   }
 
   public validarRobustezPassword(eventoTeclado){

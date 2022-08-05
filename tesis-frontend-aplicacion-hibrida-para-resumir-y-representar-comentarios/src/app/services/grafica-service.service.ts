@@ -9,11 +9,18 @@ export class GraficaServiceService {
 
   constructor() {
 
-
-
    }
+  async obtencionMejoresPeoresProductos(){
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'obtenerMejoresPeoresPlatosRestaurantes',
+      method:'GET',
+      headers: {'Content-Type':  'application/json'}
+    }
+    const response: HttpResponse = await Http.request(options);
+    return response.data
+  }
 
-   async dataParaGraficaPorGenero(){
+  async dataParaGraficaPorGenero(){
     const options:HttpOptions = {
       url: environment.WS_PATH+'usersGenero',
       method:'GET',
@@ -55,11 +62,22 @@ export class GraficaServiceService {
       return response.data
   }
 
-  async buscarComentarios(analizarComentario: string, texto:string, clasificacionComment:string){
+  async buscarComentarios(analizarComentario: string, texto:string){
     const options:HttpOptions = {
       url: environment.WS_PATH+'buscarEnDataset',
       method:'POST',
-      data: {'analizarComentario': analizarComentario, 'texto': texto, 'clasificacionComment': clasificacionComment},
+      data: {'analizarComentario': analizarComentario, 'texto': texto},
+      headers: {'Content-Type':  'application/json'}
+    }
+      const response: HttpResponse = await Http.request(options);
+      return response.data
+  }
+
+  async buscarComentariosCategoria(analizarComentario: string, categoria:string, clasificacionComment:string){
+    const options:HttpOptions = {
+      url: environment.WS_PATH+'buscarCategoriaComentario',
+      method:'POST',
+      data: {'analizarComentario': analizarComentario, 'categoria': categoria, 'clasificacionComment': clasificacionComment},
       headers: {'Content-Type':  'application/json'}
     }
       const response: HttpResponse = await Http.request(options);

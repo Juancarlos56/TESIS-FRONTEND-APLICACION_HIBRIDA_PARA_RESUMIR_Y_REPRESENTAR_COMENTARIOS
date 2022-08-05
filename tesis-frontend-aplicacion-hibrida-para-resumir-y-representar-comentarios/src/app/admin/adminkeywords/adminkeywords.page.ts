@@ -3,7 +3,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import Chart from 'chart.js/auto';
 import { AuthService } from 'src/app/services/auth.service';
 import { GraficaServiceService } from 'src/app/services/grafica-service.service';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, IonSelect, IonSelectOption, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-adminkeywords',
@@ -11,21 +11,19 @@ import { AlertController, LoadingController } from '@ionic/angular';
   styleUrls: ['./adminkeywords.page.scss'],
 })
 export class AdminkeywordsPage implements OnInit {
-  notes = [6];
 
   public imagenKeywords1 = '';
   public servicio = '';
-  public sentimiento = 'SinClasificacion';
+  public sentimientoValue = '';
+  public sentimientoText = true;
+  public habilitacionBoton = true;
   public texto = '';
   private url= `images/nubePalabras/palabrasGeneradas.png`
-  cont=0;
-
-  public pruebaChart : Chart; 
-  //Parametros para mensajes e informacion
   public nombre: String = '';
-
-  
-  public sentimientoText = true;
+  public loading = null;
+  @ViewChild('sentimientoValue') sentimiento: IonSelect;
+  public mejoresProductos = []
+  public peoresProductos = []
 
   constructor(private alertController: AlertController, 
               private graficas: GraficaServiceService, 
@@ -41,18 +39,20 @@ export class AdminkeywordsPage implements OnInit {
       });
 
     this.mostrarImagen(this.url);
+    this.obtenerMejoresyPeoresPlatos();
   }
 
   reset(){
     this.servicio = '';
-    this.sentimiento = 'SinClasificacion';
     this.texto = '';
-    this.url= `images/nubePalabras/palabrasGeneradas.png`
     this.sentimientoText = true;
-
+    this.sentimiento.value = ''
+    this.sentimientoValue = ''
+    this.habilitacionBoton = true;
   }
 
   cargaServicio(event:any){
+    //Habilita poder elegir
     this.sentimientoText = false;
     this.servicio = event.detail.value
   }
@@ -64,9 +64,9 @@ export class AdminkeywordsPage implements OnInit {
     }, 2000);
   }
 
-  async presentAlert() {
+  async presentAlert(titulo:string) {
     const alert = await this.alertController.create({
-      header: 'No existen comentatarios',
+      header: titulo,
       buttons: [
         {
           text: 'OK',
@@ -75,23 +75,32 @@ export class AdminkeywordsPage implements OnInit {
       ]
     });
     await alert.present();
-
+    
   }
 
 
   cargaSentimientosPalabras(event:any){
-    console.log(event.detail.value)
-    this.sentimiento = event.detail.value
-     this.graficas.buscarComentarios('comentario',this.servicio, this.sentimiento).then(res=>{
-      console.log("res.rutaImg: "+res.rutaImg)
+    this.sentimientoValue = event.detail.value;
+    this.habilitacionBoton = false;
+  }
+
+
+  obtenerimagencategoria(){
+    this.showLoading()
+     this.graficas.buscarComentariosCategoria('comentario',this.servicio, this.sentimientoValue).then(res=>{
       if('not exist' == res.rutaImg){
-        this.presentAlert();
+        this.presentAlert("No existen comentatarios");
         return;
       }
+      this.presentAlert("Imagen lista :)");
       this.imagenKeywords1 = res.rutaImg
       const r = res.comentarios as any[]
+      this.loading.dismiss();
+      this.reset()
     });
+    
   }
+  
 
   mostrarImagen(urlI){
     this.serviceStorage.traerImagenesStorage(urlI).then(res=>{
@@ -99,27 +108,38 @@ export class AdminkeywordsPage implements OnInit {
     });
   }
   async showLoading() {
-    const loading = await this.loadingCtrl.create({
+    this.loading = await this.loadingCtrl.create({
       message: 'Cargando imagen...',
       duration: 3500,
       cssClass: 'custom-loading'
     });
     
-    loading.present();
+    this.loading.present();
   }
 
   filtrarComentario(){
-    this.sentimiento = 'SinClasificacion';
+    if (this.texto == '') {
+      this.presentAlert("Ingresar algo para poder buscar, muchas gracias ");
+      return;
+    }
     this.showLoading();
-    this.graficas.buscarComentarios('comentario',this.texto, this.sentimiento).then(res=>{
-      console.log("res: "+  res.rutaImg)
+    this.graficas.buscarComentarios('comentario',this.texto).then(res=>{
       if('not exist' == res.rutaImg){
-        this.presentAlert();
+        this.presentAlert("No existen comentatarios");
         return;
       }
+      this.presentAlert("Imagen lista :)");
       this.imagenKeywords1 = res.rutaImg
       const r = res.comentarios as any[]
+      this.loading.dismiss();
+      this.reset()
+    });
+  }
 
+  obtenerMejoresyPeoresPlatos(){
+    this.graficas.obtencionMejoresPeoresProductos().then(res =>{
+      this.mejoresProductos = res.mejores_productos as any[]
+      this.peoresProductos = res.peores_productos as any[]
     });
   }
 

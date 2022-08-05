@@ -30,7 +30,7 @@ export class Admintop10Page implements OnInit {
   public formattedStringInicio = '';
   public formattedStringFin = '';
   public isOpen = false;
-  public contenidoComentario:String = ''
+  public comentarioSelect:any = ''
   public showPickerInicio = false;
   public showPickerFin = false;
   public listaFiltrada = true;
@@ -93,14 +93,18 @@ export class Admintop10Page implements OnInit {
 
   obtenerComentariosFacebook(){
     this.comentariosObtenidos = []
-    this.resumen.obtenerComentariosFacebookAPI(this.token).then(res=>{
+    this.resumen.obtenerComentariosFacebookAPI().then(res=>{
       const comentarios = res.comentario_completo as []
       const fechaComentario = res.fecha_comentario as []
-      const id_pagina_post = res.id_pagina_post as []
-      const profileName = res['Profile Name'] as []
-      console.log("comentarios: "+ comentarios)
+      const id_pagina_post = res.idPagina_idPost as []
+      const profileName = res['Id Facebook'] as []
+      const categoria = res.categoriaComentario as []
+      const producto = res.nombreProducto as []
+      const imagen = res.imagen as []
       for (let index = 0; index < comentarios.length; index++) {
-        this.comentariosObtenidos.push([comentarios[index],fechaComentario[index],id_pagina_post[index],profileName[index]])
+        this.comentariosObtenidos.push([comentarios[index],fechaComentario[index],
+                                        id_pagina_post[index],profileName[index],
+                                        categoria[index], producto[index], imagen[index]])
       }
       this.listaFiltrada = false;
     });
@@ -170,7 +174,7 @@ export class Admintop10Page implements OnInit {
   }
 
   openModalComentario(item:any, isOpen: boolean) {
-    this.contenidoComentario = item[0];
+    this.comentarioSelect = item;
     this.isOpen = isOpen;
   }
 

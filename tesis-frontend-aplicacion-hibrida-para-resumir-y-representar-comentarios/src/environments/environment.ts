@@ -15,7 +15,8 @@ export const environment = {
   },
   //WS_PATH : 'http://172.16.218.103:8080/api/'
   //WS_PATH : 'http://172.16.217.183:8080/api/'
-  WS_PATH : 'http://192.168.100.184:8080/api/'
+  WS_PATH : 'http://192.168.100.184:8080/api/',
+  TOKEN_RAPIDAPI : '2642234d71msh817b8098c2e7bcbp1efcc0jsn59225868b173'
 
 };
 

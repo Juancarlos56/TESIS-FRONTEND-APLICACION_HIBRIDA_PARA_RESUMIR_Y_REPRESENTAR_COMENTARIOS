@@ -63,6 +63,8 @@
             
                       <ion-item class="BG">
                         <ion-input
+                          #Password
+                          id="Password"
                           class="Password"
                           placeholder="Contraseña"
                           type="password"
@@ -70,8 +72,9 @@
                           [(ngModel)]="password1"
                           required
                         ></ion-input>
-                        <ion-label class="Show" (click)="mostrarPassword()">Mostrar</ion-label>
-                        <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Password needs to be 6 characters</ion-note>
+                        <ion-label #labelMostrar id="labelMostrar" class="Show" *ngIf="labelMostrar === false"(click)="mostrarPassword()"> Mostrar</ion-label>
+                        <ion-label #labelMostrar id="labelMostrar" class="Show" *ngIf="labelMostrar === true"  (click)="ocultarPassword()"> Ocultar</ion-label>
+                        <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Contraseña necesita minimo 8 caracteres</ion-note>
                       </ion-item>
                       <div>
                         <ion-label class="Olvidaste-tu-contrasea" (click)="mostrarPassword()">¿Olvidaste tu contraseña?</ion-label>

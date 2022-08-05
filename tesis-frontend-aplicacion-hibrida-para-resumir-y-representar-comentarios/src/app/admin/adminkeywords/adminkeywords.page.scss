@@ -27,7 +27,6 @@
   letter-spacing: normal;
   text-align: center;
   color: #0e2045;
-  margin-top: -1em;
 }
 .title1 {
  
@@ -72,6 +71,12 @@
   text-transform: none; 
 }
 
+.peores_mejores {
+  display: flex;
+  align-content: space-around;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 .titleCard {
  
   width: 100%;
@@ -104,9 +109,13 @@
 
 .filterStyle{
   font-family: Inter-Regular !important;
-    font-size: 15pt;
-    text-transform: none;
-    display: flex;
+  font-size: 15pt;
+  text-transform: none;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
 }
 .subtitleCard {
   width: 100%;
