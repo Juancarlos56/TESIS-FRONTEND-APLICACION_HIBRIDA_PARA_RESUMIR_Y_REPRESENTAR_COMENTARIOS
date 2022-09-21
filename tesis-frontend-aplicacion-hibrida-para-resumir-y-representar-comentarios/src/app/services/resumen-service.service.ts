@@ -27,7 +27,6 @@ export class ResumenServiceService {
   
   
   async guardarComentario( usercorreo:string, comentarioValor:string, tipo_comentario:string,  categoriaComentario: string)  {
-    
     const options:HttpOptions = {
       url: environment.WS_PATH+'guardarComentarioClasificacion',
       method:'POST',
